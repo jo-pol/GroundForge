@@ -46,42 +46,42 @@ Intended changes for the whiting index.
 
 
 
-[A1]: /GroundForge/?m=88%0A11;bricks;7;5;0;0&s1=ct
-[B1]: /GroundForge/?m=5-;bricks;7;5;0;0&s1=ctctpctct
-[C1]: /GroundForge/?m=5-;bricks;7;5;0;0&s1=ctpct
-[D1]: /GroundForge/?m=5-;bricks;7;5;0;0&s1=cttpctt
-[E1]: /GroundForge/?m=5-;bricks;7;5;0;0&s1=ctpcttt
-[F1]: /GroundForge/?m=5-;bricks;7;5;0;0&s1=cttpcttt
-[G1]: /GroundForge/?m=5-;bricks;7;5;0;0&s1=cttt
+[A1]:  https://d-bl.github.io/roundForge/?m=88%0A11;bricks;7;5;0;0&s1=ct
+[B1]:  https://d-bl.github.io/roundForge/?m=5-;bricks;7;5;0;0&s1=ctctpctct
+[C1]:  https://d-bl.github.io/roundForge/?m=5-;bricks;7;5;0;0&s1=ctpct
+[D1]:  https://d-bl.github.io/roundForge/?m=5-;bricks;7;5;0;0&s1=cttpctt
+[E1]:  https://d-bl.github.io/roundForge/?m=5-;bricks;7;5;0;0&s1=ctpcttt
+[F1]:  https://d-bl.github.io/roundForge/?m=5-;bricks;7;5;0;0&s1=cttpcttt
+[G1]:  https://d-bl.github.io/roundForge/?m=5-;bricks;7;5;0;0&s1=cttt
 
-[A2]: /GroundForge/?m=-5%3Bbricks%3B7%3B5%3B0%3B0&s1=A1%3Dctct&s2=ctct%20A14%3Dct%20A15%3Dct&s3=
-[B2]: /GroundForge/?m=-5%3Bbricks%3B7%3B5%3B0%3B0&s1=ctct&s2=ctct&s3=
-[E2]: /GroundForge/?m=5---5---%0A-CD632AB%0A5666-222%3Bbricks%3B24%3B24%3B0%3B0&s1=ctc%20C2%3Dctctttctc%20A3%3Dctclll%20B1%3Dctclll%20E3%3Dctcrrr%20D1%3Dctcrrr%20G2%3Dctctctc&s2=&s3=
-[F2]: /GroundForge/?m=-5--%0AB-C-%0A-5-5%0A5-5-%3Bbricks%3B24%3B24%3B0%3B0&s1=ctc%20B3%3Dctcttctc%20A4%3Dctcll%20D1%3Dctctt%20%20C4%3Dctcrr&s2=&s3=
-[G2]: /GroundForge/?m=5----5----%0A-CDD632AAB%0A5666632222%0A5666632222%0A56666-2222%3Bbricks%3B24%3B24%3B0%3B0&s1=ctct%20C1%3Dctc%20G2%3Dctc%20I2%3Dctc%20F3%3Dctc%20J3%3Dctc%20H2%3Dctc%20G3%3Dctc%20I3%3Dctc%20G5%3Dctc%20I5%3Dctc%20H1%3Dctc%20H4%3Dcttc%20F5%3Dctcl%20G1%3Dctcl%20J5%3Dctcr%20I1%3Dctcr&s2=&s3=
-[H2]: /GroundForge/?m=5---5---%0A-CD632AB%0A56663222%0A5666-222%3Bbricks%3B24%3B24%3B0%3B0&s1=cttctt%20C2%3Dctctt%20C4%3Dctc%20F1%3Dctc%20E2%3Dctc%20H1%3Dctc%20G1%3Dctc%20F2%3Dctc%20A2%3Dctc%20H2%3Dctc%20G3%3Dctcctc%20F4%3Dctc%20H4%3Dctc%20C1%3Dctc%20E4%3Dctcll%20%20B1%3Dctcll%20A4%3Dctcrr%20D1%3Dctcrr&s2=cross%3Dctc%20twist%3Dctc&s3=
+[A2]:  https://d-bl.github.io/roundForge/?m=-5%3Bbricks%3B7%3B5%3B0%3B0&s1=A1%3Dctct&s2=ctct%20A14%3Dct%20A15%3Dct&s3=
+[B2]:  https://d-bl.github.io/roundForge/?m=-5%3Bbricks%3B7%3B5%3B0%3B0&s1=ctct&s2=ctct&s3=
+[E2]:  https://d-bl.github.io/roundForge/?m=5---5---%0A-CD632AB%0A5666-222%3Bbricks%3B24%3B24%3B0%3B0&s1=ctc%20C2%3Dctctttctc%20A3%3Dctclll%20B1%3Dctclll%20E3%3Dctcrrr%20D1%3Dctcrrr%20G2%3Dctctctc&s2=&s3=
+[F2]:  https://d-bl.github.io/roundForge/?m=-5--%0AB-C-%0A-5-5%0A5-5-%3Bbricks%3B24%3B24%3B0%3B0&s1=ctc%20B3%3Dctcttctc%20A4%3Dctcll%20D1%3Dctctt%20%20C4%3Dctcrr&s2=&s3=
+[G2]:  https://d-bl.github.io/roundForge/?m=5----5----%0A-CDD632AAB%0A5666632222%0A5666632222%0A56666-2222%3Bbricks%3B24%3B24%3B0%3B0&s1=ctct%20C1%3Dctc%20G2%3Dctc%20I2%3Dctc%20F3%3Dctc%20J3%3Dctc%20H2%3Dctc%20G3%3Dctc%20I3%3Dctc%20G5%3Dctc%20I5%3Dctc%20H1%3Dctc%20H4%3Dcttc%20F5%3Dctcl%20G1%3Dctcl%20J5%3Dctcr%20I1%3Dctcr&s2=&s3=
+[H2]:  https://d-bl.github.io/roundForge/?m=5---5---%0A-CD632AB%0A56663222%0A5666-222%3Bbricks%3B24%3B24%3B0%3B0&s1=cttctt%20C2%3Dctctt%20C4%3Dctc%20F1%3Dctc%20E2%3Dctc%20H1%3Dctc%20G1%3Dctc%20F2%3Dctc%20A2%3Dctc%20H2%3Dctc%20G3%3Dctcctc%20F4%3Dctc%20H4%3Dctc%20C1%3Dctc%20E4%3Dctcll%20%20B1%3Dctcll%20A4%3Dctcrr%20D1%3Dctcrr&s2=cross%3Dctc%20twist%3Dctc&s3=
 
-[C3]: /GroundForge/?m=5-;bricks;7;5;0;0&s1=ctctpctctt
-[E3]: /GroundForge/?m=-5%3Bbricks%3B7%3B5%3B0%3B0&s1=A1%3Dctt&s2=&s3=
+[C3]:  https://d-bl.github.io/roundForge/?m=5-;bricks;7;5;0;0&s1=ctctpctctt
+[E3]:  https://d-bl.github.io/roundForge/?m=-5%3Bbricks%3B7%3B5%3B0%3B0&s1=A1%3Dctt&s2=&s3=
 
-[E4]: /GroundForge/?m=-5----%0AB-CD-A%0A256-5-%0A-5-535%0A5-56-2%3Bbricks%3B24%3B24%3B0%3B0&s1=ctc%20A4%3Dctctctc%20C5%3Dctcrr%20B1%3Dctcrr%20E5%3Dctcll%20F1%3Dctcll%20D2%3Dctctt&s2=&s3=
-[F4]: /GroundForge/?m=1483%0A8-48%3Bbricks%3B16%3B16%3B0%3B0&s1=ctc%20A2%3Dctcllctc%20C2%3Dctcrrctc
-[H4]: /GroundForge/?m=5-25-56-%0A-5--5--5%0A5-C6-2B-%3Bbricks%3B16%3B16%3B0%3B0&s1=ctc%20G3%3Dctcttctc%20A1%3Dctcll%20B2%3Dctcll%20E1%3Dctcrr%20D2%3Dctcrr&s2=&s3=
+[E4]:  https://d-bl.github.io/roundForge/?m=-5----%0AB-CD-A%0A256-5-%0A-5-535%0A5-56-2%3Bbricks%3B24%3B24%3B0%3B0&s1=ctc%20A4%3Dctctctc%20C5%3Dctcrr%20B1%3Dctcrr%20E5%3Dctcll%20F1%3Dctcll%20D2%3Dctctt&s2=&s3=
+[F4]:  https://d-bl.github.io/roundForge/?m=1483%0A8-48%3Bbricks%3B16%3B16%3B0%3B0&s1=ctc%20A2%3Dctcllctc%20C2%3Dctcrrctc
+[H4]:  https://d-bl.github.io/roundForge/?m=5-25-56-%0A-5--5--5%0A5-C6-2B-%3Bbricks%3B16%3B16%3B0%3B0&s1=ctc%20G3%3Dctcttctc%20A1%3Dctcll%20B2%3Dctcll%20E1%3Dctcrr%20D2%3Dctcrr&s2=&s3=
 
-[C6]: /GroundForge/?m=-5%3Bbricks%3B7%3B5%3B0%3B0&s1=A1%3Dctct&s2=ct%20A10%3Dctct%20A13%3Dctct&s3=
-[B6]: /GroundForge/?m=-5%3Bbricks%3B7%3B5%3B0%3B0&s1=ctct&s2=cttctt&s3=
-[D6]: /GroundForge/?m=-5%3Bbricks%3B7%3B5%3B0%3B0&s1=crclct&s2=ct%20A10%3Dctct%20A11%3Dctct%20A13%3Dctct%20A14%3Dctct&s3=
-[E6]: /GroundForge/?m=1488-483%208-483148%20831488-4%20488-4831%3Bbricks%3B12%3B10%3B0%3B0&s1=ct%20F3%3Dctct%20E4%3Dctct%20G4%3Dctct%20B1%3Dctct%20H1%3Dctct%20C4%3Dctct%20A2%3Dctct%20H3%3Dctct%20B3%3Dctct%20A4%3Dctct%20D1%3Dctct%20C2%3Dctct%20E2%3Dctct%20D3%3Dctct%20F1%3Dctct%20G4%3Dctct%20G2%3Dctct&s2=&s3=
+[C6]:  https://d-bl.github.io/roundForge/?m=-5%3Bbricks%3B7%3B5%3B0%3B0&s1=A1%3Dctct&s2=ct%20A10%3Dctct%20A13%3Dctct&s3=
+[B6]:  https://d-bl.github.io/roundForge/?m=-5%3Bbricks%3B7%3B5%3B0%3B0&s1=ctct&s2=cttctt&s3=
+[D6]:  https://d-bl.github.io/roundForge/?m=-5%3Bbricks%3B7%3B5%3B0%3B0&s1=crclct&s2=ct%20A10%3Dctct%20A11%3Dctct%20A13%3Dctct%20A14%3Dctct&s3=
+[E6]:  https://d-bl.github.io/roundForge/?m=1488-483%208-483148%20831488-4%20488-4831%3Bbricks%3B12%3B10%3B0%3B0&s1=ct%20F3%3Dctct%20E4%3Dctct%20G4%3Dctct%20B1%3Dctct%20H1%3Dctct%20C4%3Dctct%20A2%3Dctct%20H3%3Dctct%20B3%3Dctct%20A4%3Dctct%20D1%3Dctct%20C2%3Dctct%20E2%3Dctct%20D3%3Dctct%20F1%3Dctct%20G4%3Dctct%20G2%3Dctct&s2=&s3=
 
-[C9]: /GroundForge/?m=-5%3Bbricks%3B7%3B5%3B0%3B0&s1=ctct&s2=ctcttt&s3=
-[D9]: /GroundForge/?m=5-%0A-5%3Bchecker%3B8%3B8%3B0%3B0&s1=A1%3Dctctt%20B2%3Dctt&s2=&s3=
-[H9]: /GroundForge/?m=5-;bricks;7;7;0;0&s1=ctcttptctcttt
+[C9]:  https://d-bl.github.io/roundForge/?m=-5%3Bbricks%3B7%3B5%3B0%3B0&s1=ctct&s2=ctcttt&s3=
+[D9]:  https://d-bl.github.io/roundForge/?m=5-%0A-5%3Bchecker%3B8%3B8%3B0%3B0&s1=A1%3Dctctt%20B2%3Dctt&s2=&s3=
+[H9]:  https://d-bl.github.io/roundForge/?m=5-;bricks;7;7;0;0&s1=ctcttptctcttt
 
-[H10]: /GroundForge/?m=54---7%2C%20-79-04%2C%205-158-%2C%20-5-5-5%2C%205-535-%2C%20-24-76%3Bchecker%3B18%3B18%3B0%3B0&s1=ctct%20A1%3Dctcttt%20F2%3Dctctrr%20B2%3Dctctll%20D2%3DA5%3Dctctctct%20C4%3DE4%3Dctctt%20E6%3DC6%3Dtctct&s2=cross%3Dctc%20twist%3Dctc&s3=
+[H10]: https://d-bl.github.io/GroundForge/?m=54---7%2C%20-79-04%2C%205-158-%2C%20-5-5-5%2C%205-535-%2C%20-24-76%3Bchecker%3B18%3B18%3B0%3B0&s1=ctct%20A1%3Dctcttt%20F2%3Dctctrr%20B2%3Dctctll%20D2%3DA5%3Dctctctct%20C4%3DE4%3Dctctt%20E6%3DC6%3Dtctct&s2=cross%3Dctc%20twist%3Dctc&s3=
 
-[G14]: /GroundForge/?m=5-%0A12%0A88%0A4-%3Bbricks%3B16%3B11%3B0%3B0&s1=ctc%20A2%3Dctctt%20B4%3Dctcll%20B1%3Dctcrr&s2=&s3=
+[G14]: https://d-bl.github.io/GroundForge/?m=5-%0A12%0A88%0A4-%3Bbricks%3B16%3B11%3B0%3B0&s1=ctc%20A2%3Dctctt%20B4%3Dctcll%20B1%3Dctcrr&s2=&s3=
 
-[D16]: /GroundForge/?m=-5-%0AE-2%0A8-M%0AF-1%0A8-M%3Bchecker%3B16%3B16%3B0%3B0&s1=ctc%20A5%3Dctcll%20C1%3Dctcrr%20A2%3Dctcll%0AC3%3Dctcrr&s2=&s3=
-[E16]: /GroundForge/?m=-5-L-H%0AH-E-21%0A-O8-M8%0A-1F-1F%0A-M86-M%0A5-4-K-%3Bchecker%3B16%3B16%3B0%3B0&s1=C6%3Dctcll%20F6%3Dctcll%20E1%3Dctcrr%20B1%3Dctcrr%20C2%3Dctcll%20F2%3Dctcll%20D3%3Dctcrr%20B3%3Dctcrr%20E4%3Dtctct%20B5%3Dtctct&s2=&s3=
-[F16]: /GroundForge/?m=5-%0A-5%0A5-%0A12%0A99%0A11%0A66%0A4-%3Bbricks%3B19%3B9%3B0%3B0&s1=ctc%20B7%3Dtctct%20A8%3Dctct%20B2%3Dctcll%20B3%3Dctcrr%20A4%3Dctcll%20B5%3Dctcrr&s2=&s3=
-[G16]: /GroundForge/?m=5-%0A-5%0A5-%0A12%0A88%0A4-%3Bbricks%3B16%3B9%3B0%3B0&s1=ctc%20A6%3Dctctt%20B5%3Dctctt%20B2%3Dctcll%20B3%3Dctcrr%20A4%3Dctctt%20&s2=&s3=
+[D16]: https://d-bl.github.io/GroundForge/?m=-5-%0AE-2%0A8-M%0AF-1%0A8-M%3Bchecker%3B16%3B16%3B0%3B0&s1=ctc%20A5%3Dctcll%20C1%3Dctcrr%20A2%3Dctcll%0AC3%3Dctcrr&s2=&s3=
+[E16]: https://d-bl.github.io/GroundForge/?m=-5-L-H%0AH-E-21%0A-O8-M8%0A-1F-1F%0A-M86-M%0A5-4-K-%3Bchecker%3B16%3B16%3B0%3B0&s1=C6%3Dctcll%20F6%3Dctcll%20E1%3Dctcrr%20B1%3Dctcrr%20C2%3Dctcll%20F2%3Dctcll%20D3%3Dctcrr%20B3%3Dctcrr%20E4%3Dtctct%20B5%3Dtctct&s2=&s3=
+[F16]: https://d-bl.github.io/GroundForge/?m=5-%0A-5%0A5-%0A12%0A99%0A11%0A66%0A4-%3Bbricks%3B19%3B9%3B0%3B0&s1=ctc%20B7%3Dtctct%20A8%3Dctct%20B2%3Dctcll%20B3%3Dctcrr%20A4%3Dctcll%20B5%3Dctcrr&s2=&s3=
+[G16]: https://d-bl.github.io/GroundForge/?m=5-%0A-5%0A5-%0A12%0A88%0A4-%3Bbricks%3B16%3B9%3B0%3B0&s1=ctc%20A6%3Dctctt%20B5%3Dctctt%20B2%3Dctcll%20B3%3Dctcrr%20A4%3Dctctt%20&s2=&s3=
