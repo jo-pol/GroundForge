@@ -16,7 +16,7 @@ import scala.scalajs.js.annotation.{ JSExport, JSExportTopLevel }
     .toMap
 
   private def getMatrix(key: String): Seq[String] = {
-    queryFields.getOrElse(key, "").toLowerCase.split("[^-a-z0-9]+").map(_.trim)
+    queryFields.getOrElse(key, "").trim.split("[\r\n\t ;,]+")
   }
 
   // TODO defend against unequal rows lengths

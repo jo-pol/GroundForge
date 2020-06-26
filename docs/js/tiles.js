@@ -157,7 +157,7 @@ function load() {
   keyValueStrings.find(whiting)
 }
 function getMatrixLines() {
-  return d3.select('#tile').node().value.toUpperCase().trim().split(/[^-A-Z0-9]+/)
+  return d3.select('#tile').node().value.trim().split(/[\n\r\t,; ]+/)
 }
 function asChecker() {
 

@@ -156,7 +156,7 @@ import scala.util.{Failure, Success, Try}
     *         or are longer than 26 as stitch ID's tag columns with a single capital letter.
     */
   def toValidMatrixLines(str: String): Try[Array[String]] = {
-    val lines = str.split(separator)
+    val lines = str.trim.split("[\r\n\t ,;]+")
     if (lines.map(_.length).sortBy(n => n).distinct.length != 1)
       Failure(new scala.Exception(s"Matrix lines have varying lengths: $str ==> ${lines.map(s => s"$s(${s.length})").mkString(", ")}"))
     else if (lines(0).length > 26)
