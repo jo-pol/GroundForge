@@ -1,8 +1,7 @@
 function clickedDot(event) {
     event.preventDefault()
-    var linkElement = event.currentTarget
     var link = document.getElementById("customlink")
-    var dotId = linkElement.getElementsByTagName("circle")[0].attributes["id"].value
+    var dotId = event.currentTarget.getElementsByTagName("circle")[0].attributes["id"].value
     if (event.altKey) {
         var currentLinks = link.href.replace(/.*=/,"")
         var newlinks = TopoLink.removeStitch(dotId,currentLinks)
