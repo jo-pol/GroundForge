@@ -36,9 +36,11 @@ function generate (b, set, colors) {
   const p = b.split("").reverse().join("")
   const q = d.split("").reverse().join("")
   const hor2x2 = "tile=88,11&a1=rctctctctt&l2=lctctctctt&shiftColsSW=0&shiftRowsSW=2&shiftColsSE=2&shiftRowsSE=2&patchWidth=10&patchHeight=12&headside=x,7&footside=4,x"
-  const diagonal = "tile=5-5-,-5-5&shiftColsSW=0&shiftColsSW=-2&shiftRowsSW=2&shiftColsSE=2&shiftRowsSE=2&patchWidth=10&patchHeight=12&headside=7,x&footside=x,4"
-  const paris = "tile=B-C-,---5,C-B-,-5--,B-C-,---5,C-B-,-5--&shiftColsSW=0&shiftRowsSW=8&shiftColsSE=4&shiftRowsSE=8&patchWidth=13&patchHeight=18&footside=x,4,x,x&headside=x,x,x,7&footsideStitch=ctctctctl&headsideStitch=ctctctctr"
-  const weavingParis = "tile=-5---5--,6v9v6v9v,---5---5,2z0z2z0z&headsideStitch=ctct&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=8&shiftRowsSE=4&patchWidth=11&patchHeight=16&footside=rx,r8,x4,11&footside=rx,r8,x4,11&headside=xx,88,7r,1r&footsideStitch=ctct&a2=ctctctctll&headsideStitch=ctct&o4=ctctctctrr"
+  const diagonal = "tile=5-5-,-5-5&shiftColsSW=0&shiftColsSW=-2&shiftRowsSW=2&shiftColsSE=2&shiftRowsSE=2&patchWidth=12&patchHeight=12&headside=7,x&footside=x,4"
+  const paris = "tile=B-C-,---5,C-B-,-5--,B-C-,---5,C-B-,-5--&shiftColsSW=0&shiftRowsSW=8&shiftColsSE=4&shiftRowsSE=8&patchWidth=17&patchHeight=18&footside=x,4,x,x&headside=x,x,x,7&footsideStitch=ctctctctl&headsideStitch=ctctctctr"
+  const parisBricks = "tile=B-C-,---5,C-B-,-5--,B-C-,---5,C-B-,-5--&shiftColsSW=0&shiftRowsSW=8&shiftColsSE=4&shiftRowsSE=4&patchWidth=17&patchHeight=18&footside=x,4,x,x&headside=x,x,x,7&footsideStitch=ctctctctl&headsideStitch=ctctctctr"
+  const weavingParis = "tile=-5---5--,6v9v6v9v,---5---5,2z0z2z0z&headsideStitch=ctct&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=8&shiftRowsSE=4&patchWidth=15&patchHeight=16&footside=rx,r8,x4,11&footside=rx,r8,x4,11&headside=xx,88,7r,1r&footsideStitch=ctct&a2=ctctctctll&headsideStitch=ctct&o4=ctctctctrr"
+  const weavingParisBricks = "tile=-5---5--,6v9v6v9v,---5---5,2z0z2z0z&headsideStitch=ctct&shiftColsSW=-4&shiftRowsSW=4&shiftColsSE=4&shiftRowsSE=4&patchWidth=15&patchHeight=16&footside=rx,r8,x4,11&footside=rx,r8,x4,11&headside=xx,88,7r,1r&footsideStitch=ctct&a2=ctctctctll&headsideStitch=ctct&o4=ctctctctrr"
   d3.select('#b').node().value = b
   d3.select('#mb').text(b)
   d3.select('#md').text(d)
@@ -60,7 +62,7 @@ function generate (b, set, colors) {
     showGraph ("weaving Paris", `tileStitch=${b}&${weavingParis}`)
     showGraph ("bb ->\nbb <-", `tileStitch=${b}&${hor2x2}`)
   }
-  if (set == "2") {
+  if (set == "square2") {
     if (b != d) {
       showGraph ("bb ->\ndd <-", `b1=${b}&c1=${b}&b2=${d}&c2=${d}&${hor2x2}`)
       showGraph ("bd ->\nbd <-", `b1=${b}&c1=${d}&b2=${b}&c2=${d}&${hor2x2}`)
@@ -77,13 +79,29 @@ function generate (b, set, colors) {
       showGraph ("bq ->\nqb <-", `b1=${b}&c1=${q}&b2=${q}&c2=${b}&${hor2x2}`)
     }
   }
-  if (set == "4") {
+  if (set == "square4") {
     showGraph ("bd ->\npq <-", `b1=${p}&c1=${d}&b2=${p}&c2=${q}&${hor2x2}`)
     showGraph ("bd ->\nqp <-", `b1=${p}&c1=${d}&b2=${q}&c2=${p}&${hor2x2}`)
     showGraph ("bp ->\ndq <-", `b1=${b}&c1=${p}&b2=${d}&c2=${q}&${hor2x2}`)
     showGraph ("bp ->\nqd <-", `b1=${b}&c1=${p}&b2=${q}&c2=${d}&${hor2x2}`)
     showGraph ("bq ->\ndp <-", `b1=${p}&c1=${q}&b2=${d}&c2=${p}&${hor2x2}`)
     showGraph ("bq ->\npd <-", `b1=${p}&c1=${q}&b2=${p}&c2=${d}&${hor2x2}`)
+  }
+  if (set == "kat2") {
+    if (b != d) {
+      const w = b
+      const m = d
+      const stitches = `d1=${w}&h1=${m}&c2=${b}&c4=${d}&e2=${d}&e4=${d}&f3=${d}&g2=${d}&g4=${d}&i2=${b}&i4=${b}&j3=${b}&`
+      showGraph (" bd  ->\nb  d\n\ bd  <-",        `${stitches}&${weavingParis}`)
+      showGraph (" bd  ->\nb  d\n\ bd  <- bricks", `${stitches}&${weavingParisBricks}`)
+    }
+    if (b != p) {
+      const w = b
+      const m = d
+      const stitches = `tileStitch=${b}`
+      showGraph ("  M  \nb   d\nb   d\n  W  ", `${stitches}&${paris}`)
+      showGraph ("  M  \nb   d\nb   d\n  W   bricks", `${stitches}&${parisBricks}`)
+    }
   }
   setColors(colors)
 }
