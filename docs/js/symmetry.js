@@ -329,12 +329,12 @@ function findKissingPair(movedPair, direction) {
     switch (String(`${leftNodeIds.includes(start)}-${leftNodeIds.includes(end)}-${rightNodeIds.includes(start)}-${rightNodeIds.includes(end)}`)){
     case "true-false-false-true":
         console.log('start kisses left')
-        markStitch("cllc",  findSource (end, rightNodeIds, sharedRight))
+        markStitch("cllc",  findSource (start, centerNodeIds, sharedWithRight))
         markStitch("crrc",  findSink (start, leftNodeIds, sharedLeft))
         break
     case "false-true-true-false":
         console.log('start kisses right')
-        markStitch("cllc",  findSource (end, leftNodeIds, sharedLeft))
+        markStitch("cllc",  findSource (start, centerNodeIds, sharedWithLeft))
         markStitch("crrc",  findSink (start, rightNodeIds, sharedRight))
         break
     case "true-true-false-false":
