@@ -318,34 +318,53 @@ function findKissingPair(movedPair, direction) {
     function shared(id){return centerNodeIds.includes(id)}
     var sharedLeft = leftNodeIds.map(shared)
     var sharedRight = rightNodeIds.map(shared)
+    var sharedWithLeft = centerNodeIds.map(function(id){return leftNodeIds.includes(id)})
+    var sharedWithRight = centerNodeIds.map(function(id){return rightNodeIds.includes(id)})
     console.log(nodeId(movedPair,"start") + "," + nodeId(movedPair,"end")
         + " left nodes: "+leftNodeIds+ " right nodes: "+rightNodeIds
         + " shared left: "+sharedLeft + " shared right: "+sharedRight
     )
-    markStitch("clc",  findSource (end, leftNodeIds, sharedLeft).trim())
-    markStitch("crc",  findSource (end, rightNodeIds, sharedRight).trim())
-    markStitch("clcc", findSource (start, leftNodeIds, sharedLeft).trim())
-    markStitch("crcc", findSource (start, rightNodeIds, sharedRight).trim())
-    markStitch("cltc", findSink (end, leftNodeIds, sharedLeft).trim())
-    markStitch("ctrc", findSink (end, rightNodeIds, sharedRight).trim())
-    markStitch("cltc", findSink (start, leftNodeIds, sharedLeft).trim())
-    markStitch("ctrc", findSink (start, rightNodeIds, sharedRight).trim())
+    markStitch("clc",  start)
+    markStitch("crc",  end)
+    switch (String(`${leftNodeIds.includes(start)}-${leftNodeIds.includes(end)}-${rightNodeIds.includes(start)}-${rightNodeIds.includes(end)}`)){
+    case "true-false-false-true":
+        console.log('start kisses left')
+        markStitch("cllc",  findSource (end, rightNodeIds, sharedRight))
+        markStitch("crrc",  findSink (start, leftNodeIds, sharedLeft))
+        break
+    case "false-true-true-false":
+        console.log('start kisses right')
+        markStitch("cllc",  findSource (end, leftNodeIds, sharedLeft))
+        markStitch("crrc",  findSink (start, rightNodeIds, sharedRight))
+        break
+    case "true-true-false-false":
+        console.log('both kiss left')
+        markStitch("cllc",  findSource (start, centerNodeIds, sharedWithRight))
+        markStitch("crrc",  findSink (end, centerNodeIds, sharedWithRight))
+        break
+    case "false-false-true-true":
+        console.log('both kiss right')
+        markStitch("cllc",  findSource (start, centerNodeIds, sharedWithLeft))
+        markStitch("crrc",  findSink (end, centerNodeIds, sharedWithLeft))
+        break
+    default:
+        console.log('Whoops. What other sink-source?')
+    }
     return kissingPairs
 }
 function findSource (id, nodeIds, sharedNodes) {
     var i = nodeIds.indexOf(id)
-    while(i>=0){
+    while(--i>=0){
         if(sharedNodes[i]) return nodeIds[i]
         i--
-    }
+   }
     return ""
 }
 function findSink (id, nodeIds, sharedNodes) {
     var i = nodeIds.indexOf(id)
     if (i<0) return ""
-    while(i<nodeIds.length ) {
+    while(i++<nodeIds.length ) {
         if (sharedNodes[i]) return nodeIds[i]
-        i++
     }
     return ""
 }
@@ -468,8 +487,8 @@ function readSingleFile(evt) {
               .filter(function(){ return this.id.startsWith("r") })
               .each(function(){
                  rc = this.id.replace("r","").split("c")
-                 rows = Math.max(rows,rc[0]*1)
-                 cols = Math.max(cols,rc[1]*1)
+                 rows = Math.max(rows,rc[0]*1+1)
+                 cols = Math.max(cols,rc[1]*1+1)
               })
             document.querySelector("#width").value = cols
             document.querySelector("#height").value = rows
