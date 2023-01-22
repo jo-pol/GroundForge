@@ -315,40 +315,35 @@ function findKissingPair(movedPair, direction) {
     var leftNodeIds = orderedNodeIds(kissClassLeft)
     var rightNodeIds = orderedNodeIds(kissClassRight)
     var centerNodeIds = orderedNodeIds(kissClassCenter)
-    function shared(id){return centerNodeIds.includes(id)}
-    var sharedLeft = leftNodeIds.map(shared)
-    var sharedRight = rightNodeIds.map(shared)
-    var sharedWithLeft = centerNodeIds.map(function(id){return leftNodeIds.includes(id)})
-    var sharedWithRight = centerNodeIds.map(function(id){return rightNodeIds.includes(id)})
-    console.log(nodeId(movedPair,"start") + "," + nodeId(movedPair,"end")
-        + " left nodes: "+leftNodeIds+ " right nodes: "+rightNodeIds
-        + " shared left: "+sharedLeft + " shared right: "+sharedRight
-    )
+    function isOnLeft(id){return leftNodeIds.includes(id)}
+    function isOnRight(id){return rightNodeIds.includes(id)}
+    var sharedWithLeft = centerNodeIds.map(isOnLeft)
+    var sharedWithRight = centerNodeIds.map(isOnRight)
     markStitch("clc",  start)
     markStitch("crc",  end)
-    switch (String(`${leftNodeIds.includes(start)}-${leftNodeIds.includes(end)}-${rightNodeIds.includes(start)}-${rightNodeIds.includes(end)}`)){
-    case "true-false-false-true":
-        console.log('start kisses left')
+    switch (String(`${leftNodeIds.includes(start)}-${leftNodeIds.includes(end)}`)){
+    case "true-false":
+//        console.log('start kisses left')
         markStitch("cllc",  findSource (start, centerNodeIds, sharedWithRight))
-        markStitch("crrc",  findSink (start, leftNodeIds, sharedLeft))
+        markStitch("crrc",  findSink (end, centerNodeIds, sharedWithLeft))
         break
-    case "false-true-true-false":
-        console.log('start kisses right')
+    case "false-true":
+//        console.log('start kisses right')
         markStitch("cllc",  findSource (start, centerNodeIds, sharedWithLeft))
-        markStitch("crrc",  findSink (start, rightNodeIds, sharedRight))
+        markStitch("crrc",  findSink (end, centerNodeIds, sharedWithRight))
         break
-    case "true-true-false-false":
-        console.log('both kiss left')
+    case "true-true":
+//        console.log('both kiss left')
         markStitch("cllc",  findSource (start, centerNodeIds, sharedWithRight))
         markStitch("crrc",  findSink (end, centerNodeIds, sharedWithRight))
         break
-    case "false-false-true-true":
-        console.log('both kiss right')
+    case "false-false":
+//        console.log('both kiss right')
         markStitch("cllc",  findSource (start, centerNodeIds, sharedWithLeft))
         markStitch("crrc",  findSink (end, centerNodeIds, sharedWithLeft))
         break
     default:
-        console.log('Whoops. What other sink-source?')
+        console.log('Whoops. What else?')
     }
     return kissingPairs
 }
@@ -356,22 +351,19 @@ function findSource (id, nodeIds, sharedNodes) {
     var i = nodeIds.indexOf(id)
     while(--i>=0){
         if(sharedNodes[i]) return nodeIds[i]
-        i--
    }
     return ""
 }
 function findSink (id, nodeIds, sharedNodes) {
     var i = nodeIds.indexOf(id)
-    if (i<0) return ""
-    while(i++<nodeIds.length ) {
+    while(++i<nodeIds.length ) {
         if (sharedNodes[i]) return nodeIds[i]
     }
     return ""
 }
 function markStitch (instruction, id){
-    if(id)d3.select("#"+id).html(function() {
-        return "<title>"+instruction+"</title>"+PairSvg.shapes(instruction)
-    })
+    if(id) d3.select("#"+id)
+        .html("<title>"+instruction+"</title>"+PairSvg.shapes(instruction))
 }
 function orderedNodeIds(kissSelector) {
     var nodeIds = []
