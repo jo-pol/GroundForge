@@ -315,49 +315,47 @@ function findKissingPair(movedPair, direction) {
     var leftNodeIds = orderedNodeIds(kissClassLeft)
     var rightNodeIds = orderedNodeIds(kissClassRight)
     var centerNodeIds = orderedNodeIds(kissClassCenter)
-    function isOnLeft(id){return leftNodeIds.includes(id)}
-    function isOnRight(id){return rightNodeIds.includes(id)}
-    var sharedWithLeft = centerNodeIds.map(isOnLeft)
-    var sharedWithRight = centerNodeIds.map(isOnRight)
     markStitch("clc",  start)
     markStitch("crc",  end)
     switch (String(`${leftNodeIds.includes(start)}-${leftNodeIds.includes(end)}`)){
     case "true-false":
 //        console.log('start kisses left')
-        markStitch("cllc",  findSource (start, centerNodeIds, sharedWithRight))
-        markStitch("crrc",  findSink (end, centerNodeIds, sharedWithLeft))
+        markStitch("cllc",  findSource (start, centerNodeIds, rightNodeIds))
+        markStitch("crrc",  findSink (end, centerNodeIds, leftNodeIds))
         break
     case "false-true":
 //        console.log('start kisses right')
-        markStitch("cllc",  findSource (start, centerNodeIds, sharedWithLeft))
-        markStitch("crrc",  findSink (end, centerNodeIds, sharedWithRight))
+        markStitch("cllc",  findSource (start, centerNodeIds, leftNodeIds))
+        markStitch("crrc",  findSink (end, centerNodeIds, rightNodeIds))
         break
     case "true-true":
 //        console.log('both kiss left')
-        markStitch("cllc",  findSource (start, centerNodeIds, sharedWithRight))
-        markStitch("crrc",  findSink (end, centerNodeIds, sharedWithRight))
+        markStitch("cllc",  findSource (start, centerNodeIds, rightNodeIds))
+        markStitch("crrc",  findSink (end, centerNodeIds, rightNodeIds))
         break
     case "false-false":
 //        console.log('both kiss right')
-        markStitch("cllc",  findSource (start, centerNodeIds, sharedWithLeft))
-        markStitch("crrc",  findSink (end, centerNodeIds, sharedWithLeft))
+        markStitch("cllc",  findSource (start, centerNodeIds, leftNodeIds))
+        markStitch("crrc",  findSink (end, centerNodeIds, leftNodeIds))
         break
     default:
         console.log('Whoops. What else?')
     }
     return kissingPairs
 }
-function findSource (id, nodeIds, sharedNodes) {
+function findSource (id, nodeIds, kissingPairIds) {
     var i = nodeIds.indexOf(id)
-    while(--i>=0){
-        if(sharedNodes[i]) return nodeIds[i]
+    while(--i>=0) {
+        var id = nodeIds[i]
+        if (kissingPairIds.includes(id)) return id
    }
     return ""
 }
-function findSink (id, nodeIds, sharedNodes) {
+function findSink (id, nodeIds, kissingPairIds) {
     var i = nodeIds.indexOf(id)
     while(++i<nodeIds.length ) {
-        if (sharedNodes[i]) return nodeIds[i]
+        var id = nodeIds[i]
+        if (kissingPairIds.includes(id)) return id
     }
     return ""
 }
