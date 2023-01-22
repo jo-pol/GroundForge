@@ -21,7 +21,7 @@ function clickedStitch(event) {
     var elem = event.target.parentElement
     switch (document.querySelector("input[name=editMode]:checked").value) {
     case "change":
-        var txt = dropTwists(d3.select("#stitchDef").node().value)
+        var txt = dropTwists(document.querySelector("#stitchDef").value)
         var w = document.querySelector("#width").value - 1
         var h = document.querySelector("#height").value - 1
         function isTopBottom(elem) { return elem.id.startsWith("r0c") || elem.id.startsWith(`r${h}c`) }
@@ -236,7 +236,7 @@ function finishPinch() {
 
     // find the edge with the centre closest to the mouse position
     var nearest = null
-    findKissingPair(this, direction(this)).each(function () {
+    findKissingPair(this).each(function () {
         if (nearest == null) nearest = this
         else {
             var distThis = dist(this)
@@ -253,6 +253,7 @@ function finishPinch() {
     el.innerHTML = PairSvg.shapes('ctc')
     el.setAttribute('transform',`translate(${d3.event.x},${d3.event.y})`)
     el.setAttribute('onclick', "clickedStitch(event)")
+    el.setAttribute('class', "node")
     el.id = newID
     d3.drag().on("drag",moveStitch)(d3.select(el))
     var container = document.querySelector('#cloned')
@@ -296,7 +297,7 @@ function splitLink(nearest, newID, newXY) {
     dragLinks(d3.select(p2))
     return p2
 }
-function findKissingPair(movedPair, direction) {
+function findKissingPair(movedPair) {
 
     var start = movedPair.classList.value.replace(/.*starts_at_/,"").replace(/ .*/,"")
     var end = movedPair.classList.value.replace(/.*ends_at_/,"").replace(/ .*/,"")
@@ -319,22 +320,22 @@ function findKissingPair(movedPair, direction) {
     markStitch("crc",  end)
     switch (String(`${leftNodeIds.includes(start)}-${leftNodeIds.includes(end)}`)){
     case "true-false":
-//        console.log('start kisses left')
+//        console.log('start on left')
         markStitch("cllc",  findSource (start, centerNodeIds, rightNodeIds))
         markStitch("crrc",  findSink (end, centerNodeIds, leftNodeIds))
         break
     case "false-true":
-//        console.log('start kisses right')
+//        console.log('start on right')
         markStitch("cllc",  findSource (start, centerNodeIds, leftNodeIds))
         markStitch("crrc",  findSink (end, centerNodeIds, rightNodeIds))
         break
     case "true-true":
-//        console.log('both kiss left')
+//        console.log('both on left')
         markStitch("cllc",  findSource (start, centerNodeIds, rightNodeIds))
         markStitch("crrc",  findSink (end, centerNodeIds, rightNodeIds))
         break
     case "false-false":
-//        console.log('both kiss right')
+//        console.log('both on right')
         markStitch("cllc",  findSource (start, centerNodeIds, leftNodeIds))
         markStitch("crrc",  findSink (end, centerNodeIds, leftNodeIds))
         break
@@ -385,19 +386,6 @@ function orderedNodeIds(kissSelector) {
         })
     } while (lastNodeId != "")
     return nodeIds
-}
-function direction(lineElem){
-    var def = lineElem.getAttribute("d").split(" ")
-    var start = def[1].split(",")
-    var end = def[4].split(",")
-    var mid = [(start[0]*1+end[0]*1)/2, (start[1]*1+end[1]*1)/2]
-    var mouse = [d3.event.x,d3.event.y]
-    var lineAngle = angle(start,end)
-    var moveAngle = angle(mid,mouse)
-    var diff = lineAngle - moveAngle
-    var direction = - diff / Math.abs(diff)
-//    console.log(`direction: ${direction}  Angles: line=${lineAngle} move=${moveAngle}`)
-    return direction
 }
 function angle(start, end) {
     var dx = end[0] - start[0]
@@ -510,17 +498,8 @@ function loadStitchExamples() {
             </figure>`
     }
 }
-function showStitches(){
-
-    d3.select('#gallery').style('display','block')
-}
-function hideStitches(){
-
-    //d3.select('#gallery').style('display','none')
-}
 function setStitch(stitch){
     n = document.querySelector("#stitchDef")
     n.value = stitch
     n.focus()
-    hideStitches()
 }
