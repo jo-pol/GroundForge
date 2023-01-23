@@ -338,6 +338,10 @@ function findKissingPair(movedPair) {
 //        console.log('both on right')
         markStitch("cllc",  findSource (start, centerNodeIds, leftNodeIds))
         markStitch("crrc",  findSink (end, centerNodeIds, leftNodeIds))
+        // TODO highlight source to sink
+        // d3.selectAll('.starts_at_'+lastId).filter(function(){
+        //     return this.classList.value.includes('ends_at_'+id)
+        // })
         break
     default:
         console.log('Whoops. What else?')
