@@ -303,50 +303,60 @@ function findKissingPair(movedPair) {
     var end = movedPair.classList.value.replace(/.*ends_at_/,"").replace(/ .*/,"")
 
     var thisKissNr = findClass(movedPair,'kiss_').replace(/kiss_/,'')*1
-    var kissClassLeft = `#cloned .kiss_${thisKissNr - 1}`
-    var kissClassRight = `#cloned .kiss_${thisKissNr + 1}`
-    var kissClassCenter = `#cloned .kiss_${thisKissNr}`
-    var kissingPairs = d3.selectAll(kissClassLeft + "," + kissClassRight)
-    kissingPairs.style("stroke","rgb(0, 255, 0)").style('stroke-opacity',"0.25")
-    kissingPairs.filter(function(){
-     return this.classList.value.includes('_at_'+end)
-         || this.classList.value.includes('_at_'+start)
-    }).style("stroke","rgb(44,162,95)")
+    var selectLeft = `#cloned .kiss_${thisKissNr - 1}`
+    var selectRight = `#cloned .kiss_${thisKissNr + 1}`
+    var selectCenter = `#cloned .kiss_${thisKissNr}`
+    var kissingPairs = d3.selectAll(selectLeft + "," + selectRight)
+    kissingPairs.style("stroke","rgb(0, 120, 0)").style('stroke-opacity',"0.25")
 
-    var leftNodeIds = orderedNodeIds(kissClassLeft)
-    var rightNodeIds = orderedNodeIds(kissClassRight)
-    var centerNodeIds = orderedNodeIds(kissClassCenter)
-    markStitch("clc",  start)
-    markStitch("crc",  end)
+    var leftNodeIds = orderedNodeIds(selectLeft)
+    var rightNodeIds = orderedNodeIds(selectRight)
+    var centerNodeIds = orderedNodeIds(selectCenter)
     switch (String(`${leftNodeIds.includes(start)}-${leftNodeIds.includes(end)}`)){
     case "true-false":
 //        console.log('start on left')
-        markStitch("cllc",  findSource (start, centerNodeIds, rightNodeIds))
-        markStitch("crrc",  findSink (end, centerNodeIds, leftNodeIds))
+        kissingSubSection( rightNodeIds, findSource (start, centerNodeIds, rightNodeIds), end )
+        kissingSubSection( leftNodeIds, start, findSink (end, centerNodeIds, leftNodeIds) )
         break
     case "false-true":
 //        console.log('start on right')
-        markStitch("cllc",  findSource (start, centerNodeIds, leftNodeIds))
-        markStitch("crrc",  findSink (end, centerNodeIds, rightNodeIds))
+        kissingSubSection( leftNodeIds, findSource (start, centerNodeIds, leftNodeIds), end )
+        kissingSubSection( rightNodeIds, start, findSink (end, centerNodeIds, rightNodeIds) )
         break
     case "true-true":
 //        console.log('both on left')
-        markStitch("cllc",  findSource (start, centerNodeIds, rightNodeIds))
-        markStitch("crrc",  findSink (end, centerNodeIds, rightNodeIds))
+        kissingSubSection( leftNodeIds, start, end )
+        kissingSubSection(
+            rightNodeIds,
+            findSource (start, centerNodeIds, rightNodeIds),
+            findSink (end, centerNodeIds, rightNodeIds)
+        )
         break
     case "false-false":
 //        console.log('both on right')
-        markStitch("cllc",  findSource (start, centerNodeIds, leftNodeIds))
-        markStitch("crrc",  findSink (end, centerNodeIds, leftNodeIds))
-        // TODO highlight source to sink
-        // d3.selectAll('.starts_at_'+lastId).filter(function(){
-        //     return this.classList.value.includes('ends_at_'+id)
-        // })
+        kissingSubSection( rightNodeIds, start, end )
+        kissingSubSection(
+            leftNodeIds,
+            findSource (start, centerNodeIds, leftNodeIds),
+            findSink (end, centerNodeIds, leftNodeIds)
+        )
         break
     default:
         console.log('Whoops. What else?')
     }
+    // TODO return subsections or select (and delete) the temporary class
     return kissingPairs
+}
+function kissingSubSection(nodeIds, sourceId, sinkId){
+        var iSource = nodeIds.indexOf(sourceId)
+        var iSink = nodeIds.indexOf(sinkId)
+        for(i=iSource ; i<iSink ; i++) {
+             d3.selectAll('.starts_at_'+nodeIds[i]).filter(function(){
+                console.log(`filtering ${i} ${nodeIds[i]} with ${nodeIds[i+1]} classList=${this.classList.value}`)
+                 return this.classList.value.includes('ends_at_'+nodeIds[i+1])
+             }).style("stroke","rgb(0, 255, 0)").style('stroke-opacity',"0.25")
+             // TODO add a temporary class (to remove when now the stroke is reset)
+        }
 }
 function findSource (id, nodeIds, kissingPairIds) {
     var i = nodeIds.indexOf(id)
@@ -354,7 +364,7 @@ function findSource (id, nodeIds, kissingPairIds) {
         var id = nodeIds[i]
         if (kissingPairIds.includes(id)) return id
    }
-    return ""
+    return kissingPairIds[0]
 }
 function findSink (id, nodeIds, kissingPairIds) {
     var i = nodeIds.indexOf(id)
@@ -362,11 +372,7 @@ function findSink (id, nodeIds, kissingPairIds) {
         var id = nodeIds[i]
         if (kissingPairIds.includes(id)) return id
     }
-    return ""
-}
-function markStitch (instruction, id){
-    if(id) d3.select("#"+id)
-        .html("<title>"+instruction+"</title>"+PairSvg.shapes(instruction))
+    return kissingPairIds[kissingPairIds.length-1]
 }
 function orderedNodeIds(kissSelector) {
     var nodeIds = []
