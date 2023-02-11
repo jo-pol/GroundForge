@@ -195,7 +195,6 @@ function initDiagram() {
     var links = d3.selectAll("#cloned .link")
     links.each(function () {
         var n = Math.min(...(this.id.replace(regex,'$1_$2').split('_')))
-        var classes = [this.id.replace(regex,'$1_$2'), this.id.replace(regex,'$2_$1')]
         this.classList.add('kiss_'+n)
     })
     links.style("stroke-width","5px") // wider lines are bigger targets
