@@ -11,7 +11,7 @@ Challenge: combine plaits of different (lengths and/or) orientations,
 
 ![img_1.png](img_1.png)
 
-The next solution for 4 blobs causes chaos,
+The left solution for 4 blobs causes chaos,
 [pattern for 4 blobs](https://d-bl.github.io/GroundForge/pattern.html?patchWidth=14&patchHeight=26&tile=-g-y,l---,-c--,b---,----&headside=-&shiftColsSW=-4&shiftRowsSW=4&shiftColsSE=-1&shiftRowsSE=5&b1=ctc&a2=ctc&b3=ctc&a4=ctc)
 
 ![img_2.png](img_2.png) ![img_3.png](img_3.png)
