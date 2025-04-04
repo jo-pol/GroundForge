@@ -235,4 +235,49 @@ document.addEventListener('DOMContentLoaded', (event) => {
     diagrams(twistFootsides(q));
     document.getElementById('toDiagrams').setAttribute("href", drosteURL + q);
     document.getElementById('toPrintFriendly').setAttribute("href", stitchesURL + q);
+
+    let tooltipTimer;
+    let tooltipElement;
+
+    document.querySelectorAll('path')
+        .forEach(path => {
+            path.addEventListener('touchstart', showTitle);
+            path.addEventListener('touchend', hideTitle);
+        });
+
+    function showTitle(event) {
+        event.preventDefault();
+        tooltipTimer = setTimeout(() => {
+            let target = event.target;
+            let titleElement = target.querySelector('title');
+
+            // If no child <title> found, check for sibling <title>
+            if (!titleElement) {
+                let parent = target.parentElement;
+                if (parent) {
+                    titleElement = parent.querySelector('title');
+                }
+            }
+            if (titleElement) {
+                if (!tooltipElement) {
+                    tooltipElement = document.createElement('div');
+                    tooltipElement.className = 'tooltip';
+                    document.body.appendChild(tooltipElement);
+                }
+                tooltipElement.textContent = titleElement.textContent;
+                const rect = event.target.getBoundingClientRect();
+                const zoomFactor = window.visualViewport.scale || 1; // Default to 1 if scale is not available
+                tooltipElement.style.left = `${(rect.left - (rect.width / 2) - (tooltipElement.offsetWidth / zoomFactor))}px`;
+                tooltipElement.style.top = `${(rect.top + window.scrollY - tooltipElement.offsetHeight / zoomFactor) - 50}px`;
+                tooltipElement.style.display = 'block';
+            }
+        }, 500); // Show title after 500ms
+    }
+
+    function hideTitle() {
+        clearTimeout(tooltipTimer);
+        if (tooltipElement) {
+            tooltipElement.style.display = 'none';
+        }
+    }
 })

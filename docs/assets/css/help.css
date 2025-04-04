@@ -56,7 +56,18 @@ img[src$="align=center"] { text-align: center }
 
 fieldset + fieldset, form + fieldset { margin-top: 0.7em; }
 
-/* for the gallery of the snow mixer */
+/* snow mixer */
+
+#pairs, #threads { vertical-align: top; }
+.tooltip {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+/* snow mixer gallery */
 
 fieldset a[data-title] {
     display: inline-block;
