@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 tooltipElement.textContent = titleElement.textContent;
                 const rect = event.target.getBoundingClientRect();
                 const zoomFactor = window.visualViewport.scale || 1; // Default to 1 if scale is not available
-                tooltipElement.style.left = `${(rect.left - (rect.width / 2) - (tooltipElement.offsetWidth / zoomFactor))}px`;
+                tooltipElement.style.left = `${(rect.left - (rect.width / 2) - (tooltipElement.offsetWidth / 2 / zoomFactor))}px`;
                 tooltipElement.style.top = `${(rect.top + window.scrollY - tooltipElement.offsetHeight / zoomFactor) - 50}px`;
                 tooltipElement.style.display = 'block';
             }
