@@ -8,7 +8,6 @@ function generateStitch(stitchInputValue) {
     const pathSpacing = size / 3; // Horizontal spacing between paths
     const edgeStartIndex = {}; // Index for edges starting at nodes
     const edgeEndIndex = {}; // Index for edges ending at nodes
-    const mergedNodes = {}; // Index for merged nodes
 
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, "svg");
@@ -30,7 +29,7 @@ function generateStitch(stitchInputValue) {
         return line;
     }
 
-    function drawCircle(x, y, id, decription) {
+    function drawCircle(x, y, id, description) {
         const circle = document.createElementNS(svgNS, "circle");
         circle.setAttribute("cx", x + '');
         circle.setAttribute("cy", y + '');
@@ -38,9 +37,9 @@ function generateStitch(stitchInputValue) {
         circle.setAttribute("fill", "blue");
         circle.setAttribute("opacity", "0.3");
         circle.setAttribute("id", id);
-        circle.setAttribute("class", decription);
+        circle.setAttribute("class", (description ? description : '').replace(/.* /g, ''));
         const title = document.createElementNS(svgNS, "title");
-        title.textContent = `${decription} - ${id}`;
+        title.textContent = `${description} - ${id}`;
         circle.appendChild(title);
         svg.appendChild(circle);
     }
@@ -75,6 +74,7 @@ function generateStitch(stitchInputValue) {
             }
         }
 
+        // TODO add white-start/end dependnig on description.replace(/.* /,´' ), if possible even bend-left/right
         updateEdges(leftNodeId, edgeStartIndex, "x1", "y1", "starts_left_at_");
         updateEdges(leftNodeId, edgeEndIndex, "x2", "y2", "ends_left_at_");
         updateEdges(rightNodeId, edgeStartIndex, "x1", "y1", "starts_right_at_");
@@ -156,18 +156,49 @@ function generateStitch(stitchInputValue) {
 
     // Replace all line elements with path elements
     svg.querySelectorAll("line").forEach(line => {
+        // TODO apply white-start/end once these classes are assigned
         const x1 = line.getAttribute("x1");
         const y1 = line.getAttribute("y1");
         const x2 = line.getAttribute("x2");
         const y2 = line.getAttribute("y2");
-        // TODO create white start/ends depending on line and node classes
 
         const path = document.createElementNS(svgNS, "path");
         path.setAttribute("d", `M ${x1} ${y1} L ${x2} ${y2}`);
         path.setAttribute("stroke", line.getAttribute("stroke"));
         path.setAttribute("stroke-width", line.getAttribute("stroke-width"));
         path.setAttribute("opacity", line.getAttribute("opacity"));
+        path.setAttribute("fill", "none");
         path.setAttribute("class", line.getAttribute("class"));
+
+        // bend the line if it is a repetition of the same type of stitch
+        const classes = Array.from(line.classList);
+        if (classes.length > 2) {
+            // we skip the first class, which ends with the path number, the others are starts/ends_at_<nodeId>
+            const id0 = classes[1].replace(/.*_/g, "");
+            const id1 = classes[2].replace(/.*_/g, "");
+            const n0 = svg.getElementById(id0).classList[0]
+            const n1 = svg.getElementById(id1).classList[0]
+            if (n0 === n1 && classes[1].includes("starts_left")) { // TODO seems to work but why?
+                // Calculate the midpoint of the line segment
+                const mx = (parseFloat(x1) + parseFloat(x2)) / 2;
+                const my = (parseFloat(y1) + parseFloat(y2)) / 2;
+
+                // Calculate the direction vector of the line segment
+                const dx = parseFloat(x2) - parseFloat(x1);
+                const dy = parseFloat(y2) - parseFloat(y1);
+
+                // Normalize and rotate the direction vector to get the perpendicular vector
+                const length = Math.sqrt(dx * dx + dy * dy);
+                const px = dy / length * 20; // Perpendicular x (scaled by 20)
+                const py = dx / length * 20;  // Perpendicular y (scaled by 20)
+
+                // Adjust the control point by the perpendicular offset TODO switch +/- for other direction
+                const cx = mx + px;
+                const cy = my - py;
+
+                path.setAttribute("d", `M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`);
+            }
+        }
 
         line.replaceWith(path);
     });
