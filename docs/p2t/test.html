@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="svgPairsToThreads.js" type="text/javascript"></script>
+    <style>svg {margin-right: 2em}</style>
+    <title>test SVG Pairs to Threads</title>
+</head>
+<body>
+    <h1>test SVG Pairs to Threads</h1>
+    <input type="text"
+           value="ctctrrctc"
+           id="stitch"
+           pattern="[ctlrCTLR]+"
+           title="C/c=cross, T/t=twist both, L/l=left twist, R/r=right twist. Other characters are ignored." />
+    <button onclick="generateStitch(document.getElementById('stitch').value)">Run Test</button>
+    <p></p>
+</body>
