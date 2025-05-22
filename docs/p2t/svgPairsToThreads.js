@@ -92,6 +92,7 @@ function generateStitch(stitchInputValue) {
 
     // Create 4 paths each with the number of subnodes needed by the stitch
     for (let pathIndex = 0; pathIndex < 4; pathIndex++) {
+        const color = ["red", "blue", "red", "blue"];
         const x = (pathIndex) * pathSpacing; // X-coordinate for the current path
 
         for (let nodeIndex = 0; nodeIndex < n; nodeIndex++) {
@@ -101,6 +102,7 @@ function generateStitch(stitchInputValue) {
             // Draw an edge to the node
             const line = drawLine(x, y);
             line.setAttribute("class", "kissing_path_" + pathIndex);
+            line.setAttribute("stroke", color[pathIndex]);
             if (nodeIndex > 0) addToEdgeIndex(nodeIndex - 1, pathIndex, line, edgeStartIndex);
             addToEdgeIndex(nodeIndex, pathIndex, line, edgeEndIndex);
         }
@@ -108,6 +110,7 @@ function generateStitch(stitchInputValue) {
         const line = drawLine(x, (n + 1) * nodeSpacing);
         line.setAttribute("class", "kissing_path_" + pathIndex);
         addToEdgeIndex(n - 1, pathIndex, line, edgeStartIndex);
+        line.setAttribute("stroke", color[pathIndex]);
     }
 
     let j = 0
@@ -193,10 +196,7 @@ function generateStitch(stitchInputValue) {
                 const py = dx / length * 20;  // Perpendicular y (scaled by 20)
 
                 // Adjust the control point by the perpendicular offset TODO switch +/- for other direction
-                const cx = mx + px;
-                const cy = my - py;
-
-                path.setAttribute("d", `M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`);
+                path.setAttribute("d", `M ${x1} ${y1} Q ${(mx - px)} ${(my + py)} ${x2} ${y2}`);
             }
         }
 
