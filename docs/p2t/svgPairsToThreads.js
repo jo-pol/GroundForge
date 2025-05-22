@@ -1,19 +1,19 @@
-function generateStitch(stitchInputValue) {
+function generateStitch(stitchInputValue, kissingPathColors) {
     let stitch = stitchInputValue
         .toLowerCase()
         .replace(/[^clrt]/g, '');
-    const n = stitch.length; // Number of nodes on each of the 4 paths
-    const size = 180 // width/heigth of the container
-    const nodeSpacing = size / (n + 1); // Vertical spacing between subnodes
-    const pathSpacing = size / 3; // Horizontal spacing between paths
-    const edgeStartIndex = {}; // Index for edges starting at nodes
-    const edgeEndIndex = {}; // Index for edges ending at nodes
+    const nrOfInitialPathNodes = stitch.length;
+    const containerSize = 180 // width/height
+    const nodeSpacing = containerSize / (nrOfInitialPathNodes + 1); // Vertical spacing between subnodes
+    const pathSpacing = containerSize / 3; // Horizontal spacing between paths
+    const edgeStartMap = {}; // Index for edges starting at nodes
+    const edgeEndMap = {}; // Index for edges ending at nodes
 
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, "svg");
     document.body.appendChild(svg);
-    svg.setAttribute("width", size + "");
-    svg.setAttribute("height", size + "");
+    svg.setAttribute("width", containerSize + "");
+    svg.setAttribute("height", containerSize + "");
     svg.setAttribute("xmlns", svgNS);
 
     function drawLine(x, y) {
@@ -24,7 +24,6 @@ function generateStitch(stitchInputValue) {
         line.setAttribute("y2", y);
         line.setAttribute("stroke", "black");
         line.setAttribute("stroke-width", "4");
-        line.setAttribute("opacity", "0.3");
         svg.appendChild(line);
         return line;
     }
@@ -33,9 +32,9 @@ function generateStitch(stitchInputValue) {
         const circle = document.createElementNS(svgNS, "circle");
         circle.setAttribute("cx", x + '');
         circle.setAttribute("cy", y + '');
-        circle.setAttribute("r", "8");
-        circle.setAttribute("fill", "blue");
-        circle.setAttribute("opacity", "0.3");
+        circle.setAttribute("r", "7");
+        circle.setAttribute("fill", "black");
+        circle.setAttribute("opacity", "0.15");
         circle.setAttribute("id", id);
         circle.setAttribute("class", (description ? description : '').replace(/.* /g, ''));
         const title = document.createElementNS(svgNS, "title");
@@ -63,58 +62,59 @@ function generateStitch(stitchInputValue) {
         const midY = (leftY + rightY) / 2;
         drawCircle(midX, midY, id, description);
 
-        function updateEdges(nodeId, edgeIndex, attrX, attrY, classPrefix) {
-            if (edgeIndex[nodeId]) {
-                edgeIndex[nodeId].forEach(edge => {
-                    edge.setAttribute(attrX, midX);
-                    edge.setAttribute(attrY, midY);
-                    edge.classList.add(classPrefix + id);
-                });
-                delete edgeIndex[nodeId]; // Remove old node from index
+        function updateEdge(nodeId, edgeMap, attrX, attrY, classPrefix) {
+            const edge = edgeMap[nodeId];
+            if (edge) {
+                edge.setAttribute(attrX, midX);
+                edge.setAttribute(attrY, midY);
+                edge.classList.add(classPrefix + id);
+                delete edgeMap[nodeId];
             }
+            return edge;
         }
 
-        // TODO add white-start/end dependnig on description.replace(/.* /,´' ), if possible even bend-left/right
-        updateEdges(leftNodeId, edgeStartIndex, "x1", "y1", "starts_left_at_");
-        updateEdges(leftNodeId, edgeEndIndex, "x2", "y2", "ends_left_at_");
-        updateEdges(rightNodeId, edgeStartIndex, "x1", "y1", "starts_right_at_");
-        updateEdges(rightNodeId, edgeEndIndex, "x2", "y2", "ends_right_at_");
+        const end = "white_end";
+        const st = "white_start";
+        const isCross = description === "cross";
+        updateEdge(leftNodeId, edgeStartMap, "x1", "y1", "starts_left_at_").classList.add(isCross ? end : st);
+        updateEdge(leftNodeId, edgeEndMap, "x2", "y2", "ends_left_at_").classList.add(isCross ? end : st);
+        updateEdge(rightNodeId, edgeStartMap, "x1", "y1", "starts_right_at_").classList.add(isCross ? st : end);
+        updateEdge(rightNodeId, edgeEndMap, "x2", "y2", "ends_right_at_").classList.add(isCross ? st : end);
 
         leftNode.remove();
         rightNode.remove();
     }
 
-    function addToEdgeIndex(nodeIndex, pathIndex, line, edgeIndex) {
-        const startNodeId = `${nodeIndex}-${pathIndex}`;
-        if (!edgeIndex[startNodeId]) edgeIndex[startNodeId] = [];
-        edgeIndex[startNodeId].push(line);
+    function addToEdgeMap(nodeMap, pathMap, line, edgeMap) {
+        const startNodeId = `${nodeMap}-${pathMap}`;
+        if (!edgeMap[startNodeId]) edgeMap[startNodeId] = [];
+        edgeMap[startNodeId] = line;
     }
 
     // Create 4 paths each with the number of subnodes needed by the stitch
-    for (let pathIndex = 0; pathIndex < 4; pathIndex++) {
-        const color = ["red", "blue", "red", "blue"];
-        const x = (pathIndex) * pathSpacing; // X-coordinate for the current path
+    for (let pathMap = 0; pathMap < 4; pathMap++) {
+        const x = (pathMap) * pathSpacing; // X-coordinate for the current path
 
-        for (let nodeIndex = 0; nodeIndex < n; nodeIndex++) {
-            const y = (nodeIndex + 1) * nodeSpacing; // Y-coordinate for the current subnode
-            drawCircle(x, y, nodeIndex + '-' + pathIndex);
+        for (let nodeNr = 0; nodeNr < nrOfInitialPathNodes; nodeNr++) {
+            const y = (nodeNr + 1) * nodeSpacing; // Y-coordinate for the current subnode
+            drawCircle(x, y, nodeNr + '-' + pathMap);
 
             // Draw an edge to the node
             const line = drawLine(x, y);
-            line.setAttribute("class", "kissing_path_" + pathIndex);
-            line.setAttribute("stroke", color[pathIndex]);
-            if (nodeIndex > 0) addToEdgeIndex(nodeIndex - 1, pathIndex, line, edgeStartIndex);
-            addToEdgeIndex(nodeIndex, pathIndex, line, edgeEndIndex);
+            line.setAttribute("class", "kissing_path_" + pathMap);
+            line.setAttribute("stroke", kissingPathColors[pathMap]);
+            if (nodeNr > 0) addToEdgeMap(nodeNr - 1, pathMap, line, edgeStartMap);
+            addToEdgeMap(nodeNr, pathMap, line, edgeEndMap);
         }
         // Draw an edge out of the last node
-        const line = drawLine(x, (n + 1) * nodeSpacing);
-        line.setAttribute("class", "kissing_path_" + pathIndex);
-        addToEdgeIndex(n - 1, pathIndex, line, edgeStartIndex);
-        line.setAttribute("stroke", color[pathIndex]);
+        const line = drawLine(x, (nrOfInitialPathNodes + 1) * nodeSpacing);
+        line.setAttribute("class", "kissing_path_" + pathMap);
+        addToEdgeMap(nrOfInitialPathNodes - 1, pathMap, line, edgeStartMap);
+        line.setAttribute("stroke", kissingPathColors[pathMap]);
     }
 
     let j = 0
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < nrOfInitialPathNodes; i++) {
         switch (stitch[i]) {
             case 'c':
                 mergeNodes(i + '-1', i + '-2', ++j, 'cross');
@@ -135,68 +135,87 @@ function generateStitch(stitchInputValue) {
     }
 
     // Cleanup of nodes that did not merge, join their links
-    Object.keys(edgeStartIndex).forEach(nodeId => {
-        if (edgeStartIndex[nodeId] && edgeEndIndex[nodeId]) {
-            const outgoingEdges = edgeStartIndex[nodeId];
-            const incomingEdges = edgeEndIndex[nodeId];
+    Object.keys(edgeStartMap).forEach(nodeId => {
+        if (edgeStartMap[nodeId] && edgeEndMap[nodeId]) {
+            const outEdge = edgeStartMap[nodeId];
+            const inEdge = edgeEndMap[nodeId];
 
-            incomingEdges.forEach(inEdge => {
-                outgoingEdges.forEach(outEdge => {
-                    // Merge the edges by connecting the start of inEdge to the end of outEdge
-                    outEdge.setAttribute("x1", inEdge.getAttribute("x1"));
-                    outEdge.setAttribute("y1", inEdge.getAttribute("y1"));
-                    inEdge.classList.forEach(className => {
-                        outEdge.classList.add(className);
-                    });
-                    inEdge.remove()
-                });
+            // Merge the edges by connecting the start of inEdge to the end of outEdge
+            outEdge.setAttribute("x1", inEdge.getAttribute("x1"));
+            outEdge.setAttribute("y1", inEdge.getAttribute("y1"));
+            inEdge.classList.forEach(className => {
+                outEdge.classList.add(className);
             });
-            delete edgeStartIndex[nodeId];
-            delete edgeEndIndex[nodeId];
+            svg.removeChild(inEdge);
+            delete edgeStartMap[nodeId];
+            delete edgeEndMap[nodeId];
             svg.getElementById(nodeId).remove();
         }
     });
 
     // Replace all line elements with path elements
     svg.querySelectorAll("line").forEach(line => {
-        // TODO apply white-start/end once these classes are assigned
-        const x1 = line.getAttribute("x1");
-        const y1 = line.getAttribute("y1");
-        const x2 = line.getAttribute("x2");
-        const y2 = line.getAttribute("y2");
+        const x1 = line.getAttribute("x1") * 1;
+        const y1 = line.getAttribute("y1") * 1;
+        const x2 = line.getAttribute("x2") * 1;
+        const y2 = line.getAttribute("y2") * 1;
+
+        // Calculate the direction vector of the line segment
+        let dx = (parseFloat(x2) - parseFloat(x1));
+        let dy = (parseFloat(y2) - parseFloat(y1));
+        const length = Math.sqrt(dx * dx + dy * dy);
+        dx = dx / length;
+        dy = dy / length;
 
         const path = document.createElementNS(svgNS, "path");
-        path.setAttribute("d", `M ${x1} ${y1} L ${x2} ${y2}`);
         path.setAttribute("stroke", line.getAttribute("stroke"));
         path.setAttribute("stroke-width", line.getAttribute("stroke-width"));
         path.setAttribute("opacity", line.getAttribute("opacity"));
         path.setAttribute("fill", "none");
         path.setAttribute("class", line.getAttribute("class"));
 
+        const whiteStart = line.classList.contains("white_start");
+        const whiteEnd = line.classList.contains("white_end");
+        const gap = 8;
+        const x1s = !whiteStart ? x1 : x1 + (dx * gap);
+        const y1s = !whiteStart ? y1 : y1 + (dy * gap);
+        const x2s = !whiteEnd ? x2 : x2 - (dx * gap);
+        const y2s = !whiteEnd ? y2 : y2 - (dy * gap);
+        path.setAttribute("d", `M ${x1s} ${y1s} L ${x2s} ${y2s}`);
+
         // bend the line if it is a repetition of the same type of stitch
-        const classes = Array.from(line.classList);
-        if (classes.length > 2) {
-            // we skip the first class, which ends with the path number, the others are starts/ends_at_<nodeId>
-            const id0 = classes[1].replace(/.*_/g, "");
-            const id1 = classes[2].replace(/.*_/g, "");
+        const classes = Array.from(line.classList).filter(className => className.includes('_at_'));
+        if (classes.length > 1) {
+            const id0 = classes[0].replace(/.*_/g, "");
+            const id1 = classes[1].replace(/.*_/g, "");
             const n0 = svg.getElementById(id0).classList[0]
             const n1 = svg.getElementById(id1).classList[0]
-            if (n0 === n1 && classes[1].includes("starts_left")) { // TODO seems to work but why?
+            const startsLeft = classes[0].includes("starts_left");
+            const startsRight = classes[0].includes("starts_right");
+            if (n0 === n1 && (startsLeft || startsRight)) { // TODO seems to work but why?
                 // Calculate the midpoint of the line segment
                 const mx = (parseFloat(x1) + parseFloat(x2)) / 2;
                 const my = (parseFloat(y1) + parseFloat(y2)) / 2;
 
-                // Calculate the direction vector of the line segment
-                const dx = parseFloat(x2) - parseFloat(x1);
-                const dy = parseFloat(y2) - parseFloat(y1);
+                // Rotate the direction vector to get the perpendicular vector for the control point
+                const px = dy * 20; // Perpendicular x (scaled by 20)
+                const py = dx * 20;  // Perpendicular y (scaled by 20)
 
-                // Normalize and rotate the direction vector to get the perpendicular vector
-                const length = Math.sqrt(dx * dx + dy * dy);
-                const px = dy / length * 20; // Perpendicular x (scaled by 20)
-                const py = dx / length * 20;  // Perpendicular y (scaled by 20)
-
-                // Adjust the control point by the perpendicular offset TODO switch +/- for other direction
-                path.setAttribute("d", `M ${x1} ${y1} Q ${(mx - px)} ${(my + py)} ${x2} ${y2}`);
+                // note the sings after mx/my
+                const fraction = 0.4;
+                if (startsLeft) {
+                    const x1s = !whiteStart ? x1 : x1 + (mx - px - x1) * fraction;
+                    const y1s = !whiteStart ? y1 : y1 + (my + py - y1) * fraction;
+                    const x2s = !whiteEnd ? x2 : x2 + (mx - px - x2) * fraction;
+                    const y2s = !whiteEnd ? y2 : y2 + (my + py - y2) * fraction;
+                    path.setAttribute("d", `M ${x1s} ${y1s} Q ${(mx - px)} ${(my + py)} ${x2s} ${y2s}`);
+                } else {
+                    const x1s = !whiteStart ? x1 : x1 + (mx + px - x1) * fraction;
+                    const y1s = !whiteStart ? y1 : y1 + (my - py - y1) * fraction;
+                    const x2s = !whiteEnd ? x2 : x2 + (mx + px - x2) * fraction;
+                    const y2s = !whiteEnd ? y2 : y2 + (my - py - y2) * fraction;
+                    path.setAttribute("d", `M ${x1s} ${y1s} Q ${(mx + px)} ${(my - py)} ${x2s} ${y2s}`);
+                }
             }
         }
 
