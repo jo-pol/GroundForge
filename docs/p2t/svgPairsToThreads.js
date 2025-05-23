@@ -224,4 +224,47 @@ function generateStitch(stitchInputValue, kissingPathColors) {
 
         line.replaceWith(path);
     });
+    addThreadClasses(svg, svgNS);
+}
+
+function addThreadClasses(svg, svgNS) {
+    const threadStarts = {};
+    const classToPath = {};
+    svg.querySelectorAll("path").forEach(path => {
+        const classes = Array.from(path.classList).filter(className => className.includes('_at_'));
+        if (classes.length === 1 && classes[0].startsWith("ends_")) {
+            threadStarts[classes[0]] = path;
+        }
+        classes.forEach(className => {
+            classToPath[className] = path;
+        })
+    })
+    const threadStartKeys = Object.keys(threadStarts);
+    const nrOfThreads =  threadStartKeys.length;
+    for (let threadNr = 0; threadNr < nrOfThreads; threadNr++) {
+        let currentClass = threadStartKeys[threadNr];
+        let currentPath = threadStarts[currentClass];
+
+        while (true) {
+            currentPath.classList.add('thread_' + threadNr);
+            // find next edge
+            if (currentClass == null) {
+                break; // End of the thread
+            }
+            switch (currentClass.replace(/_at_.*/, "")) {
+                case "ends_left":
+                    currentPath = classToPath[currentClass.replace("ends_left","starts_right")];
+                    break;
+                case "ends_right":
+                    currentPath = classToPath[currentClass.replace("ends_right","starts_left")];
+                    break;
+                default:
+                    currentPath = null;
+            }
+            if (currentPath == null) {
+                break; // End of the thread
+            }
+            currentClass = Array.from(currentPath.classList).find(className => className.startsWith('ends_'));
+        }
+    }
 }

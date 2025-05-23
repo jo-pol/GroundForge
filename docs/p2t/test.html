@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="svgPairsToThreads.js" type="text/javascript"></script>
-    <style>svg {margin-right: 2em}</style>
+    <style>
+        svg svg {margin-right: 2em}
+        .thread_0 {stroke: chartreuse}
+        .thread_1 {stroke: black}
+        .thread_2 {stroke: deepskyblue}
+        .thread_3 {stroke: orange}
+    </style>
     <title>test SVG Pairs to Threads</title>
 </head>
 <body onload="generateStitch(document.getElementById('stitch').value, ['red', 'blue', 'red', 'blue'])">
