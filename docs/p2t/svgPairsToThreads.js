@@ -11,10 +11,10 @@ function generateStitch(stitchInputValue, kissingPathColors) {
 
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, "svg");
-    document.body.appendChild(svg);
     svg.setAttribute("width", containerSize + "");
     svg.setAttribute("height", containerSize + "");
     svg.setAttribute("xmlns", svgNS);
+    document.body.appendChild(svg);
 
     function drawLine(x, y) {
         const line = document.createElementNS(svgNS, "line");
@@ -92,27 +92,28 @@ function generateStitch(stitchInputValue, kissingPathColors) {
     }
 
     // Create 4 paths each with the number of subnodes needed by the stitch
-    for (let pathMap = 0; pathMap < 4; pathMap++) {
-        const x = (pathMap) * pathSpacing; // X-coordinate for the current path
+    for (let pathNr = 0; pathNr < 4; pathNr++) {
+        const x = (pathNr) * pathSpacing; // X-coordinate for the current path
 
         for (let nodeNr = 0; nodeNr < nrOfInitialPathNodes; nodeNr++) {
             const y = (nodeNr + 1) * nodeSpacing; // Y-coordinate for the current subnode
-            drawCircle(x, y, nodeNr + '-' + pathMap);
+            drawCircle(x, y, nodeNr + '-' + pathNr);
 
             // Draw an edge to the node
             const line = drawLine(x, y);
-            line.setAttribute("class", "kissing_path_" + pathMap);
-            line.setAttribute("stroke", kissingPathColors[pathMap]);
-            if (nodeNr > 0) addToEdgeMap(nodeNr - 1, pathMap, line, edgeStartMap);
-            addToEdgeMap(nodeNr, pathMap, line, edgeEndMap);
+            line.setAttribute("class", "kissing_path_" + pathNr);
+            line.setAttribute("stroke", kissingPathColors[pathNr]);
+            if (nodeNr > 0) addToEdgeMap(nodeNr - 1, pathNr, line, edgeStartMap);
+            addToEdgeMap(nodeNr, pathNr, line, edgeEndMap);
         }
         // Draw an edge out of the last node
         const line = drawLine(x, (nrOfInitialPathNodes + 1) * nodeSpacing);
-        line.setAttribute("class", "kissing_path_" + pathMap);
-        addToEdgeMap(nrOfInitialPathNodes - 1, pathMap, line, edgeStartMap);
-        line.setAttribute("stroke", kissingPathColors[pathMap]);
+        line.setAttribute("class", "kissing_path_" + pathNr);
+        addToEdgeMap(nrOfInitialPathNodes - 1, pathNr, line, edgeStartMap);
+        line.setAttribute("stroke", kissingPathColors[pathNr]);
     }
 
+    // Make the paths kiss
     let j = 0
     for (let i = 0; i < nrOfInitialPathNodes; i++) {
         switch (stitch[i]) {
@@ -153,8 +154,15 @@ function generateStitch(stitchInputValue, kissingPathColors) {
         }
     });
 
-    // Replace all line elements with path elements
+    // Replace all line elements with path elements for short ends and bends
     svg.querySelectorAll("line").forEach(line => {
+        const path = document.createElementNS(svgNS, "path");
+        path.setAttribute("stroke", line.getAttribute("stroke"));
+        path.setAttribute("stroke-width", line.getAttribute("stroke-width"));
+        path.setAttribute("opacity", line.getAttribute("opacity"));
+        path.setAttribute("fill", "none");
+        path.setAttribute("class", line.getAttribute("class"));
+
         const x1 = line.getAttribute("x1") * 1;
         const y1 = line.getAttribute("y1") * 1;
         const x2 = line.getAttribute("x2") * 1;
@@ -167,13 +175,7 @@ function generateStitch(stitchInputValue, kissingPathColors) {
         dx = dx / length;
         dy = dy / length;
 
-        const path = document.createElementNS(svgNS, "path");
-        path.setAttribute("stroke", line.getAttribute("stroke"));
-        path.setAttribute("stroke-width", line.getAttribute("stroke-width"));
-        path.setAttribute("opacity", line.getAttribute("opacity"));
-        path.setAttribute("fill", "none");
-        path.setAttribute("class", line.getAttribute("class"));
-
+        // calculate the shortened ends
         const whiteStart = line.classList.contains("white_start");
         const whiteEnd = line.classList.contains("white_end");
         const gap = 8;
@@ -183,7 +185,7 @@ function generateStitch(stitchInputValue, kissingPathColors) {
         const y2s = !whiteEnd ? y2 : y2 - (dy * gap);
         path.setAttribute("d", `M ${x1s} ${y1s} L ${x2s} ${y2s}`);
 
-        // bend the line if it is a repetition of the same type of stitch
+        // Override d to bend the line if it is a repetition of the same type of stitch
         const classes = Array.from(line.classList).filter(className => className.includes('_at_'));
         if (classes.length > 1) {
             const id0 = classes[0].replace(/.*_/g, "");
@@ -192,7 +194,8 @@ function generateStitch(stitchInputValue, kissingPathColors) {
             const n1 = svg.getElementById(id1).classList[0]
             const startsLeft = classes[0].includes("starts_left");
             const startsRight = classes[0].includes("starts_right");
-            if (n0 === n1 && (startsLeft || startsRight)) { // TODO seems to work but why?
+            // TODO Conditions seems to work. Which coincidence eliminates bends for twist with a cross in between?
+            if (n0 === n1 && (startsLeft || startsRight)) {
                 // Calculate the midpoint of the line segment
                 const mx = (parseFloat(x1) + parseFloat(x2)) / 2;
                 const my = (parseFloat(y1) + parseFloat(y2)) / 2;
@@ -201,7 +204,7 @@ function generateStitch(stitchInputValue, kissingPathColors) {
                 const px = dy * 20; // Perpendicular x (scaled by 20)
                 const py = dx * 20;  // Perpendicular y (scaled by 20)
 
-                // note the sings after mx/my
+                // note the signs after mx/my
                 const fraction = 0.4;
                 if (startsLeft) {
                     const x1s = !whiteStart ? x1 : x1 + (mx - px - x1) * fraction;
