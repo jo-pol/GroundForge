@@ -1,20 +1,16 @@
-function generateStitch(stitchInputValue, kissingPathColors) {
+function newStitch(stitchInputValue, firstKissingPathNr, firstNodeNr, svgContainer) {
     let stitch = stitchInputValue
         .toLowerCase()
         .replace(/[^clrt]/g, '');
+
+    const svgNS = svgContainer.namespaceURI;
+    const containerHeight = svgContainer.getAttribute('height');
+    const containerWidth = svgContainer.getAttribute('width');
     const nrOfInitialPathNodes = stitch.length;
-    const containerSize = 180 // width/height
-    const nodeSpacing = containerSize / (nrOfInitialPathNodes + 1); // Vertical spacing between subnodes
-    const pathSpacing = containerSize / 3; // Horizontal spacing between paths
+    const nodeSpacing = containerHeight / (nrOfInitialPathNodes + 1); // Vertical spacing between subnodes
+    const pathSpacing = containerWidth / 3; // Horizontal spacing between paths
     const edgeStartMap = {}; // Index for edges starting at nodes
     const edgeEndMap = {}; // Index for edges ending at nodes
-
-    const svgNS = "http://www.w3.org/2000/svg";
-    const svg = document.createElementNS(svgNS, "svg");
-    svg.setAttribute("width", containerSize + "");
-    svg.setAttribute("height", containerSize + "");
-    svg.setAttribute("xmlns", svgNS);
-    document.body.appendChild(svg);
 
     function drawLine(x, y) {
         const line = document.createElementNS(svgNS, "line");
@@ -24,7 +20,7 @@ function generateStitch(stitchInputValue, kissingPathColors) {
         line.setAttribute("y2", y);
         line.setAttribute("stroke", "black");
         line.setAttribute("stroke-width", "4");
-        svg.appendChild(line);
+        svgContainer.appendChild(line);
         return line;
     }
 
@@ -40,12 +36,12 @@ function generateStitch(stitchInputValue, kissingPathColors) {
         const title = document.createElementNS(svgNS, "title");
         title.textContent = `${description} - ${id}`;
         circle.appendChild(title);
-        svg.appendChild(circle);
+        svgContainer.appendChild(circle);
     }
 
     function mergeNodes(leftNodeId, rightNodeId, id, description) {
-        const leftNode = svg.getElementById(leftNodeId);
-        const rightNode = svg.getElementById(rightNodeId);
+        const leftNode = svgContainer.getElementById(leftNodeId);
+        const rightNode = svgContainer.getElementById(rightNodeId);
 
         if (!leftNode || !rightNode) {
             console.error("One or both nodes not found");
@@ -92,7 +88,8 @@ function generateStitch(stitchInputValue, kissingPathColors) {
     }
 
     // Create 4 paths each with the number of subnodes needed by the stitch
-    for (let pathNr = 0; pathNr < 4; pathNr++) {
+    const kissingPathColors = ['red', 'blue', 'red', 'blue']; // for debugging purposes
+    for (let pathNr = firstKissingPathNr; pathNr < 4 + firstKissingPathNr; pathNr++) {
         const x = (pathNr) * pathSpacing; // X-coordinate for the current path
 
         for (let nodeNr = 0; nodeNr < nrOfInitialPathNodes; nodeNr++) {
@@ -102,7 +99,7 @@ function generateStitch(stitchInputValue, kissingPathColors) {
             // Draw an edge to the node
             const line = drawLine(x, y);
             line.setAttribute("class", "kissing_path_" + pathNr);
-            line.setAttribute("stroke", kissingPathColors[pathNr]);
+            line.setAttribute("stroke", kissingPathColors[pathNr%4]);
             if (nodeNr > 0) addToEdgeMap(nodeNr - 1, pathNr, line, edgeStartMap);
             addToEdgeMap(nodeNr, pathNr, line, edgeEndMap);
         }
@@ -114,21 +111,21 @@ function generateStitch(stitchInputValue, kissingPathColors) {
     }
 
     // Make the paths kiss
-    let j = 0
+    let currentNodeNr = firstNodeNr
     for (let i = 0; i < nrOfInitialPathNodes; i++) {
         switch (stitch[i]) {
             case 'c':
-                mergeNodes(i + '-1', i + '-2', ++j, 'cross');
+                mergeNodes(i + '-1', i + '-2', ++currentNodeNr, 'cross');
                 break;
             case 'l':
-                mergeNodes(i + '-0', i + '-1', ++j, 'left twist');
+                mergeNodes(i + '-0', i + '-1', ++currentNodeNr, 'left twist');
                 break;
             case 'r':
-                mergeNodes(i + '-2', i + '-3', ++j, 'right twist');
+                mergeNodes(i + '-2', i + '-3', ++currentNodeNr, 'right twist');
                 break;
             case 't':
-                mergeNodes(i + '-0', i + '-1', ++j, 'left twist');
-                mergeNodes(i + '-2', i + '-3', ++j, 'right twist');
+                mergeNodes(i + '-0', i + '-1', ++currentNodeNr, 'left twist');
+                mergeNodes(i + '-2', i + '-3', ++currentNodeNr, 'right twist');
                 break;
             default:
                 break
@@ -147,15 +144,15 @@ function generateStitch(stitchInputValue, kissingPathColors) {
             inEdge.classList.forEach(className => {
                 outEdge.classList.add(className);
             });
-            svg.removeChild(inEdge);
+            svgContainer.removeChild(inEdge);
             delete edgeStartMap[nodeId];
             delete edgeEndMap[nodeId];
-            svg.getElementById(nodeId).remove();
+            svgContainer.getElementById(nodeId).remove();
         }
     });
 
     // Replace all line elements with path elements for short ends and bends
-    svg.querySelectorAll("line").forEach(line => {
+    svgContainer.querySelectorAll("line").forEach(line => {
         const path = document.createElementNS(svgNS, "path");
         path.setAttribute("stroke", line.getAttribute("stroke"));
         path.setAttribute("stroke-width", line.getAttribute("stroke-width"));
@@ -190,8 +187,8 @@ function generateStitch(stitchInputValue, kissingPathColors) {
         if (classes.length > 1) {
             const id0 = classes[0].replace(/.*_/g, "");
             const id1 = classes[1].replace(/.*_/g, "");
-            const n0 = svg.getElementById(id0).classList[0]
-            const n1 = svg.getElementById(id1).classList[0]
+            const n0 = svgContainer.getElementById(id0).classList[0]
+            const n1 = svgContainer.getElementById(id1).classList[0]
             const startsLeft = classes[0].includes("starts_left");
             const startsRight = classes[0].includes("starts_right");
             // TODO Conditions seems to work. Which coincidence eliminates bends for twist with a cross in between?
@@ -224,10 +221,22 @@ function generateStitch(stitchInputValue, kissingPathColors) {
 
         line.replaceWith(path);
     });
-    addThreadClasses(svg, svgNS);
+    addThreadClasses(svgContainer, svgNS);
+    return currentNodeNr;
 }
 
-function addThreadClasses(svg, svgNS) {
+function generateStitches(stitchInputValue) {
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("width", "180");
+    svg.setAttribute("height", "180");
+    svg.setAttribute("xmlns", svgNS);
+    document.body.appendChild(svg);
+    // hint: add a temporary invisible box (fill and stroke "none") when passing in an empty group
+    const nrOfNodes = newStitch(stitchInputValue, 0, 0, containerHeight, containerWidth, svg);
+}
+
+function addThreadClasses(svg) {
     const threadStarts = {};
     const classToPath = {};
     svg.querySelectorAll("path").forEach(path => {
