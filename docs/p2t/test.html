@@ -6,6 +6,7 @@
     <script src="svgPairsToThreads.js" type="text/javascript"></script>
     <style>
         svg {margin-right: 2em}
+        span {margin-right: 0.5em}
         .thread_0 {stroke: chartreuse}
         .thread_1 {stroke: black}
         .thread_2 {stroke: deepskyblue}
@@ -15,12 +16,15 @@
 </head>
 <body onload="generateStitches(document.getElementById('stitch').value)">
 <h1>test SVG Pairs to Threads</h1>
-<p>Generate stitches to replace nodes in a pair diagram.</p>
+<p>
 <input type="text"
        value="cltlcrtcctc"
        id="stitch"
        pattern="[ctlrCTLR]+"
-       title="C/c=cross, T/t=twist both, L/l=left twist, R/r=right twist. Other characters are ignored." />
+       title="C/c=cross, T/t=twist both, L/l=left twist, R/r=right twist. Other characters are ignored."/>
 <button onclick="generateStitches(document.getElementById('stitch').value)">Run Test</button>
-<p></p>
+<br>
+<label for="upload">Show legend stitches of file downloaded from GF symmetry page:</label>
+<input id="upload" type="file" accept="image/svg+xml" onchange="loadSVGFile()"/>
+</p>
 </body>

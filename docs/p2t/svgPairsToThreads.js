@@ -226,9 +226,6 @@ function newStitch(stitchInputValue, firstKissingPathNr, firstNodeNr, svgContain
 }
 
 function generateStitches(stitchInputValue) {
-    // TODO next step: get element with id cloned from symmetry page (or upload) to create and connect stitches
-    //   note that the links have additional twists, maybe start with the legend
-    //   see also https://d-bl.github.io/GroundForge-help/symmetry/#file-structure
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, "svg");
     svg.setAttribute("width", "180");
@@ -278,5 +275,28 @@ function addThreadClasses(svg) {
             }
             currentClass = Array.from(currentPath.classList).find(className => className.startsWith('ends_'));
         }
+    }
+}
+function loadSVGFile() {
+    // Retrieve the first (and only!) File from the FileList object
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const svgContent = e.target.result;
+            const svgDoc = new DOMParser().parseFromString(svgContent, "image/svg+xml");
+            svgDoc.querySelectorAll("#bdpqLegend tspan").forEach((el) => {
+                const textElement = document.createElement("span");
+                textElement.textContent = el.textContent + ':';
+                document.body.appendChild(textElement);
+                generateStitches(el.textContent);
+            });
+            // TODO next step: top row of elements with id cloned
+            //   note that the links have additional twists, maybe start with the legend
+            //   see also https://d-bl.github.io/GroundForge-help/symmetry/#file-structure
+        };
+        reader.readAsText(file);
+    } else {
+        alert("Failed to load file");
     }
 }
