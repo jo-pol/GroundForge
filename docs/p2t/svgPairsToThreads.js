@@ -233,7 +233,7 @@ function generateStitches(stitchInputValue) {
     svg.setAttribute("xmlns", svgNS);
     document.body.appendChild(svg);
     // hint: add a temporary invisible box (fill and stroke "none") when passing in an empty group
-    const nrOfNodes = newStitch(stitchInputValue, 0, 0, containerHeight, containerWidth, svg);
+    const nrOfNodes = newStitch(stitchInputValue, 0, 0, svg);
 }
 
 function addThreadClasses(svg) {
