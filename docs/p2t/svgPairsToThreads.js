@@ -225,12 +225,15 @@ function newStitch(stitchInputValue, firstKissingPathNr, firstNodeNr, svgContain
     return currentNodeNr;
 }
 
-function generateStitches(stitchInputValue) {
+function newLegendStitch(stitchInputValue) {
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, "svg");
     svg.setAttribute("width", "180");
     svg.setAttribute("height", "180");
     svg.setAttribute("xmlns", svgNS);
+    const textElement = document.createElement("span");
+    textElement.textContent = stitchInputValue.replace(/[^ctlr]/gi, '')+ ':';
+    document.body.appendChild(textElement);
     document.body.appendChild(svg);
     // hint: add a temporary invisible box (fill and stroke "none") when passing in an empty group
     const nrOfNodes = newStitch(stitchInputValue, 0, 0, svg);
@@ -283,16 +286,14 @@ function loadSVGFile() {
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            const svgContent = e.target.result;
+            // TODO: maybe some day: allow href attributes of use elements
+            const svgContent = DOMPurify.sanitize(e.target.result);
             const svgDoc = new DOMParser().parseFromString(svgContent, "image/svg+xml");
             svgDoc.querySelectorAll("#bdpqLegend tspan").forEach((el) => {
-                const textElement = document.createElement("span");
-                textElement.textContent = el.textContent + ':';
-                document.body.appendChild(textElement);
-                generateStitches(el.textContent);
+                newLegendStitch(el.textContent);
             });
-            // TODO next step: top row of elements with id cloned
-            //   note that the links have additional twists, maybe start with the legend
+            // TODO next step: top row of stitches in element with id cloned
+            //   note that the links have additional twists
             //   see also https://d-bl.github.io/GroundForge-help/symmetry/#file-structure
         };
         reader.readAsText(file);
