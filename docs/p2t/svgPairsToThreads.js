@@ -226,7 +226,7 @@ function newStitch(stitchInputValue, firstKissingPathNr, firstNodeNr, svgContain
 }
 
 function generateStitches(stitchInputValue) {
-    // TODOD next step: get element with id cloned from symmetry page (or upload) to create and connect stitches
+    // TODO next step: get element with id cloned from symmetry page (or upload) to create and connect stitches
     //   note that the links have additional twists, maybe start with the legend
     //   see also https://d-bl.github.io/GroundForge-help/symmetry/#file-structure
     const svgNS = "http://www.w3.org/2000/svg";
