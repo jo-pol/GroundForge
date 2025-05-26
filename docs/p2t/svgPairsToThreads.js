@@ -311,9 +311,9 @@ function loadSVGFile(event) {
             legendEntries.forEach((el) => {
                 newLegendStitch(el.textContent);
             });
-            // TODO next step: top row of stitches in element with id cloned
-            //   note that the links have additional twists
-            //   see also https://d-bl.github.io/GroundForge-help/symmetry/#file-structure
+            // TODO next step: replace nodes with sub-graphs
+            //  in templates without pinched/moved stitches only deleted or changed stitches
+            //  see also https://d-bl.github.io/GroundForge-help/symmetry/#file-structure
         };
         reader.readAsText(file);
     } else {
