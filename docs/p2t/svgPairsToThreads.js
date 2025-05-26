@@ -280,16 +280,35 @@ function addThreadClasses(svg) {
         }
     }
 }
+
 function loadSVGFile() {
     // Retrieve the first (and only!) File from the FileList object
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            // TODO: maybe some day: allow href attributes of use elements
-            const svgContent = DOMPurify.sanitize(e.target.result);
-            const svgDoc = new DOMParser().parseFromString(svgContent, "image/svg+xml");
-            svgDoc.querySelectorAll("#bdpqLegend tspan").forEach((el) => {
+            // TODO: maybe some day: allow href attributes of use elements starting with #
+            const svgContent = DOMPurify.sanitize(e.target.result, {USE_PROFILES: {svg: true, svgFilters: true}});
+            const parsedSvg = new DOMParser().parseFromString(svgContent, "image/svg+xml");
+
+            const templateElement = parsedSvg.getElementById("cloned");
+            const yValues = Array.from(templateElement.querySelectorAll(".link"))
+                .map(element => element.getAttribute("d").replace(/.*,/g,'')*1);
+            const maxYValue = Math.max(...yValues);
+            const legendElement = parsedSvg.getElementById("bdpqLegend");
+            const legendEntries = legendElement.querySelectorAll("tspan");
+            const legendHeight = legendEntries.length * 25.2; // N.B: see stitchDistance in symmetry.js
+            const svgNS = "http://www.w3.org/2000/svg";
+            const svg = document.createElementNS(svgNS, "svg");
+            svg.setAttribute("xmlns", svgNS);
+            svg.appendChild(legendElement);
+            svg.appendChild(templateElement);
+            svg.appendChild(parsedSvg.querySelector("defs"));
+            svg.setAttribute("width", "100%");
+            svg.setAttribute("height", Math.max((maxYValue*1.8+12),legendHeight)+'');
+            document.body.appendChild(svg);
+
+            legendEntries.forEach((el) => {
                 newLegendStitch(el.textContent);
             });
             // TODO next step: top row of stitches in element with id cloned
