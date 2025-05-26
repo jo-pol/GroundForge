@@ -281,7 +281,7 @@ function addThreadClasses(svg) {
     }
 }
 
-function loadSVGFile() {
+function loadSVGFile(event) {
     // Retrieve the first (and only!) File from the FileList object
     const file = event.target.files[0];
     if (file) {

@@ -14,7 +14,7 @@
     </style>
     <title>test SVG Pairs to Threads</title>
 </head>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.6/purify.min.js"></script>
 <body onload="newLegendStitch(document.getElementById('stitch').value)">
 <h1>test SVG Pairs to Threads</h1>
 <p>
@@ -26,6 +26,6 @@
 <button onclick="newLegendStitch(document.getElementById('stitch').value)">Run Test</button>
 <br>
 <label for="upload">Show legend stitches of file downloaded from GF symmetry page:</label>
-<input id="upload" type="file" accept="image/svg+xml" onchange="loadSVGFile()"/>
+<input id="upload" type="file" accept="image/svg+xml" onchange="loadSVGFile(event)"/>
 </p>
 </body>
