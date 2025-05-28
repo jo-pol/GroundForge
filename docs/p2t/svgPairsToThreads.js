@@ -243,8 +243,7 @@ const GF_svgP2T = {
         colorCodeSvg.appendChild(colorCodeElement)
         colorCodeElement.setAttribute("transform", "translate(13,17) scale(3)")
         const textElement = document.createElement("span");
-        textElement.textContent = stitchInputValue.replace(/[^ctlr]/gi, '') + ':';
-        document.body.appendChild(textElement);
+        document.body.insertAdjacentHTML("beforeend", `<span>${stitchInputValue.replace(/[^ctlr]/gi, '')}: </span>`);
         document.body.appendChild(colorCodeSvg);
         document.body.appendChild(threadSvg);
         // hint: add a temporary invisible box (fill and stroke "none") when passing in an empty group
@@ -304,7 +303,9 @@ const GF_svgP2T = {
         const legendElement = parsedSvg.getElementById("bdpqLegend");
         const legendTextEntries = legendElement.querySelectorAll("tspan");
         const legendColorCodeEntries = legendElement.querySelectorAll("g");
-        const svg = GF_svgP2T.newSVG(Math.max(...xValues) * 3 + 12 + '', Math.max(...yValues) * 3 + 12 + '');
+        const w = Math.max(...xValues) * 3 + 12 + '';
+        const h = Math.max(...yValues) * 3 + 12 + '';
+        const svg = GF_svgP2T.newSVG(w, h);
         templateElement.setAttribute("transform", "scale(3)");
         svg.appendChild(twistMarkDefs);
         svg.appendChild(templateElement);
@@ -320,8 +321,40 @@ const GF_svgP2T = {
         for (let i = 0; i < nrOfLegendEntries; i++) {
             GF_svgP2T.newLegendStitch(legendTextEntries[i].textContent, legendColorCodeEntries[i]);
         }
-        // TODO next step: replace nodes with sub-graphs
-        //  in templates without pinched/moved stitches only deleted or changed stitches
+        GF_svgP2T.createDiagram(templateElement,w,h);
+    },
+
+    createDiagram(templateElement, w, h) {
+        document.body.insertAdjacentHTML("beforeend", "<hr><p>Under construction (pinched stitches will cause overlap): </p>");
+
+        const svg = GF_svgP2T.newSVG("100%", h*3.5);
+        document.body.appendChild(svg);
+        const bigG = document.createElementNS(GF_svgP2T.svgNS, "g");
+        bigG.setAttribute("id", "original");
+        svg.appendChild(bigG);
+        let kissingPairNr = 0;
+        let nodeNr = 0;
+        templateElement.querySelectorAll("g").forEach(element => {
+            const [x, y] = element.getAttribute("transform")
+                .match(/translate\(([^)]+)\)/)[1]
+                .split(",");
+            const stitchInputValue = element.querySelectorAll("title")[0].textContent;
+            const tmpSVG = GF_svgP2T.newSVG(125, 80);
+            const g = document.createElementNS(GF_svgP2T.svgNS, "g");
+            const nrOfNodes = GF_svgP2T.newStitch(stitchInputValue, 0, 0, tmpSVG);
+            nodeNr += nrOfNodes;
+            kissingPairNr += 4;
+            g.setAttribute("transform", `translate(${ x*5.7 }, ${ y*5.6 })`);
+            tmpSVG.childNodes.forEach(child => {
+                g.appendChild(child.cloneNode(true));
+            });
+            bigG.appendChild(g);
+        })
+        svg.insertAdjacentHTML("beforeend", `<use xlink:href="#original" id="clone_b" x="${w*4}" transform="scale(0.7,0.7)"></use>`);
+        svg.insertAdjacentHTML("beforeend", `<use xlink:href="#original" id="clone_d" x="${-w*8.8}" y="0" transform="scale(-0.7,0.7)"></use>`);
+        svg.insertAdjacentHTML("beforeend", `<use xlink:href="#original" id="clone_p" x="${w*4}" y="${-h*4.8}" transform="scale(0.7,-0.7)"></use>`);
+        svg.insertAdjacentHTML("beforeend", `<use xlink:href="#original" id="clone_q" x="${-w*8.8}" y="${-h*4.8}" transform="scale(-0.7,-0.7)"></use>`);
+        // TODO connect threads (at least by color), enable download, scale pinched stitches
         //  see also https://d-bl.github.io/GroundForge-help/symmetry/#file-structure
     },
 
