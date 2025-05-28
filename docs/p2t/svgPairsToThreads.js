@@ -1,4 +1,5 @@
 const GF_svgP2T = {
+    svgNS: "http://www.w3.org/2000/svg",
 
     newStitch(stitchInputValue, firstKissingPathNr, firstNodeNr, svgContainer) {
         let stitch = stitchInputValue
@@ -227,18 +228,27 @@ const GF_svgP2T = {
         return currentNodeNr;
     },
 
-    newLegendStitch(stitchInputValue) {
-        const svgNS = "http://www.w3.org/2000/svg";
-        const svg = document.createElementNS(svgNS, "svg");
-        svg.setAttribute("width", "80");
-        svg.setAttribute("height", "120");
-        svg.setAttribute("xmlns", svgNS);
+    newSVG(w,h) {
+        const threadSvg = document.createElementNS(GF_svgP2T.svgNS, "svg");
+        threadSvg.setAttribute("width", w);
+        threadSvg.setAttribute("height", h);
+        threadSvg.setAttribute("xmlns", GF_svgP2T.svgNS);
+        return threadSvg;
+    },
+
+    newLegendStitch(stitchInputValue, colorCodeElement) {
+
+        const threadSvg = GF_svgP2T.newSVG("80","120");
+        const colorCodeSvg =GF_svgP2T.newSVG("27","35");
+        colorCodeSvg.appendChild(colorCodeElement)
+        colorCodeElement.setAttribute("transform", "translate(13,17) scale(3)")
         const textElement = document.createElement("span");
         textElement.textContent = stitchInputValue.replace(/[^ctlr]/gi, '') + ':';
         document.body.appendChild(textElement);
-        document.body.appendChild(svg);
+        document.body.appendChild(colorCodeSvg);
+        document.body.appendChild(threadSvg);
         // hint: add a temporary invisible box (fill and stroke "none") when passing in an empty group
-        const nrOfNodes = GF_svgP2T.newStitch(stitchInputValue, 0, 0, svg);
+        const nrOfNodes = GF_svgP2T.newStitch(stitchInputValue, 0, 0, threadSvg);
     },
 
     addThreadClasses(svg) {
@@ -286,21 +296,18 @@ const GF_svgP2T = {
     appendUploadedSvg(svgContent) {
         const parsedSvg = new DOMParser().parseFromString(svgContent, "image/svg+xml");
 
+        const twistMarkDefs = parsedSvg.querySelector("defs");
         const templateElement = parsedSvg.getElementById("cloned");
-        const yValues = Array.from(templateElement.querySelectorAll(".link"))
-            .map(element => element.getAttribute("d").replace(/.*,/g, '') * 1);
-        const maxYValue = Math.max(...yValues);
+        const linkElements = Array.from(templateElement.querySelectorAll(".link"));
+        const yValues = linkElements.map(element => element.getAttribute("d").replace(/.*,/g, '') * 1);
+        const xValues = linkElements.map(element => element.getAttribute("d").replace(/.* /g, '').replace(/,.*/g, '') * 1);
         const legendElement = parsedSvg.getElementById("bdpqLegend");
-        const legendEntries = legendElement.querySelectorAll("tspan");
-        const legendHeight = legendEntries.length * 25.2; // N.B: see stitchDistance in symmetry.js
-        const svgNS = "http://www.w3.org/2000/svg";
-        const svg = document.createElementNS(svgNS, "svg");
-        svg.setAttribute("xmlns", svgNS);
-        svg.appendChild(legendElement);
+        const legendTextEntries = legendElement.querySelectorAll("tspan");
+        const legendColorCodeEntries = legendElement.querySelectorAll("g");
+        const svg = GF_svgP2T.newSVG(Math.max(...xValues) * 3 + 12 + '', Math.max(...yValues) * 3 + 12 + '');
+        templateElement.setAttribute("transform", "scale(3)");
+        svg.appendChild(twistMarkDefs);
         svg.appendChild(templateElement);
-        svg.appendChild(parsedSvg.querySelector("defs"));
-        svg.setAttribute("width", "100%");
-        svg.setAttribute("height", Math.max((maxYValue * 1.8 + 12), legendHeight) + '');
         svg.querySelectorAll('.link').forEach(element => {
             element.setAttribute("stroke-width", "2");
             element.setAttribute("stroke", "#bbbbbb");
@@ -309,7 +316,13 @@ const GF_svgP2T = {
             element.removeAttribute('style');
         });
         document.body.appendChild(svg);
-        return legendEntries;
+        const nrOfLegendEntries = Math.min(legendTextEntries.length, legendColorCodeEntries.length);
+        for (let i = 0; i < nrOfLegendEntries; i++) {
+            GF_svgP2T.newLegendStitch(legendTextEntries[i].textContent, legendColorCodeEntries[i]);
+        }
+        // TODO next step: replace nodes with sub-graphs
+        //  in templates without pinched/moved stitches only deleted or changed stitches
+        //  see also https://d-bl.github.io/GroundForge-help/symmetry/#file-structure
     },
 
     loadSVGFile(event) {
@@ -318,21 +331,13 @@ const GF_svgP2T = {
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
+                document.querySelectorAll("svg,span")
+                    .forEach(svg => svg.remove())
                 const svgContent = DOMPurify.sanitize(
                     e.target.result,
                     {USE_PROFILES: {svg: true, svgFilters: true}}
                 );
-                document.querySelectorAll("svg").forEach(svg => {
-                    svg.remove()
-                })
-                const legendEntries = GF_svgP2T.appendUploadedSvg(svgContent);
-                legendEntries.forEach((el) => {
-                    // TODO add color coded node after/before text
-                    GF_svgP2T.newLegendStitch(el.textContent);
-                });
-                // TODO next step: replace nodes with sub-graphs
-                //  in templates without pinched/moved stitches only deleted or changed stitches
-                //  see also https://d-bl.github.io/GroundForge-help/symmetry/#file-structure
+                GF_svgP2T.appendUploadedSvg(svgContent);
             };
             reader.readAsText(file);
         } else {
