@@ -35,6 +35,15 @@ const GF_snow_mixer = {
             GF_snow_mixer.lastValidReplacementValue = value;
         } else {
             GF_snow_mixer.replacement.value = GF_snow_mixer.lastValidReplacementValue;
+            if (typeof window.AudioContext !== "undefined") {
+                const ctx = new window.AudioContext();
+                const o = ctx.createOscillator();
+                o.type = "sine";
+                o.frequency.value = 440;
+                o.connect(ctx.destination);
+                o.start();
+                o.stop(ctx.currentTime + 0.05);
+            }
         }
     },
 
