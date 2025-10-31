@@ -31,7 +31,7 @@ const GF_snow_mixer = {
     fixReplacementValue() {
         const value = GF_snow_mixer.replacement.value.toLowerCase();
         GF_snow_mixer.replacement.value = value
-        if (/^([-]|([tclr]){0,*})([.,][tclr]*){0,9}$/.test(value)) {
+        if (/^([-]|([tclr])*)([.,][tclr]*){0,9}$/.test(value)) {
             GF_snow_mixer.lastValidReplacementValue = value;
         } else {
             GF_snow_mixer.replacement.value = GF_snow_mixer.lastValidReplacementValue;
