@@ -34,7 +34,10 @@ const GF_snow_mixer = {
         if (/^([-]|([tclr])*)([.,][tclr]*){0,9}$/.test(value)) {
             GF_snow_mixer.lastValidRecipeValue = value;
         } else {
+            const pos1 = inputField.selectionStart - 1;
+            const pos2 = inputField.selectionEnd - 1;
             inputField.value = GF_snow_mixer.lastValidRecipeValue;
+            inputField.setSelectionRange(pos1, pos2);
             if (typeof window.AudioContext !== "undefined") {
                 const ctx = new window.AudioContext();
                 const o = ctx.createOscillator();

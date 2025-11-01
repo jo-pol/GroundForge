@@ -1,7 +1,7 @@
 const GF_stitches = {
 
 
-    lastValidStitchValue: "",
+    lastValidStitchValue: "ct", // the initial value by loadStitchForm
 
     fixStitchValue(inputField) {
         const value = inputField.value.toLowerCase();
@@ -9,7 +9,10 @@ const GF_stitches = {
         if (/^([-]|([tclr])*)$/.test(value)) {
             GF_stitches.lastValidStitchValue = value;
         } else {
+            const pos1 = inputField.selectionStart - 1;
+            const pos2 = inputField.selectionEnd - 1;
             inputField.value = GF_stitches.lastValidStitchValue;
+            inputField.setSelectionRange(pos1, pos2);
             if (typeof window.AudioContext !== "undefined") {
                 const ctx = new window.AudioContext();
                 const o = ctx.createOscillator();
@@ -124,6 +127,7 @@ const GF_stitches = {
         const n = document.querySelector("#stitchDef")
         n.value = stitch
         n.focus()
+        this.lastValidStitchValue = stitch;
         this.setColorCode();
     }
 }
