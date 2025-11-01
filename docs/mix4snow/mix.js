@@ -25,16 +25,16 @@ const GF_snow_mixer = {
         "u800=u801=u802=u803=u810=u811=u816=u817=u818=u840=u846=u847=u848=u850=u856=u857=u858=u866=u867=u868=" +
         "f700=f701=f702=f703=f710=f711=f716=f717=f718=f740=f746=f747=f748=f750=f756=f757=f758=f766=f767=f768=ttttctttt",
 
-    lastValidReplacementValue: "",
-    replacement: null,
+    lastValidRecipeValue: "",
 
-    fixReplacementValue() {
-        const value = GF_snow_mixer.replacement.value.toLowerCase();
-        GF_snow_mixer.replacement.value = value
+    fixRecipeValue(inputField) {
+        const value = inputField.value.toLowerCase();
+        inputField.value = value
+        // during typing, we can't require an even number of stitches of 4-10
         if (/^([-]|([tclr])*)([.,][tclr]*){0,9}$/.test(value)) {
-            GF_snow_mixer.lastValidReplacementValue = value;
+            GF_snow_mixer.lastValidRecipeValue = value;
         } else {
-            GF_snow_mixer.replacement.value = GF_snow_mixer.lastValidReplacementValue;
+            inputField.value = GF_snow_mixer.lastValidRecipeValue;
             if (typeof window.AudioContext !== "undefined") {
                 const ctx = new window.AudioContext();
                 const o = ctx.createOscillator();
@@ -346,8 +346,6 @@ const GF_snow_mixer = {
                  }
                  this.updatePattern(q);
                  GF_snow_mixer.diagrams(GF_snow_mixer.twistFootsides(q));
-                 GF_snow_mixer.replacement = document.getElementById('replacement');
-                 GF_snow_mixer.replacement.addEventListener('input', GF_snow_mixer.fixReplacementValue);
              })
              .catch(err => console.error('Failed to load fragment:', err));
 
