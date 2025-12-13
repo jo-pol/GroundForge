@@ -17,6 +17,7 @@
 <body>
 <script>
     function generate() {
+        // TODO call when loosing focus from a radio button or textarea or mark it dirty?
         const diagramType = document.querySelector('input[name="diagram"]:checked').value;
         const checkedDroste = document.querySelector('input[name="droste"]:checked');
         const drosteIndex = parseInt(checkedDroste.value, 10);
@@ -55,7 +56,14 @@
     GF_panel.load({caption: "diagram", id: "panel2", controls: ['diagram', "resize", "color"]});
     const firstLink = document.getElementById('panel2').parentElement.querySelector('a');
     firstLink.href = 'javascript:generate()';
-    GF_panel.diagramSVG({id: 'panel2', query: q, type: 'pair', steps: []});
+
+    const config = TilesConfig(q)
+    const pairDiagram = NewPairDiagram.create(config);
+    const threadDiagram = ThreadDiagram.create(pairDiagram);
+    const svg = DiagramSvg.render(threadDiagram, "2px", true, GF_panel.svgSize[1].width, GF_panel.svgSize[1].height, 0.05);
+    document.getElementById('panel2').innerHTML = svg;
+    GF_panel.nudge('panel2');
+    // GF_panel.diagramSVG({id: 'panel2', query: q, type: 'pair', steps: []});
 </script>
 </body>
 </html>

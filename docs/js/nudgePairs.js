@@ -31,7 +31,7 @@ function nudgeDiagram(svg, forceOptions= {
     link: { strength: 50, distance: 18, iterations: 30 },
     alpha: 0.0035
 }) {
-  console.time("nudgeDiagram");
+
   // collect data of the SVG elements with class node
 
   function getNodeData(n){
@@ -110,7 +110,9 @@ function nudgeDiagram(svg, forceOptions= {
       }
       links.attr("d", drawPath);
       nodes.attr("transform", moveNode);
+      // console.log(new Date().getMilliseconds())
   }
+
   // define forces with the collected data
   d3.forceSimulation(nodeData)
     .force("charge", d3.forceManyBody().strength(forceOptions.forceManyBody.strength))
@@ -122,8 +124,5 @@ function nudgeDiagram(svg, forceOptions= {
     .force("center", d3.forceCenter(100, 100))
     .alpha(forceOptions.alpha)
     .on("tick", onTick)
-    .on("end", function() {
-          moveToNW();
-          console.timeEnd("nudgeDiagram"); // End timer after simulation
-    });
+    .on("end", moveToNW)
 }
