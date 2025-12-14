@@ -134,8 +134,13 @@ const GF_panel = {
         const svgElement = container.querySelectorAll("svg>g")[0];
         svgElement.setAttribute("transform", isPairDiagram ? "scale(1.3)" : "scale(0.5)");
 
-        if (type==='thread' && container.classList.contains("hasColorChooser")) {
+        if (type==='pair') {
             document.querySelectorAll(`#${id} .node`).forEach(el => {
+                el.removeAttribute('onclick')
+            })
+        } else {
+            document.querySelectorAll(`#${id} .node`).forEach(el => {
+                el.removeAttribute('onclick');
                 el.addEventListener('click', function(event) {
                     GF_panel.clickedNode(event, id + 'ColorChooser');
                 });
