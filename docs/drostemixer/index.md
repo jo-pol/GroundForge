@@ -5,7 +5,7 @@ javascript:
   - d3.v4.min.js
   - GroundForge-opt.js
   - nudgePairs.js
-  - panel.js        \<dans\-java\-utils\.version\>2\.5\.0\<\/dans\-java\-utils\.version\>\n
+  - panel.js
 ---
 
 Droste mixer? Under development.
