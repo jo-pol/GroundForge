@@ -25,7 +25,7 @@ If the droste field is not empty, a reloaded thread diagram will be one step fur
 <input type="text" id="basicStitchInput" placeholder="Example: clct" />
 
 <label for="drosteStitches">Droste applied together with basic stitch:</label>
-<input type="text" id="drosteStitches" style="width:40em" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
+<input type="text" id="drosteStitches" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
 
 ---
 
@@ -34,6 +34,7 @@ If the droste field is not empty, a reloaded thread diagram will be one step fur
     .gf_panel > div {width: 100%; overflow: auto; resize:both; border: #ddd solid 1px; }
     .gf_panel > figcaption {width: 100%; box-sizing: border-box; background-color: #ddd; }
     .gf_panel > figcaption img, .gf_panel > figcaption > input {margin-left: 0.5em;}
+    #drosteStitches {width: 100%}
 </style>
 <script src="droste-mixer.js" type="text/javascript"></script>
 <script>GF_droste_mixer.load(document.getElementById('main-content'))</script>
