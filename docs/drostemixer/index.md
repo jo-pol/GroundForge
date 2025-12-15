@@ -29,5 +29,11 @@ If the droste field is not empty, a reloaded thread diagram will be one step fur
 
 ---
 
+<style>
+    .gf_panel {display: inline-block; margin: 4px;}
+    .gf_panel > div {width: 100%; overflow: auto; resize:both; border: #ddd solid 1px; }
+    .gf_panel > figcaption {width: 100%; box-sizing: border-box; background-color: #ddd; }
+    .gf_panel > figcaption img, .gf_panel > figcaption > input {margin-left: 0.5em;}
+</style>
 <script src="droste-mixer.js" type="text/javascript"></script>
 <script>GF_droste_mixer.load(document.getElementById('main-content'))</script>
