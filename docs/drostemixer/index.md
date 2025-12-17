@@ -12,14 +12,15 @@ Droste mixer? Under development.
 ================================
 
 **TODO**: 
-* Galleries that can initialize the following two text fields 
-* Dressing-up
-* Assigning stitches
+* Galleries: [basic stitches](/API/stitch-gallery) and recipes for snow with
+  [two droste steps](/GroundForge-help/snow-mix/droste/), maybe even
+  some [patterns](https://jo-pol.github.io/GroundForge-help/snow-mix/droste/#more-freedom).
+* Flip buttons, apply to all (ignored only for step-0?).
+* Radios -> twisters in diagram captions
+* Rename rest of _options_ to _advanced_, maybe even initialy minimized (values collected from URL and pair diagram interactions)
+* Legend panel (should wrap nicely)
 
 ---
-
-See [recipe sections](/GroundForge-help/snow-mix/droste/) for the droste input field for now.
-If the droste field is not empty, a reloaded thread diagram will be one step further than the pair diagram checked in the options panel.
 
 <label for="basicStitchInput">Basic stitch:</label>
 <input type="text" id="basicStitchInput" placeholder="Example: clct" />
