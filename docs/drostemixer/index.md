@@ -16,7 +16,7 @@ TO DO:
   [two droste steps](/GroundForge-help/snow-mix/droste/), maybe even
   some [patterns](https://jo-pol.github.io/GroundForge-help/snow-mix/droste/#more-freedom).
 * Flip buttons, apply to all (ignored only for step-0?).
-* Radios -> twisters in diagram captions
+* Radios -> twisters in diagram captions. Both values should also be added to the URL query, defaulting to zero for both.
 * Rename rest of _options_ to _advanced_, maybe initially minimized (values collected from URL and pair diagram interactions)
 * Legend panel (should wrap nicely)
 * Link to changed pattern
