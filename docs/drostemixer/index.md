@@ -1,6 +1,6 @@
 ---
 layout: default
-title: GF - Droste mixer
+title: Droste mixer
 javascript:
   - d3.v4.min.js
   - GroundForge-opt.js
@@ -8,31 +8,34 @@ javascript:
   - panel.js
 ---
 
-Droste mixer? Under development.
-================================
+Under development.
+==================
 
-**TODO**: 
+TO DO: 
 * Galleries: [basic stitches](/API/stitch-gallery) and recipes for snow with
   [two droste steps](/GroundForge-help/snow-mix/droste/), maybe even
   some [patterns](https://jo-pol.github.io/GroundForge-help/snow-mix/droste/#more-freedom).
 * Flip buttons, apply to all (ignored only for step-0?).
 * Radios -> twisters in diagram captions
-* Rename rest of _options_ to _advanced_, maybe even initialy minimized (values collected from URL and pair diagram interactions)
+* Rename rest of _options_ to _advanced_, maybe initially minimized (values collected from URL and pair diagram interactions)
 * Legend panel (should wrap nicely)
+* Link to changed pattern
 
 ---
 
 <label for="basicStitchInput">Basic stitch:</label>
-<input type="text" id="basicStitchInput" placeholder="Example: clct" />
+<input type="text" id="basicStitchInput" value="lclc" placeholder="Example: clct" />
 
 <label for="drosteStitches">Droste applied to basic stitch:</label>
-<input type="text" id="drosteStitches" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
+<input type="text" id="drosteStitches" value="tc,rclcrc,clcrcl,ct" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
 
 <style>
     .gf_panel {display: inline-block; margin: 4px;}
     .gf_panel > div {width: 100%; overflow: auto; resize:both; border: #ddd solid 1px; }
-    .gf_panel > figcaption {width: 100%; box-sizing: border-box; background-color: #ddd; }
+    .gf_panel > figcaption {width: 100%; height:2.5em; padding-bottom: 0.2em; box-sizing: border-box; display: flex; align-items: flex-end; background-color: #ddd; }
     .gf_panel > figcaption img, .gf_panel > figcaption > input {margin-left: 0.5em;}
+    .gf_panel > div > div > textarea { height: 7em;}
+    .gf_panel > div > div > radio { padding-right: 0.5em;}
     #drosteStitches {width: 100%}
 </style>
 <script src="droste-mixer.js" type="text/javascript"></script>
