@@ -24,7 +24,7 @@ If the droste field is not empty, a reloaded thread diagram will be one step fur
 <label for="basicStitchInput">Basic stitch:</label>
 <input type="text" id="basicStitchInput" placeholder="Example: clct" />
 
-<label for="drosteStitches">Droste applied together with basic stitch:</label>
+<label for="drosteStitches">Droste applied to basic stitch:</label>
 <input type="text" id="drosteStitches" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
 
 <style>

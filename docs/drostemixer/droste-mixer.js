@@ -12,6 +12,33 @@ const GF_droste_mixer = {
         GF_panel.diagramSVG({id: diagramType+ '_panel', query: q, type: diagramType, steps: stepValues});
         document.getElementById(diagramType+ '_panel').style.backgroundColor = "";
     },
+    setStitchEvents() {
+        function stitchHandler(event) {
+            const targetText = event.currentTarget.textContent;
+            const targetClass = '.'+targetText.replaceAll(/ /g, '');
+            document.getElementById('pair_panel')
+                .querySelectorAll('title')
+                .forEach(title => {
+                if (title.parentNode.textContent === targetText) {
+                    title.parentNode.insertAdjacentHTML(
+                        'beforeend',
+                        '<circle cx="0" cy="0" r="9" fill="#000" style="opacity: 0.15;"></circle>'
+                    );
+                }
+            });
+            document.getElementById('thread_panel').querySelectorAll(targetClass).forEach(el => {
+                el.append('<circle cx="0" cy="0" r="9" fill="#000" style="opacity: 0.15;"></circle>')
+            })
+        }
+
+        Array.from(document
+            .getElementById('pair_panel')
+            .querySelectorAll('title')
+        ).forEach(function (title) {
+            if (!title.textContent.startsWith('Pair'))
+                title.parentNode.addEventListener('click', stitchHandler)
+        });
+    },
     drosteControls(stepNr){
         return `
             <div style="display: flex; width: 100%;">
@@ -21,9 +48,11 @@ const GF_droste_mixer = {
           `;
     },
     load(container) {
-        q = "patchWidth=3&patchHeight=5&c1=tc&d1=tctc&e1=tc&c2=tctc&e2=tctc&d3=tc&shiftColsSE=2&shiftRowsSE=2&shiftColsSW=-2&shiftRowsSW=2&footside=-5,B-,-2,b-,,&tile=831,4-7,-5-&headside=5-,-c,6-,-c"
-        GF_panel.load({caption: "pair diagram", id: "pair_panel", wandHref: "javascript:GF_droste_mixer.generateSelectedDiagram('pair')", controls: ["resize"]}, container);
-        GF_panel.load({caption: "thread diagram", id: "thread_panel", wandHref: "javascript:GF_droste_mixer.generateSelectedDiagram('thread')", controls: ["resize", "color"]}, container);
+        q = "patchWidth=3&patchHeight=7&c1=tc&d1=tctc&e1=tc&c2=tctc&e2=tctc&d3=tc&shiftColsSE=2&shiftRowsSE=2&shiftColsSW=-2&shiftRowsSW=2&footside=-5,B-,-2,b-,,&tile=831,4-7,-5-&headside=5-,-c,6-,-c"
+        const pairWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('pair');GF_droste_mixer.setStitchEvents()";
+        const threadWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('thread')";
+        GF_panel.load({caption: "pair diagram", id: "pair_panel", wandHref: pairWandHref, controls: ["resize"]}, container);
+        GF_panel.load({caption: "thread diagram", id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"]}, container);
         GF_panel.load({caption: "options", id: "options", controls: ["resize"]}, container);
         document.getElementById('options').innerHTML = `
         <div style="display: flex; width: 100%;">

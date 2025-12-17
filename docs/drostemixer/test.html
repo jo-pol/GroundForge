@@ -12,12 +12,17 @@
         .gf_panel > div {width: 100%; overflow: auto; resize:both; border: #ddd solid 1px; }
         .gf_panel > figcaption {width: 100%; box-sizing: border-box; background-color: #ddd; }
         .gf_panel > figcaption img, .gf_panel > figcaption > input {margin-left: 0.5em;}
+        #drosteStitches {width: 40em;}
     </style>
 </head>
 <body>
 <p>
+
+    <label for="basicStitchInput">Basic stitch:</label>
     <input type="text" id="basicStitchInput" placeholder="Example: clct" />
-    <input type="text" id="drosteStitches" style="width:40em" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
+
+    <label for="drosteStitches">Droste applied to basic stitch:</label>
+    <input type="text" id="drosteStitches" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
 </p>
 <script>GF_droste_mixer.load(document.body)</script>
 </body>
