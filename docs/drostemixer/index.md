@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Droste mixer
+title: wip
 javascript:
   - d3.v4.min.js
   - GroundForge-opt.js
@@ -8,8 +8,8 @@ javascript:
   - panel.js
 ---
 
-Under development.
-==================
+Work in progress
+================
 
 TO DO: 
 * Galleries: [basic stitches](/API/stitch-gallery) and recipes for snow with
