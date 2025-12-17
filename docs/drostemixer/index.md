@@ -34,7 +34,7 @@ TO DO:
     .gf_panel > div {width: 100%; overflow: auto; resize:both; border: #ddd solid 1px; }
     .gf_panel > figcaption {width: 100%; height:2.5em; padding-bottom: 0.2em; box-sizing: border-box; display: flex; align-items: flex-end; background-color: #ddd; }
     .gf_panel > figcaption img, .gf_panel > figcaption > input {margin-left: 0.5em;}
-    .gf_panel > div > div > textarea { height: 7em;}
+    .gf_panel > div > div > textarea { height: 5.5em;}
     .gf_panel > div > div > input[type="radio"] { margin-right: 0.5em;}
     #drosteStitches {width: 100%}
 </style>

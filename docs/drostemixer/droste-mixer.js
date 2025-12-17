@@ -79,7 +79,7 @@ const GF_droste_mixer = {
     drosteControls(stepNr){
         return `
             <div style="display: flex; width: 100%;">${this.stepRadiosControls(stepNr)}
-              <textarea id="droste${stepNr}" style="flex: 1 1 0; width: 0; min-width: 0;" placeholder="droste step ${stepNr}, default all: ctc"></textarea>
+              <textarea id="droste${stepNr}" style="flex: 1 1 0; width: 0; min-width: 0;" spellcheck="false" placeholder="droste step ${stepNr}, default all: ctc"></textarea>
             </div>
           `;
     },
