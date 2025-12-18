@@ -1,6 +1,6 @@
 const GF_droste_mixer = {
     generateSelectedDiagram(diagramType) {
-        const checkedStep = document.querySelector(`input[name="${diagramType}Step"]:checked`);
+        const checkedStep = document.querySelector(`input[name="${diagramType}Step"]`);
         const drosteIndex = parseInt(checkedStep.value, 10);
         const steps = [];
         for (let i = 1; i <= drosteIndex; i++) {
@@ -70,18 +70,8 @@ const GF_droste_mixer = {
                 title.parentNode.addEventListener('click', stitchHandler)
         });
     },
-    stepRadiosControls(stepNr){
-        return `
-              <input type="radio" name="pairStep" value="${stepNr}" style="flex: 0 0 auto;" ${stepNr===0?'checked':''}>
-              <input type="radio" name="threadStep" value="${stepNr}" style="flex: 0 0 auto;" ${stepNr===1?'checked':''}>
-          `;
-    },
     drosteControls(stepNr){
-        return `
-            <div style="display: flex; width: 100%;">${this.stepRadiosControls(stepNr)}
-              <textarea id="droste${stepNr}" style="flex: 1 1 0; width: 0; min-width: 0;" spellcheck="false" placeholder="droste step ${stepNr}, default all: ctc"></textarea>
-            </div>
-          `;
+        return `<textarea id="droste${stepNr}" spellcheck="false" placeholder="droste step ${stepNr}, default all: ctc"></textarea>`;
     },
     load(container) {
         let q = new URL(document.documentURI).search.slice(1);
@@ -91,26 +81,21 @@ const GF_droste_mixer = {
         const threadWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('thread')";
         GF_panel.load({caption: "pair diagram", id: "pair_panel", wandHref: pairWandHref, controls: ["resize"]}, container);
         GF_panel.load({caption: "thread diagram", id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"]}, container);
-        GF_panel.load({caption: "options", id: "options", controls: ["resize"]}, container);
+        GF_panel.load({caption: "advanced", id: "options", controls: ["resize"]}, container);
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('threadStep').value = 1;
         document.getElementById('options').innerHTML = `
-        <div style="display: flex; width: 100%;">${this.stepRadiosControls(0)}
-          <input type="text" id="droste0" value="${q}" style="flex: 1 1 0; width: 0; min-width: 0;">
-        </div>${this.drosteControls(1)}${this.drosteControls(2)}${this.drosteControls(3)}
+          Specs collected from URL and clicks on pair diagrams:
+          <input type="text" id="droste0" value="${q}">
+          <textarea id="droste1" spellcheck="false" placeholder="droste step 1, default all: ctc">${params.get('droste2')}</textarea>
+          <textarea id="droste2" spellcheck="false" placeholder="droste step 2, default all: ctc">${params.get('droste3')}</textarea>
+          <textarea id="droste2" spellcheck="false" placeholder="droste step 3, default all: ctc">${params.get('droste4')}</textarea>
         `;
-        for(let kv of q.split(/&/)){
-            let eq = kv.indexOf('=');
-            let key = eq === -1 ? kv : kv.slice(0, eq);
-            let value = eq === -1 ? '' : kv.slice(eq + 1);
-            if(key.startsWith('droste')) {
-                const elementId = 'droste'+((key.slice(6)*1)-1);
-                document.getElementById(elementId).value = value;
-            }
+        for (let type of ["pair", "thread"]) {
+            document.getElementById(`${type}`)
+                .addEventListener('change', function () {
+                    document.getElementById(type + '_panel').style.backgroundColor = "rgb(238, 238, 238)";
+                });
         }
-        document.querySelectorAll('input[name="droste"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                document.getElementById('pair_panel').style.backgroundColor = "rgb(238, 238, 238)";
-                document.getElementById('thread_panel').style.backgroundColor = "rgb(238, 238, 238)";
-            });
-        });
     }
 }

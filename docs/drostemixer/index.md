@@ -14,12 +14,11 @@ Work in progress
 TO DO: 
 * Galleries: [basic stitches](/API/stitch-gallery) and recipes for snow with
   [two droste steps](/GroundForge-help/snow-mix/droste/), maybe even
-  some [patterns](https://jo-pol.github.io/GroundForge-help/snow-mix/droste/#more-freedom).
-* Flip buttons, apply to all (ignored only for step-0?).
-* Radios -> twisters in diagram captions. Both values should also be added to the URL query, defaulting to zero for both.
-* Rename rest of _options_ to _advanced_, maybe initially minimized (values collected from URL and pair diagram interactions)
+  some [patterns](https://jo-pol.github.io/GroundForge-help/snow-mix/droste/#more-freedom)
+* Flip buttons, apply to all (ignored only for step-0?)
+* Maybe show _advanced_ initially minimized
 * Legend panel (should wrap nicely)
-* Link to changed pattern
+* Link to changed pattern, add step numbers to URL
 
 ---
 

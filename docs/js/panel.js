@@ -22,6 +22,7 @@ const GF_panel = {
         ` : '';
         const type = hasColorChooser ? "thread" : "pair";
         const diagram = wandHref ? `
+            <input type="number" min="0" max="2" value="0" id="${type}Step" name="${type}Step" title="droste step" >
             <a href="${wandHref}"  title="reload"><img src="/GroundForge/images/wand.png" alt="wand"></a>
             <a href="javascript:GF_panel.nudge('${id}','${type}')" title="resume animation"><img src="/GroundForge/images/play.png" alt="resume"></a>
             <a href="javascript:GF_panel.downloadSVG('${id}')" title="download"><img src="/GroundForge/images/download.jpg" alt="download"></a>
