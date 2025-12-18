@@ -32,10 +32,11 @@ TO DO:
     .gf_panel {display: inline-block; margin: 4px;}
     .gf_panel > div {width: 100%; overflow: auto; resize:both; border: #ddd solid 1px; }
     .gf_panel > figcaption {width: 100%; height:2.5em; padding-bottom: 0.2em; box-sizing: border-box; display: flex; align-items: flex-end; background-color: #ddd; }
-    .gf_panel > figcaption img, .gf_panel > figcaption > input {margin-left: 0.5em;}
-    .gf_panel > div > div > textarea { height: 5.5em;}
-    .gf_panel > div > div > input[type="radio"] { margin-right: 0.5em;}
-    #drosteStitches {width: 100%}
+    .gf_panel > figcaption img {margin-left: 0.5em; width: 3em;}
+    .gf_panel > figcaption > input {margin-left: 0.5em; width: 3em; height: 2.2em;}
+    .gf_panel > div > textarea { height: 6em; width: 100%}
+    .gf_panel > div > input { width: 100%}
+    #drosteStitches {width: 100%;}
 </style>
 <script src="droste-mixer.js" type="text/javascript"></script>
 <script>GF_droste_mixer.load(document.getElementById('main-content'))</script>

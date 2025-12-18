@@ -1,7 +1,6 @@
 const GF_droste_mixer = {
     generateSelectedDiagram(diagramType) {
-        const checkedStep = document.querySelector(`input[name="${diagramType}Step"]`);
-        const drosteIndex = parseInt(checkedStep.value, 10);
+        const drosteIndex = parseInt(document.getElementById(`${diagramType}Step`).value, 10);
         const steps = [];
         for (let i = 1; i <= drosteIndex; i++) {
             const textarea = document.getElementById(`droste${i}`);
@@ -36,8 +35,7 @@ const GF_droste_mixer = {
                     path.style.opacity = 0.5;
                 }
             }
-            const checkedDroste = document.querySelector('input[name="pairStep"]:checked');
-            const drosteIndex = parseInt(checkedDroste.value, 10);
+            const drosteIndex = parseInt(document.getElementById("pairStep").value);
             const drosteInput = document.getElementById('droste'+ drosteIndex);
             if (drosteIndex===0){
                 for(let kv of drosteInput.value.split(/&/)){
@@ -70,9 +68,6 @@ const GF_droste_mixer = {
                 title.parentNode.addEventListener('click', stitchHandler)
         });
     },
-    drosteControls(stepNr){
-        return `<textarea id="droste${stepNr}" spellcheck="false" placeholder="droste step ${stepNr}, default all: ctc"></textarea>`;
-    },
     load(container) {
         let q = new URL(document.documentURI).search.slice(1);
         if (q === "" || !q.includes('shiftRows'))
@@ -82,20 +77,21 @@ const GF_droste_mixer = {
         GF_panel.load({caption: "pair diagram", id: "pair_panel", wandHref: pairWandHref, controls: ["resize"]}, container);
         GF_panel.load({caption: "thread diagram", id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"]}, container);
         GF_panel.load({caption: "advanced", id: "options", controls: ["resize"]}, container);
-        const params = new URLSearchParams(window.location.search);
+        const params = new URLSearchParams(q);
         document.getElementById('threadStep').value = 1;
         document.getElementById('options').innerHTML = `
           Specs collected from URL and clicks on pair diagrams:
           <input type="text" id="droste0" value="${q}">
-          <textarea id="droste1" spellcheck="false" placeholder="droste step 1, default all: ctc">${params.get('droste2')}</textarea>
-          <textarea id="droste2" spellcheck="false" placeholder="droste step 2, default all: ctc">${params.get('droste3')}</textarea>
-          <textarea id="droste2" spellcheck="false" placeholder="droste step 3, default all: ctc">${params.get('droste4')}</textarea>
+          <textarea id="droste1" spellcheck="false" placeholder="droste step 1, default all: ctc">${params.get('droste2') || ''}</textarea>
+          <textarea id="droste2" spellcheck="false" placeholder="droste step 3, default all: ctc">${params.get('droste3') || ''}</textarea>
+          <textarea id="droste3" spellcheck="false" placeholder="droste step 3, default all: ctc">${params.get('droste4') || ''}</textarea>
         `;
         for (let type of ["pair", "thread"]) {
-            document.getElementById(`${type}`)
-                .addEventListener('change', function () {
+            document.querySelectorAll(`input[name="${type}Step"]`).forEach(function (elem) {
+                elem.addEventListener('change', function () {
                     document.getElementById(type + '_panel').style.backgroundColor = "rgb(238, 238, 238)";
                 });
+            });
         }
     }
 }
