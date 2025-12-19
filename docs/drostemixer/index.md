@@ -1,6 +1,7 @@
 ---
 layout: default
 title: wip
+sidebar: mix4snow
 javascript:
   - d3.v4.min.js
   - GroundForge-opt.js
@@ -12,11 +13,10 @@ Work in progress
 ================
 
 TO DO: 
-* Galleries: [basic stitches](/API/stitch-gallery) and recipes for snow with
-  [two droste steps](/GroundForge-help/snow-mix/droste/), maybe even
-  some [patterns](https://jo-pol.github.io/GroundForge-help/snow-mix/droste/#more-freedom)
-* Flip buttons, apply to all (ignored only for step-0?)
-* Maybe show _advanced_ initially minimized
+* Toggle between galleries (minimize all but one): [basic stitches](/API/stitch-gallery) and [4/8-pair snow](/GroundForge-help/snow-mix/droste/#48-pair-recipes).
+  Maybe even some basic [pattern](/GroundForge-help/snow-mix/droste/#more-freedom)
+  variations, finally linking to the catalogues (tesselace first).
+* Flip buttons, apply to all (ignored only for step-0?), beep on invalid input.
 * Legend panel (should wrap nicely)
 * Link to changed pattern, add step numbers to URL
 

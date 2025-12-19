@@ -102,7 +102,7 @@ const GF_droste_mixer = {
         const containerWidth = `'${container.style.width}'`;
         const pairWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('pair');GF_droste_mixer.setStitchEvents()";
         const threadWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('thread')";
-        GF_panel.load({caption: "select (3/6-pair)", id: "snow3", controls: ["resize"], size:{width:'´100%', height: '3em'}}, container);
+        GF_panel.load({caption: "select (3/6-pair)", id: "snow3", controls: ["resize"], size:{width:'´100%', height: '50px'}}, container);
         GF_panel.load({caption: "tweak", id: "tweak", size:{width:'´100%', height: '6em'}}, container);
         GF_panel.load({caption: "pairs", id: "pair_panel", wandHref: pairWandHref, controls: ["resize"]}, container);
         GF_panel.load({caption: "threads", id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"]}, container);
