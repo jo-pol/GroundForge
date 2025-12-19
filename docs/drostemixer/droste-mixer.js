@@ -119,7 +119,7 @@ const GF_droste_mixer = {
         const gallery = document.getElementById('snow3')
         for(let [img,basicStitch,droste] of GF_droste_mixer.snow3){
             gallery.insertAdjacentHTML('beforeend',`
-                <a href="javascript:GF_droste_mixer.setRecipe('${basicStitch}','${droste}')"><img src="../mix4snow/images/snow3/${img}.png" alt="${img}"></a>
+                <a href="javascript:GF_droste_mixer.setRecipe('${basicStitch}','${droste}')"><img src="../mix4snow/${img}.png" alt="${img}"></a>
             `);
 
         }
