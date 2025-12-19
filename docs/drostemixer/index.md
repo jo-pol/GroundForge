@@ -28,7 +28,7 @@ TO DO:
     .gf_panel > figcaption {width: 100%; height:2.5em; padding-bottom: 0.2em; box-sizing: border-box; display: flex; align-items: flex-end; background-color: #ddd; }
     .gf_panel > figcaption img {margin-left: 0.5em;}
     .gf_panel > figcaption > input {margin-left: 0.5em; width: 3em;}
-    .gf_panel > div > textarea { height: 6em; width: 100%}
+    .gf_panel > div > textarea { height: 4.5em; width: 100%}
     .gf_panel > div > input { width: 100%}
     #drosteStitches {width: 100%;}
 </style>

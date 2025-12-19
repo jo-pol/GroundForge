@@ -77,6 +77,7 @@ const GF_droste_mixer = {
         container.insertAdjacentHTML('beforeend',`<p>
             <label for="basicStitchInput">Basic stitch:</label>
             <input type="text" id="basicStitchInput" value="lclc" placeholder="Example: clct"/>
+            <br>
             <label for="drosteStitches">Droste applied to basic stitch:</label>
             <input type="text" id="drosteStitches" value="tc,rclcrc,clcrcl,ct" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
         </p>`);
@@ -84,7 +85,6 @@ const GF_droste_mixer = {
         GF_panel.load({caption: "threads", id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"]}, container);
         GF_panel.load({caption: "advanced", id: "specs", controls: ["resize"]}, container);
         const params = new URLSearchParams(q);
-        document.getElementById('specs').style.height = "2";
         document.getElementById('threadStep').value = 1;
         document.getElementById('specs').innerHTML = `
           Specs collected from URL and clicks:
@@ -93,6 +93,7 @@ const GF_droste_mixer = {
           <textarea id="droste2" spellcheck="false" placeholder="droste step 3, default all: ctc">${params.get('droste3') || ''}</textarea>
           <textarea id="droste3" spellcheck="false" placeholder="droste step 3, default all: ctc">${params.get('droste4') || ''}</textarea>
         `;
+        document.getElementById('specs').style.height = "2";
         for (let type of ["pair", "thread"]) {
             document.querySelectorAll(`input[name="${type}Step"]`).forEach(function (elem) {
                 elem.addEventListener('change', function () {
