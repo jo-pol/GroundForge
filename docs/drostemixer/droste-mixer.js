@@ -93,7 +93,7 @@ const GF_droste_mixer = {
           <textarea id="droste2" spellcheck="false" placeholder="droste step 3, default all: ctc">${params.get('droste3') || ''}</textarea>
           <textarea id="droste3" spellcheck="false" placeholder="droste step 3, default all: ctc">${params.get('droste4') || ''}</textarea>
         `;
-        document.getElementById('specs').style.height = "2";
+        document.getElementById('specs').style.height = "2px";
         for (let type of ["pair", "thread"]) {
             document.querySelectorAll(`input[name="${type}Step"]`).forEach(function (elem) {
                 elem.addEventListener('change', function () {
