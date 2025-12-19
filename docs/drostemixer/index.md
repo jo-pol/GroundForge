@@ -22,18 +22,12 @@ TO DO:
 
 ---
 
-<label for="basicStitchInput">Basic stitch:</label>
-<input type="text" id="basicStitchInput" value="lclc" placeholder="Example: clct" />
-
-<label for="drosteStitches">Droste applied to basic stitch:</label>
-<input type="text" id="drosteStitches" value="tc,rclcrc,clcrcl,ct" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
-
 <style>
     .gf_panel {display: inline-block; margin: 4px;}
     .gf_panel > div {width: 100%; overflow: auto; resize:both; border: #ddd solid 1px; }
     .gf_panel > figcaption {width: 100%; height:2.5em; padding-bottom: 0.2em; box-sizing: border-box; display: flex; align-items: flex-end; background-color: #ddd; }
     .gf_panel > figcaption img {margin-left: 0.5em;}
-    .gf_panel > figcaption > input {margin-left: 0.5em; width: 3em; height: 2.2em;}
+    .gf_panel > figcaption > input {margin-left: 0.5em; width: 3em;}
     .gf_panel > div > textarea { height: 6em; width: 100%}
     .gf_panel > div > input { width: 100%}
     #drosteStitches {width: 100%;}

@@ -74,13 +74,20 @@ const GF_droste_mixer = {
             q = "patchWidth=3&patchHeight=7&c1=tc&d1=tctc&e1=tc&c2=tctc&e2=tctc&d3=tc&shiftColsSE=2&shiftRowsSE=2&shiftColsSW=-2&shiftRowsSW=2&footside=-5,B-,-2,b-,,&tile=831,4-7,-5-&headside=5-,-c,6-,-c&droste2=ctct,twist=ct"
         const pairWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('pair');GF_droste_mixer.setStitchEvents()";
         const threadWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('thread')";
+        container.insertAdjacentHTML('beforeend',`<p>
+            <label for="basicStitchInput">Basic stitch:</label>
+            <input type="text" id="basicStitchInput" value="lclc" placeholder="Example: clct"/>
+            <label for="drosteStitches">Droste applied to basic stitch:</label>
+            <input type="text" id="drosteStitches" value="tc,rclcrc,clcrcl,ct" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
+        </p>`);
         GF_panel.load({caption: "pairs", id: "pair_panel", wandHref: pairWandHref, controls: ["resize"]}, container);
         GF_panel.load({caption: "threads", id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"]}, container);
-        GF_panel.load({caption: "advanced", id: "options", controls: ["resize"]}, container);
+        GF_panel.load({caption: "advanced", id: "specs", controls: ["resize"]}, container);
         const params = new URLSearchParams(q);
+        document.getElementById('specs').style.height = "2";
         document.getElementById('threadStep').value = 1;
-        document.getElementById('options').innerHTML = `
-          Specs collected from URL and clicks on pair diagrams:
+        document.getElementById('specs').innerHTML = `
+          Specs collected from URL and clicks:
           <input type="text" id="droste0" value="${q}">
           <textarea id="droste1" spellcheck="false" placeholder="droste step 1, default all: ctc">${params.get('droste2') || ''}</textarea>
           <textarea id="droste2" spellcheck="false" placeholder="droste step 3, default all: ctc">${params.get('droste3') || ''}</textarea>
