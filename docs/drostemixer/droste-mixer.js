@@ -125,7 +125,7 @@ const GF_droste_mixer = {
         }
         let q = new URL(document.documentURI).search.slice(1);
         if (q === "" || !q.includes('shiftRows')) {
-            q = "patchWidth=3&patchHeight=7&c1=tc&d1=tctc&e1=tc&c2=tctc&e2=tctc&d3=tc&shiftColsSE=2&shiftRowsSE=2&shiftColsSW=-2&shiftRowsSW=2&footside=-5,B-,-2,b-,,&tile=831,4-7,-5-&headside=5-,-c,6-,-c&droste2=ctct,twist=ct"
+            q = "patchWidth=7&patchHeight=7&footside=---x,---4,---x,---4&tile=5-,-5,5-,-5&headside=-,c,-,c,&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=2&shiftRowsSE=2&e1=ctc&l2=llctt&f2=ctc&d2=rrctt&e3=ctc&l4=llctt&f4=ctc&d4=rrctt"
         }
         const params = new URLSearchParams(q);
         document.getElementById('threadStep').value = 1;
