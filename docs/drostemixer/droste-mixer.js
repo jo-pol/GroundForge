@@ -1,4 +1,34 @@
 const GF_droste_mixer = {
+    snow3: [
+        ['123-a',   'rcrcrc','crc,crclctc,ctcrc,rcl,c,c'],
+        ['123-b',   'lclclc','rcl,ctc,crcllc,crrclcr,ctc,cl'],
+        ['132-a',   'rcrcrc','-,ctc,ctc,ctc,ctc,ctc'],
+        ['312-a',   'lclc','tctc,rctcl,ctcl,ctct'],
+        ['321-a',   'lclc','tc,rclcrc,clcrcl,ct'],
+        ['321-b',   'rcrc','tcr,lctc,ctcr,lct'],
+        ['321-c',   'rcrc','tcl,lctc,ctcr,rct'],
+        ['321-d',   'rcrc','t,lctc,ctcr,ctct'],
+        ['126453-a','lclclc','-,c,ctctc,ctctc,ctctc,c'],
+        ['153426-a','lclclc','t,rc,ctc,rclcr,ctcl,ct'],
+        ['154326-a','lclc','t,rctc,ctctcl,ctct'],
+        ['156423-a','rcrcrc','-,cr,crcl,clcrclcr,rcrcl,c'],
+        ['234561-a','lclclc','cr,crcl,clcr,crcl,clcr,c'],
+        ['263451-a','rcrcrc','-,cr,crcl,clcr,crcl,cl'],
+        ['321546-a','lclclc','-,cl,ctcl,crcrcr,rcr,c'],
+        ['321654-a','lclclclc','-,lc,crc,clcrc,clcr,c,crc,cl'],
+        ['321654-b','rcrcrc','-,cr,ctcr,clclc,lcl,c'],
+        ['354612-a','rcrcrc','ctct,ct,ct,ct,cl,ctc'],
+        ['426153-a','rcrc','lc,crclclc,crcrclc,cr'],
+        ['426153-b','rcrcrc','cr,ctcl,ctcr,ctcl,ctc,c'],
+        ['456123-a','rcrc','r,lrc,ctcr,lct'],
+        ['456123-b','rcrcrcrc','c,ctc,rclc,ctc,rc,rcl,ctc,c'],
+        ['462513-a','lclc','rc,clcrc,clctc,rcl'],
+        ['564312-a','rcrc','lcrc,clcrc,clcrc,clcr'],
+        ['563412-a','rcrcrc','-,c,ctctc,clcr,rctc,c'],
+        ['623451-a','lclclclc','r,c,crc,ctc,lcrcl,ctc,crc,cl'],
+        ['623541-a','lclclc','-,ctc,ct,crc,ctc,ctc'],
+        ['623541-b','rcrcrc','-,cl,ctctcr,ct,ctc,c']
+    ],
     generateSelectedDiagram(diagramType) {
         const drosteIndex = parseInt(document.getElementById(`${diagramType}Step`).value, 10);
         const steps = [];
@@ -69,21 +99,34 @@ const GF_droste_mixer = {
         });
     },
     load(container) {
-        let q = new URL(document.documentURI).search.slice(1);
-        if (q === "" || !q.includes('shiftRows'))
-            q = "patchWidth=3&patchHeight=7&c1=tc&d1=tctc&e1=tc&c2=tctc&e2=tctc&d3=tc&shiftColsSE=2&shiftRowsSE=2&shiftColsSW=-2&shiftRowsSW=2&footside=-5,B-,-2,b-,,&tile=831,4-7,-5-&headside=5-,-c,6-,-c&droste2=ctct,twist=ct"
+        const containerWidth = `'${container.style.width}'`;
         const pairWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('pair');GF_droste_mixer.setStitchEvents()";
         const threadWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('thread')";
-        container.insertAdjacentHTML('beforeend',`<p>
+        GF_panel.load({caption: "select (3/6-pair)", id: "snow3", controls: ["resize"], size:{width:'´100%', height: '3em'}}, container);
+        GF_panel.load({caption: "tweak", id: "tweak", size:{width:'´100%', height: '6em'}}, container);
+        GF_panel.load({caption: "pairs", id: "pair_panel", wandHref: pairWandHref, controls: ["resize"]}, container);
+        GF_panel.load({caption: "threads", id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"]}, container);
+        GF_panel.load({caption: "advanced", id: "specs", controls: ["resize"]}, container);
+        document.getElementById('tweak').insertAdjacentHTML('beforeend',`<p>
             <label for="basicStitchInput">Basic stitch:</label>
             <input type="text" id="basicStitchInput" value="lclc" placeholder="Example: clct"/>
             <br>
             <label for="drosteStitches">Droste applied to basic stitch:</label>
             <input type="text" id="drosteStitches" value="tc,rclcrc,clcrcl,ct" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
         </p>`);
-        GF_panel.load({caption: "pairs", id: "pair_panel", wandHref: pairWandHref, controls: ["resize"]}, container);
-        GF_panel.load({caption: "threads", id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"]}, container);
-        GF_panel.load({caption: "advanced", id: "specs", controls: ["resize"]}, container);
+        document.getElementById('tweak').parentNode.style.width = '100%';
+        document.getElementById('tweak').parentNode.style.width = '100%';
+        const gallery = document.getElementById('snow3')
+        for(let [img,basicStitch,droste] of GF_droste_mixer.snow3){
+            gallery.insertAdjacentHTML('beforeend',`
+                <a href="javascript:GF_droste_mixer.setRecipe('${basicStitch}','${droste}')"><img src="../mix4snow/images/snow3/${img}.png" alt="${img}"></a>
+            `);
+
+        }
+        let q = new URL(document.documentURI).search.slice(1);
+        if (q === "" || !q.includes('shiftRows')) {
+            q = "patchWidth=3&patchHeight=7&c1=tc&d1=tctc&e1=tc&c2=tctc&e2=tctc&d3=tc&shiftColsSE=2&shiftRowsSE=2&shiftColsSW=-2&shiftRowsSW=2&footside=-5,B-,-2,b-,,&tile=831,4-7,-5-&headside=5-,-c,6-,-c&droste2=ctct,twist=ct"
+        }
         const params = new URLSearchParams(q);
         document.getElementById('threadStep').value = 1;
         document.getElementById('specs').innerHTML = `
@@ -101,5 +144,9 @@ const GF_droste_mixer = {
                 });
             });
         }
+    },
+    setRecipe(basicStitch, drosteStitches) {
+        document.getElementById('basicStitchInput').value = basicStitch;
+        document.getElementById('drosteStitches').value = drosteStitches;
     }
 }
