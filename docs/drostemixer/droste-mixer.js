@@ -2,21 +2,21 @@ const GF_droste_mixer = {
     snow3: [
         ['123-a',   'rcrcrc','crc,crclctc,ctcrc,rcl,c,c'],
         ['123-b',   'lclclc','rcl,ctc,crcllc,crrclcr,ctc,cl'],
-        ['132-a',   'rcrcrc','-,ctc,ctc,ctc,ctc,ctc'],
+        ['132-a',   'crcrc','ctc,ctc,ctc,ctc,ctc'],
         ['312-a',   'lclc','tctc,rctcl,ctcl,ctct'],
         ['321-a',   'lclc','tc,rclcrc,clcrcl,ct'],
         ['321-b',   'rcrc','tcr,lctc,ctcr,lct'],
         ['321-c',   'rcrc','tcl,lctc,ctcr,rct'],
         ['321-d',   'rcrc','t,lctc,ctcr,ctct'],
-        ['126453-a','lclclc','-,c,ctctc,ctctc,ctctc,c'],
+        ['126453-a','clclc','c,ctctc,ctctc,ctctc,c'],
         ['153426-a','lclclc','t,rc,ctc,rclcr,ctcl,ct'],
         ['154326-a','lclc','t,rctc,ctctcl,ctct'],
-        ['156423-a','rcrcrc','-,cr,crcl,clcrclcr,rcrcl,c'],
+        ['156423-a','crcrc','cr,crcl,clcrclcr,rcrcl,c'],
         ['234561-a','lclclc','cr,crcl,clcr,crcl,clcr,c'],
-        ['263451-a','rcrcrc','-,cr,crcl,clcr,crcl,cl'],
-        ['321546-a','lclclc','-,cl,ctcl,crcrcr,rcr,c'],
-        ['321654-a','lclclclc','-,lc,crc,clcrc,clcr,c,crc,cl'],
-        ['321654-b','rcrcrc','-,cr,ctcr,clclc,lcl,c'],
+        ['263451-a','crcrc','cr,crcl,clcr,crcl,cl'],
+        ['321546-a','clclc','cl,ctcl,crcrcr,rcr,c'],
+        ['321654-a','clclclc','lc,crc,clcrc,clcr,c,crc,cl'],
+        ['321654-b','crcrc','cr,ctcr,clclc,lcl,c'],
         ['354612-a','rcrcrc','ctct,ct,ct,ct,cl,ctc'],
         ['426153-a','rcrc','lc,crclclc,crcrclc,cr'],
         ['426153-b','rcrcrc','cr,ctcl,ctcr,ctcl,ctc,c'],
@@ -24,10 +24,10 @@ const GF_droste_mixer = {
         ['456123-b','rcrcrcrc','c,ctc,rclc,ctc,rc,rcl,ctc,c'],
         ['462513-a','lclc','rc,clcrc,clctc,rcl'],
         ['564312-a','rcrc','lcrc,clcrc,clcrc,clcr'],
-        ['563412-a','rcrcrc','-,c,ctctc,clcr,rctc,c'],
+        ['563412-a','crcrc','c,ctctc,clcr,rctc,c'],
         ['623451-a','lclclclc','r,c,crc,ctc,lcrcl,ctc,crc,cl'],
-        ['623541-a','lclclc','-,ctc,ct,crc,ctc,ctc'],
-        ['623541-b','rcrcrc','-,cl,ctctcr,ct,ctc,c']
+        ['623541-a','clclc','ctc,ct,crc,ctc,ctc'],
+        ['623541-b','crcrc','cl,ctctcr,ct,ctc,c']
     ],
     generateSelectedDiagram(diagramType) {
         const drosteIndex = parseInt(document.getElementById(`${diagramType}Step`).value, 10);
@@ -98,12 +98,33 @@ const GF_droste_mixer = {
                 title.parentNode.addEventListener('click', stitchHandler)
         });
     },
+    flip_b2d() {
+        function flip(n) {
+            return n.value.toLowerCase()
+                .replaceAll(/[^crlt]/g, '')
+                .replace(/l/g, "R")
+                .replace(/r/g, "L");
+        }
+        const n = document.getElementById('drosteStitches');
+        n.value = flip(n);
+        this.flipRadio(document.getElementById('basicStitchInput'));
+        n.focus();
+    },
+
+    flip_b2p() {
+        const n = document.getElementById('drosteStitches');
+        n.value = n.value.toLowerCase()
+            .replaceAll('.', ',')
+            .replaceAll(/[^crlt,]/g, '')
+            .split(",").reverse().join("");
+        n.focus();
+    },
     load(container) {
         const containerWidth = `'${container.style.width}'`;
         const pairWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('pair');GF_droste_mixer.setStitchEvents()";
         const threadWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('thread')";
-        GF_panel.load({caption: "select (3/6-pair)", id: "snow3", controls: ["resize"], size:{width:'´100%', height: '50px'}}, container);
-        GF_panel.load({caption: "tweak", id: "tweak", size:{width:'´100%', height: '6em'}}, container);
+        GF_panel.load({caption: "select (3/6-pair)", id: "snow3", controls: ["resize"], size:{width:'´98%', height: '50px'}}, container);
+        GF_panel.load({caption: "tweak selected", id: "tweak", size:{width:'´98%', height: 'auto'}}, container);
         GF_panel.load({caption: "pairs", id: "pair_panel", wandHref: pairWandHref, controls: ["resize"]}, container);
         GF_panel.load({caption: "threads", id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"]}, container);
         GF_panel.load({caption: "advanced", id: "specs", controls: ["resize"]}, container);
@@ -113,14 +134,16 @@ const GF_droste_mixer = {
             <br>
             <label for="drosteStitches">Droste applied to basic stitch:</label>
             <input type="text" id="drosteStitches" value="tc,rclcrc,clcrcl,ct" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
+            Flip:
+            <button onclick="GF_droste_mixer.flip_b2d()">&harr;</button>
+            <button onclick="GF_droste_mixer.flip_b2p()">&varr;</button>
+            <button onclick="GF_droste_mixer.flip_b2d();flip_b2p()">both</button>
         </p>`);
         document.getElementById('tweak').parentNode.style.width = '100%';
-        document.getElementById('tweak').parentNode.style.width = '100%';
-        const gallery = document.getElementById('snow3')
+        const snow3Gallery = document.getElementById('snow3')
         for(let [img,basicStitch,droste] of GF_droste_mixer.snow3){
-            gallery.insertAdjacentHTML('beforeend',`
-                <a href="javascript:GF_droste_mixer.setRecipe('${basicStitch}','${droste}')"><img src="../mix4snow/${img}.png" alt="${img}"></a>
-            `);
+            snow3Gallery.insertAdjacentHTML('beforeend',
+                `<a href="javascript:GF_droste_mixer.setRecipe('${basicStitch}','${droste}')"><img src="../mix4snow/${img}.png" alt="${img}"></a> `);
 
         }
         let q = new URL(document.documentURI).search.slice(1);
