@@ -137,7 +137,7 @@ const GF_droste_mixer = {
             Flip:
             <button onclick="GF_droste_mixer.flip_b2d()">&harr;</button>
             <button onclick="GF_droste_mixer.flip_b2p()">&varr;</button>
-            <button onclick="GF_droste_mixer.flip_b2d();flip_b2p()">both</button>
+            <button onclick="GF_droste_mixer.flip_b2d();GF_droste_mixer.flip_b2p()">both</button>
         </p>`);
         document.getElementById('tweak').parentNode.style.width = '100%';
         const snow3Gallery = document.getElementById('snow3')
