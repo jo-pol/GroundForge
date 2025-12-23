@@ -48,7 +48,7 @@ const GF_droste_mixer = {
             if(newStitchValue === '') return;
 
             const selectedText = event.currentTarget.textContent;
-            let selectedStitchId = selectedText.replace(/.* /,"");
+            const selectedStitchId = selectedText.replace(/.* /,"");
 
             const pairPanel = document.getElementById('pair_panel');
             for (let title of pairPanel.getElementsByTagName('title')) {
@@ -86,8 +86,16 @@ const GF_droste_mixer = {
             for (let i = 0; i < newDrosteStitches.length; i++) {
                 extraSteps += `\n${selectedStitchId}${i}=${newDrosteStitches[i]}`;
             }
-            const elementId = 'droste'+ (drosteIndex + 1);
-            document.getElementById(elementId).value += extraSteps;
+            const drosteId = 'droste'+ (drosteIndex + 1);
+            document.getElementById(drosteId).value += extraSteps;
+            const droste0 = document.getElementById('droste0');
+            const params = new URLSearchParams(droste0.value);
+            // params.set(selectedStitchId, newStitchValue);
+            params.set(drosteId, extraSteps.replaceAll('\n',',').trim());
+            // droste0.value = params.toString();
+            document.getElementById(drosteId).value += extraSteps;
+            document.getElementById('selfRef').href = '?'+params.toString();
+            document.getElementById('selfRef').style.display = 'inline';
         }
 
         Array.from(document
@@ -101,14 +109,15 @@ const GF_droste_mixer = {
     flip_b2d() {
         function flip(n) {
             return n.value.toLowerCase()
-                .replaceAll(/[^crlt]/g, '')
+                .replaceAll(/[^crlt,.]/g, '')
                 .replace(/l/g, "R")
-                .replace(/r/g, "L");
+                .replace(/r/g, "L")
+                .toLowerCase();
         }
         const n = document.getElementById('drosteStitches');
         n.value = flip(n);
-        this.flipRadio(document.getElementById('basicStitchInput'));
-        n.focus();
+        const n2 = document.getElementById('basicStitchInput');
+        n2.value = flip(n2);
     },
 
     flip_b2p() {
@@ -119,16 +128,23 @@ const GF_droste_mixer = {
             .split(",").reverse().join("");
         n.focus();
     },
+    twister(type){
+      return `${type}s <input type='number' min='0' max='2' value='0' id='${type}Step' name='${type}Step' title='droste step' >`
+    },
     load(container) {
-        const containerWidth = `'${container.style.width}'`;
         const pairWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('pair');GF_droste_mixer.setStitchEvents()";
         const threadWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('thread')";
+        let q = new URL(document.documentURI).search.slice(1);
+        if (q === "" || !q.includes('shiftRows')) {
+            q = "patchWidth=7&patchHeight=7&footside=---x,---4,---x,---4&tile=5-,-5,5-,-5&headside=-,c,-,c,&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=2&shiftRowsSE=2&e1=lclc&l2=llctt&f2=rcrc&d2=rrctt&e3=rcrc&l4=llctt&f4=lclc&d4=rrctt&droste2=e12=clcrcl,e13=ct,f42=ctcl,e32=f22=ctcr,e33=f43=lct,e31=f21=lctc,e11=rclcrc,f23=rct,f41=rctc,e10=tc,f20=tcl,e30=f40=tcr"
+        }
         GF_panel.load({caption: "select (3/6-pair)", id: "snow3", controls: ["resize"], size:{width:'´98%', height: '50px'}}, container);
         GF_panel.load({caption: "tweak selected", id: "tweak", size:{width:'´98%', height: 'auto'}}, container);
-        GF_panel.load({caption: "pairs", id: "pair_panel", wandHref: pairWandHref, controls: ["resize"]}, container);
-        GF_panel.load({caption: "threads", id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"]}, container);
+        container.insertAdjacentHTML('beforeend',`<p><a href="?${q}" id="selfRef" style="display:none;">Updated pattern</a></p>`);
+        GF_panel.load({caption: this.twister("pair"), id: "pair_panel", wandHref: pairWandHref, controls: ["resize"]}, container);
+        GF_panel.load({caption: this.twister("thread"), id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"]}, container);
         GF_panel.load({caption: "advanced", id: "specs", controls: ["resize"]}, container);
-        document.getElementById('tweak').insertAdjacentHTML('beforeend',`<p>
+        document.getElementById('tweak').insertAdjacentHTML('beforeend',`
             <label for="basicStitchInput">Basic stitch:</label>
             <input type="text" id="basicStitchInput" value="lclc" placeholder="Example: clct"/>
             <br>
@@ -138,27 +154,23 @@ const GF_droste_mixer = {
             <button onclick="GF_droste_mixer.flip_b2d()">&harr;</button>
             <button onclick="GF_droste_mixer.flip_b2p()">&varr;</button>
             <button onclick="GF_droste_mixer.flip_b2d();GF_droste_mixer.flip_b2p()">both</button>
-        </p>`);
-        document.getElementById('tweak').parentNode.style.width = '100%';
+        `);
+        document.getElementById('tweak').parentNode.style = `width: calc(100% - 7px)`
         const snow3Gallery = document.getElementById('snow3')
         for(let [img,basicStitch,droste] of GF_droste_mixer.snow3){
             snow3Gallery.insertAdjacentHTML('beforeend',
                 `<a href="javascript:GF_droste_mixer.setRecipe('${basicStitch}','${droste}')"><img src="../mix4snow/${img}.png" alt="${img}"></a> `);
 
         }
-        let q = new URL(document.documentURI).search.slice(1);
-        if (q === "" || !q.includes('shiftRows')) {
-            q = "patchWidth=7&patchHeight=7&footside=---x,---4,---x,---4&tile=5-,-5,5-,-5&headside=-,c,-,c,&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=2&shiftRowsSE=2&e1=lclc&l2=llctt&f2=rcrc&d2=rrctt&e3=rcrc&l4=llctt&f4=lclc&d4=rrctt&droste2=e12=clcrcl,e13=ct,f42=ctcl,e32=f22=ctcr,e33=f43=lct,e31=f21=lctc,e11=rclcrc,f23=rct,f41=rctc,e10=tc,f20=tcl,e30=f40=tcr"
-        }
         const params = new URLSearchParams(q);
         document.getElementById('threadStep').value = 1;
         document.getElementById('specs').innerHTML = `
-          <a href="javascript:cleanupStitches('droste1');cleanupStitches('droste2');cleanupStitches('droste3')" title="Reduce panel content"><img src="/GroundForge/images/broom.png"></a>
+          <a href="javascript:['droste1','droste2','droste3'].forEach(GF_droste_mixer.cleanupStitches)" title="Reduce panel content"><img src="/GroundForge/images/broom.png"></a>
           Specs collected from URL and clicks:
           <input type="text" id="droste0" value="${q}">
-          <textarea id="droste1" spellcheck="false" placeholder="droste step 1, default all: ctc">${params.get('droste2') || ''}</textarea>
-          <textarea id="droste2" spellcheck="false" placeholder="droste step 3, default all: ctc">${params.get('droste3') || ''}</textarea>
-          <textarea id="droste3" spellcheck="false" placeholder="droste step 3, default all: ctc">${params.get('droste4') || ''}</textarea>
+          <textarea id="droste1" spellcheck="false" placeholder="droste step 1, default all: ctc">${(params.get('droste2')||'').replaceAll(',','\n') || ''}</textarea>
+          <textarea id="droste2" spellcheck="false" placeholder="droste step 3, default all: ctc">${(params.get('droste3')||'').replaceAll(',','\n') || ''}</textarea>
+          <textarea id="droste3" spellcheck="false" placeholder="droste step 3, default all: ctc">${(params.get('droste4')||'').replaceAll(',','\n') || ''}</textarea>
         `;
         document.getElementById('specs').style.height = "2px";
         for (let type of ["pair", "thread"]) {
