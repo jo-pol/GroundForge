@@ -21,6 +21,14 @@
     </style>
 </head>
 <body>
-<script>GF_droste_mixer.load(document.body)</script>
+<script>
+    GF_droste_mixer.load(document.body)
+    const basePath = window.location.origin.startsWith('http')
+        ? window.location.origin + '/GroundForge/docs'
+        : window.location.pathname.replace(/GroundForge.*/g, '/GroundForge/docs');
+    document.querySelectorAll('img').forEach(img => {
+        img.src = img.src.replace(/.*GroundForge/g, basePath);
+    });
+</script>
 </body>
 </html>
