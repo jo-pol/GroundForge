@@ -13,7 +13,7 @@ Work in progress
 ================
 
 TO DO: 
-* Fix flip, fix link to updated pattern (and add step nrs)
+* Fix link to updated pattern (and add step nrs)
 * Toggle between galleries (minimize all but one): [basic stitches](/API/stitch-gallery) and [4/8-pair snow](/GroundForge-help/snow-mix/droste/#48-pair-recipes).
   Maybe even some basic [pattern](/GroundForge-help/snow-mix/droste/#more-freedom)
   variations, finally linking to the catalogues (tesselace first).
@@ -30,6 +30,7 @@ TO DO:
     .gf_panel > div > textarea { height: 4.5em; width: 98%}
     .gf_panel > div > input { width: 98%}
     #tweak {resize: none;}
+    #tweak input {margin-left: 2em;}
     #snow3 {resize: vertical;}
     #drosteStitches {width: 100%;}
 </style>

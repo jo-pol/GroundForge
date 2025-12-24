@@ -124,8 +124,8 @@ const GF_droste_mixer = {
         const n = document.getElementById('drosteStitches');
         n.value = n.value.toLowerCase()
             .replaceAll('.', ',')
-            .replaceAll(/[^crlt,]/g, '')
-            .split(",").reverse().join("");
+            .replaceAll(/[^crlt,.]/g, '')
+            .split(/[,.]/).reverse().join(",");
         n.focus();
     },
     twister(type){
