@@ -29,7 +29,7 @@ TO DO:
     .gf_panel > div > textarea { height: 4.5em; width: 100%}
     .gf_panel > div > input { width: calc(100% - 1px)}
     #tweak {resize: none;}
-    #tweak input {width: calc(100% - 2.5em); margin-left: 2px; }
+    #tweak input {width: calc(100% - 2.5em); margin-left: 2em; }
     #snow3 {resize: vertical;}
 </style>
 <script src="droste-mixer.js" type="text/javascript"></script>
