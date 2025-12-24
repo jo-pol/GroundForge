@@ -158,6 +158,7 @@ const GF_droste_mixer = {
             <button onclick="GF_droste_mixer.flip_b2p()">&varr;</button>
             <button onclick="GF_droste_mixer.flip_b2d();GF_droste_mixer.flip_b2p()">both</button>
         `);
+        document.getElementById('tweak').parentNode.style = `width: calc(100% - 7px)`
         const snow3Gallery = document.getElementById('snow3')
         for(let [img,basicStitch,droste] of GF_droste_mixer.snow3){
             snow3Gallery.insertAdjacentHTML('beforeend',
