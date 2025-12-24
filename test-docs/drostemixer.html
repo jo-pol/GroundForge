@@ -14,11 +14,10 @@
         .gf_panel > figcaption img {margin-left: 0.5em;}
         .gf_panel > figcaption > input {margin-left: 0.5em; width: 3em;}
         .gf_panel > div > textarea { height: 6em; width: 100%}
-        .gf_panel > div > input { width: 100%}
+        .gf_panel > div > input { width: calc(100% - 1px)}
         #tweak {resize: none;}
-        #tweak input {margin-left: 2em;}
+        #tweak input {width: calc(100% - 2em); margin-left: 2em; }
         #snow3 {resize: vertical;}
-        #drosteStitches {width: 100%;}
     </style>
 </head>
 <body>
@@ -30,6 +29,7 @@
     document.querySelectorAll('img').forEach(img => {
         img.src = img.src.replace(/.*GroundForge/g, basePath);
     });
+    GF_panel.resetDimensions('specs');
 </script>
 </body>
 </html>

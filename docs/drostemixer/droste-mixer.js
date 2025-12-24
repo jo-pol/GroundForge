@@ -44,7 +44,8 @@ const GF_droste_mixer = {
     setStitchEvents() {
         function stitchHandler(event) {
             const newStitchValue = document.getElementById('basicStitchInput').value;
-            const newDrosteStitches = document.getElementById('drosteStitches').value.split(/[,.]/);
+            const drosteValue = document.getElementById('drosteStitches').value;
+            const newDrosteStitches = drosteValue === '' ? [] : drosteValue.split(/[,.]/);
             if(newStitchValue === '') return;
 
             const selectedText = event.currentTarget.textContent;
@@ -78,7 +79,7 @@ const GF_droste_mixer = {
             } else {
                 drosteInput.value += `\n${selectedStitchId}=${newStitchValue}`;
             }
-            if (newDrosteStitches.length !== newStitchValue.length) {
+            if (newDrosteStitches.length > 0 && newDrosteStitches.length !== newStitchValue.length) {
                 // TODO beep
                 return;
             }
@@ -90,11 +91,13 @@ const GF_droste_mixer = {
             document.getElementById(drosteId).value += extraSteps;
             const droste0 = document.getElementById('droste0');
             const params = new URLSearchParams(droste0.value);
-            // params.set(selectedStitchId, newStitchValue);
+            params.set(selectedStitchId, newStitchValue);
+            params.set("pairStep", document.getElementById('pairStep').value);
+            params.set("threadStep", document.getElementById('threadStep').value);
             params.set(drosteId, extraSteps.replaceAll('\n',',').trim());
-            // droste0.value = params.toString();
+            droste0.value = decodeURIComponent(params.toString());
             document.getElementById(drosteId).value += extraSteps;
-            document.getElementById('selfRef').href = '?'+params.toString();
+            document.getElementById('selfRef').href = '?'+droste0.value
             document.getElementById('selfRef').style.display = 'inline';
         }
 
@@ -155,7 +158,6 @@ const GF_droste_mixer = {
             <button onclick="GF_droste_mixer.flip_b2p()">&varr;</button>
             <button onclick="GF_droste_mixer.flip_b2d();GF_droste_mixer.flip_b2p()">both</button>
         `);
-        document.getElementById('tweak').parentNode.style = `width: calc(100% - 7px)`
         const snow3Gallery = document.getElementById('snow3')
         for(let [img,basicStitch,droste] of GF_droste_mixer.snow3){
             snow3Gallery.insertAdjacentHTML('beforeend',
@@ -163,7 +165,8 @@ const GF_droste_mixer = {
 
         }
         const params = new URLSearchParams(q);
-        document.getElementById('threadStep').value = 1;
+        document.getElementById('pairStep').value = params.get('pairStep') || 0;
+        document.getElementById('threadStep').value = params.get('threadStep') || 1;
         document.getElementById('specs').innerHTML = `
           <a href="javascript:['droste1','droste2','droste3'].forEach(GF_droste_mixer.cleanupStitches)" title="Reduce panel content"><img src="/GroundForge/images/broom.png"></a>
           Specs collected from URL and clicks:
