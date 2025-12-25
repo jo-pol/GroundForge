@@ -1,4 +1,4 @@
-const GF_droste_mixer = {
+const GF_hybrid = {
     snow3: [
         ['123-a',   'rcrcrc','crc,crclctc,ctcrc,rcl,c,c'],
         ['123-b',   'lclclc','rcl,ctc,crcllc,crrclcr,ctc,cl'],
@@ -135,8 +135,8 @@ const GF_droste_mixer = {
       return `${type}s <input type='number' min='0' max='2' value='0' id='${type}Step' name='${type}Step' title='droste step' >`
     },
     load(container) {
-        const pairWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('pair');GF_droste_mixer.setStitchEvents()";
-        const threadWandHref = "javascript:GF_droste_mixer.generateSelectedDiagram('thread')";
+        const pairWandHref = "javascript:GF_hybrid.generateSelectedDiagram('pair');GF_hybrid.setStitchEvents()";
+        const threadWandHref = "javascript:GF_hybrid.generateSelectedDiagram('thread')";
         let q = new URL(document.documentURI).search.slice(1);
         if (q === "" || !q.includes('shiftRows')) {
             q = "patchWidth=7&patchHeight=7&footside=---x,---4,---x,---4&tile=5-,-5,5-,-5&headside=-,c,-,c,&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=2&shiftRowsSE=2&e1=lclc&l2=llctt&f2=rcrc&d2=rrctt&e3=rcrc&l4=llctt&f4=lclc&d4=rrctt&droste2=e12=clcrcl,e13=ct,f42=ctcl,e32=f22=ctcr,e33=f43=lct,e31=f21=lctc,e11=rclcrc,f23=rct,f41=rctc,e10=tc,f20=tcl,e30=f40=tcr"
@@ -154,22 +154,22 @@ const GF_droste_mixer = {
             <label for="drosteStitches">Droste applied to basic stitch:</label>
             <input type="text" id="drosteStitches" value="tc,rclcrc,clcrcl,ct" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
             Flip:
-            <button onclick="GF_droste_mixer.flip_b2d()">&harr;</button>
-            <button onclick="GF_droste_mixer.flip_b2p()">&varr;</button>
-            <button onclick="GF_droste_mixer.flip_b2d();GF_droste_mixer.flip_b2p()">both</button>
+            <button onclick="GF_hybrid.flip_b2d()">&harr;</button>
+            <button onclick="GF_hybrid.flip_b2p()">&varr;</button>
+            <button onclick="GF_hybrid.flip_b2d();GF_hybrid.flip_b2p()">both</button>
         `);
         document.getElementById('tweak').parentNode.style = `width: calc(100% - 7px)`
         const snow3Gallery = document.getElementById('snow3')
-        for(let [img,basicStitch,droste] of GF_droste_mixer.snow3){
+        for(let [img,basicStitch,droste] of GF_hybrid.snow3){
             snow3Gallery.insertAdjacentHTML('beforeend',
-                `<a href="javascript:GF_droste_mixer.setRecipe('${basicStitch}','${droste}')"><img src="../mix4snow/${img}.png" alt="${img}"></a> `);
+                `<a href="javascript:GF_hybrid.setRecipe('${basicStitch}','${droste}')"><img src="../mix4snow/${img}.png" alt="${img}"></a> `);
 
         }
         const params = new URLSearchParams(q);
         document.getElementById('pairStep').value = params.get('pairStep') || 0;
         document.getElementById('threadStep').value = params.get('threadStep') || 1;
         document.getElementById('specs').innerHTML = `
-          <a href="javascript:['droste1','droste2','droste3'].forEach(GF_droste_mixer.cleanupStitches)" title="Reduce panel content"><img src="/GroundForge/images/broom.png"></a>
+          <a href="javascript:['droste1','droste2','droste3'].forEach(GF_hybrid.cleanupStitches)" title="Reduce panel content"><img src="/GroundForge/images/broom.png"></a>
           Specs collected from URL and clicks:
           <input type="text" id="droste0" value="${q}">
           <textarea id="droste1" spellcheck="false" placeholder="droste step 1, default all: ctc">${(params.get('droste2')||'').replaceAll(',','\n') || ''}</textarea>

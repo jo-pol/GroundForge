@@ -15,20 +15,38 @@ title: API
     * [pair.html](#pairhtml)
     * [thread.html](#threadhtml)
   * [Download SVG](#download-svg)
-* [Stitch gallery](stitch-gallery)
 
 GroundForge is a library to generate tread diagrams from pair diagrams for bobbin lace.
 
 Current User Interfaces
 =======================
 
-* The former pattern editor is split into
+* The former editor (aka the page _tiles_) is split into
   * [pattern editor](/GroundForge/pattern)
   * [stitches](/GroundForge/stitches)
   * [droste](/GroundForge/droste)
 * [nets](/GroundForge/nets)
 * [snow mixer](/GroundForge/mix4snow)
 * [symmetry](/GroundForge/symmetry)
+
+Work in progress
+================
+
+The next sections describe API's and demonstrators that caused
+too much copy-pasting between the current user interfaces.
+Some new scripts are started to share code between the user interfaces.
+
+* [Stitch gallery](stitch-gallery) shares code between _nets_, _stitches_ and _droste_.
+* [Panels](API/panels) is started to be resued on several existing pages before developing new pages.
+  The gallery is not yet felxible enough yet to be used along with the panels.
+* [Hybrid](APY/hybrid) was started to test the _panel.js_ code.
+  It seems to lead to a page that combines functionality of
+  the pages _stitches_, _droste_ and a variant of the _snow mixer_.
+  This variant wass inspired when writing 
+  [snow with two droste steps](/GroundForge-help/snow-mix/droste).
+  By hiding or not generating certain components, the script could be used
+  to replace the three pages.
+  
 
 Demonstrators
 =============

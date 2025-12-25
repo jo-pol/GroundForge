@@ -16,8 +16,8 @@ TO DO:
 * Add galleries for [basic stitches](/GroundForge/API/stitch-gallery) and [4/8-pair snow](/GroundForge-help/snow-mix/droste/#48-pair-recipes).
   Maybe even some basic [pattern](/GroundForge-help/snow-mix/droste/#more-freedom)
   variations, finally linking to the catalogues (tesselace first).
-  Toggle between these galleries (minimize all but one).
-* Apply to all (apply to ignored only for step-0?), beep on invalid input.
+* Toggle between the galleries (minimize all but the last one opened).
+* Apply to all (apply to ignored for step-0?), beep on invalid input (tweak and spinners).
 * Legend panel (should wrap nicely)
 * Update sidebar subjects
 
@@ -33,5 +33,5 @@ TO DO:
     #tweak input {width: calc(100% - 2.5em); margin-left: 2em; }
     #snow3 {resize: vertical;}
 </style>
-<script src="droste-mixer.js" type="text/javascript"></script>
-<script>GF_droste_mixer.load(document.getElementById('main-content'))</script>
+<script src="../js/hybrid.js" type="text/javascript"></script>
+<script>GF_hybrid.load(document.getElementById('main-content'))</script>

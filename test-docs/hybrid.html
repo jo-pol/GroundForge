@@ -5,7 +5,7 @@
     <script src="../docs/js/GroundForge-opt.js" type="text/javascript"></script>
     <script src="../docs/js/nudgePairs.js" type="text/javascript"></script>
     <script src="../docs/js/panel.js" type="text/javascript"></script>
-    <script src="../docs/drostemixer/droste-mixer.js" type="text/javascript"></script>
+    <script src="../docs/js/hybrid.js" type="text/javascript"></script>
     <title>Panel Test</title>
     <style>
         .gf_panel {display: inline-block; margin: 4px;}
@@ -22,7 +22,7 @@
 </head>
 <body>
 <script>
-    GF_droste_mixer.load(document.body)
+    GF_hybrid.load(document.body)
     const basePath = window.location.origin.startsWith('http')
         ? window.location.origin + '/GroundForge/docs'
         : window.location.pathname.replace(/GroundForge.*/g, '/GroundForge/docs');
