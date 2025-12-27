@@ -41,10 +41,11 @@ Some new scripts are started to share code between the user interfaces.
 * [Panels](panels) is started to be resued on several existing pages before developing new pages.
   The gallery is not yet felxible enough yet to be used along with the panels.
 * [Hybrid](hybrid) was started to test the _panel.js_ code.
-  It seems to lead to a page that combines functionality of
+  It is evolving into a page that combines functionality of
   the pages _stitches_, _droste_ and a variant of the _snow mixer_.
   This variant wass inspired when writing 
-  [snow with two droste steps](/GroundForge-help/snow-mix/droste).
+  [snow with two droste steps](/GroundForge-help/snow-mix/droste),
+  it connects the 3/6 pair snowflakes in an [asymmetric](//GroundForge-help/snow-mix/droste/#spiderysnowyasym-connections/) way.
   By hiding or not generating certain components, the script could be used
   to replace the three pages.
   
