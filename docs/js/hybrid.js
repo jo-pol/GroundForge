@@ -1,4 +1,5 @@
 const GF_hybrid = {
+    content_home: '..',
     snow3: [
         ['123-a',   'rcrcrc','crc,crclctc,ctcrc,rcl,c,c'],
         ['123-b',   'lclclc','rcl,ctc,crcllc,crrclcr,ctc,cl'],
@@ -141,7 +142,8 @@ const GF_hybrid = {
         if (q === "" || !q.includes('shiftRows')) {
             q = "patchWidth=7&patchHeight=7&footside=---x,---4,---x,---4&tile=5-,-5,5-,-5&headside=-,c,-,c,&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=2&shiftRowsSE=2&e1=lclc&l2=llctt&f2=rcrc&d2=rrctt&e3=rcrc&l4=llctt&f4=lclc&d4=rrctt&droste2=e12=clcrcl,e13=ct,f42=ctcl,e32=f22=ctcr,e33=f43=lct,e31=f21=lctc,e11=rclcrc,f23=rct,f41=rctc,e10=tc,f20=tcl,e30=f40=tcr"
         }
-        GF_panel.load({caption: "select (3/6-pair)", id: "snow3", controls: ["resize"], size:{width:'´98%', height: '50px'}}, container);
+        GF_panel.load({caption: "Initialize (w.i.p.)", id: "pattern", controls: ["resize"], size:{width:'470px', height: '200px'}}, container);
+        GF_panel.load({caption: "select (3/6-pair)", id: "snow3", controls: ["resize"], size:{width:'98%', height: '50px'}}, container);
         GF_panel.load({caption: "tweak selected", id: "tweak", size:{width:'´98%', height: 'auto'}}, container);
         container.insertAdjacentHTML('beforeend',`<p><a href="?${q}" id="selfRef" style="display:none;">Updated pattern</a></p>`);
         GF_panel.load({caption: this.twister("pair"), id: "pair_panel", wandHref: pairWandHref, controls: ["resize"]}, container);
@@ -159,10 +161,25 @@ const GF_hybrid = {
             <button onclick="GF_hybrid.flip_b2d();GF_hybrid.flip_b2p()">both</button>
         `);
         document.getElementById('tweak').parentNode.style = `width: calc(100% - 7px)`
+        document.getElementById('pattern').setAttribute('title', 'TODO: automatically activate wand of pairs (step 0), after clicking a linked letter');
+        const svgFile = `${this.content_home}/images/tiling/index.svg`;
+        fetch(svgFile)
+            .then(response => {
+                return response.text();
+            })
+            .then(svg => {
+                document.getElementById('pattern').insertAdjacentHTML('beforeend', svg);
+                document.querySelectorAll("#pattern > svg a").forEach(el => {
+                    const link = (el.getAttribute('xlink:href'));
+                    if(link.classList.contains('?')) {
+                        el.setAttribute('href', '?pairStep=0&'+ link.split('?')[1]);
+                    }
+                })
+            });
         const snow3Gallery = document.getElementById('snow3')
         for(let [img,basicStitch,droste] of GF_hybrid.snow3){
             snow3Gallery.insertAdjacentHTML('beforeend',
-                `<a href="javascript:GF_hybrid.setRecipe('${basicStitch}','${droste}')"><img src="../mix4snow/${img}.png" alt="${img}"></a> `);
+                `<a href="javascript:GF_hybrid.setRecipe('${basicStitch}','${droste}')"><img src="${this.content_home}/mix4snow/${img}.png" alt="${img}"></a> `);
 
         }
         const params = new URLSearchParams(q);
