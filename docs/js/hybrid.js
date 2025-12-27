@@ -171,7 +171,7 @@ const GF_hybrid = {
                 document.getElementById('pattern').insertAdjacentHTML('beforeend', svg);
                 document.querySelectorAll("#pattern > svg a").forEach(el => {
                     const link = (el.getAttribute('xlink:href'));
-                    if(link.classList.includes('?')) {
+                    if(link.includes('?')) {
                         el.setAttribute('href', '?pairStep=0&'+ link.split('?')[1]);
                     }
                 })
