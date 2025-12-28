@@ -178,7 +178,7 @@ const GF_hybrid = {
                 const svgEl = document.querySelector('#pattern > svg');
                 const w = svgEl.getAttribute('width').replace(/[^0-9]/g, '');
                 const h = svgEl.getAttribute('height').replace(/[^0-9]/g, '');
-                const t = `scale(0.75) translate(${-w*5/8},${-h*5/8})`;
+                const t = `scale(0.5) translate(${-w*3/4},${-h*3/4})`;
                 svgEl.setAttribute('transform', t)
             });
         const snow3Gallery = document.getElementById('snow3')
