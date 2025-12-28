@@ -184,6 +184,8 @@ const GF_hybrid = {
                     const link = (el.getAttribute('xlink:href'));
                     if(link.includes('?')) {
                         el.setAttribute('href', `javascript:GF_hybrid.setPattern('${link.split('?')[1]}')`);
+                    } else {
+                        el.setAttribute('href', link.replace(/.*io.GroundForge/ , '/GroundForge'));
                     }
                 })
                 const svgEl = document.querySelector('#pattern > svg');
