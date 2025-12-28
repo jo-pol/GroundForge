@@ -178,8 +178,10 @@ const GF_hybrid = {
                 const svgEl = document.querySelector('#pattern > svg');
                 const w = svgEl.getAttribute('width').replace(/[^0-9]/g, '');
                 const h = svgEl.getAttribute('height').replace(/[^0-9]/g, '');
-                const t = `scale(0.6) translate(${-w*(1/8)},${-h*(4/8)})`;
-                document.querySelector('#pattern > svg > g').setAttribute('transform', t)
+                const t = `scale(0.65) translate(${-w*(1/8)},${-h*(4/8)})`;
+                svgEl.setAttribute('width', (w*0.65)+'mm');
+                svgEl.setAttribute('height', (h*0.65)+'mm')
+                // document.querySelector('#pattern > svg > g').setAttribute('transform', t)
             });
         const snow3Gallery = document.getElementById('snow3')
         for(let [img,basicStitch,droste] of GF_hybrid.snow3){
