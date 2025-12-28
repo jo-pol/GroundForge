@@ -142,7 +142,7 @@ const GF_hybrid = {
         if (q === "" || !q.includes('shiftRows')) {
             q = "patchWidth=7&patchHeight=7&footside=---x,---4,---x,---4&tile=5-,-5,5-,-5&headside=-,c,-,c,&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=2&shiftRowsSE=2&e1=lclc&l2=llctt&f2=rcrc&d2=rrctt&e3=rcrc&l4=llctt&f4=lclc&d4=rrctt&droste2=e12=clcrcl,e13=ct,f42=ctcl,e32=f22=ctcr,e33=f43=lct,e31=f21=lctc,e11=rclcrc,f23=rct,f41=rctc,e10=tc,f20=tcl,e30=f40=tcr"
         }
-        GF_panel.load({caption: "Initialize (w.i.p.)", id: "pattern", controls: ["resize"], size:{width:'470px', height: '200px'}}, container);
+        GF_panel.load({caption: "Initialize (w.i.p.)", id: "pattern", controls: ["resize"], size:{width:'300px', height: '200px'}}, container);
         GF_panel.load({caption: "select (3/6-pair)", id: "snow3", controls: ["resize"], size:{width:'98%', height: '50px'}}, container);
         GF_panel.load({caption: "tweak selected", id: "tweak", size:{width:'´98%', height: 'auto'}}, container);
         container.insertAdjacentHTML('beforeend',`<p><a href="?${q}" id="selfRef" style="display:none;">Updated pattern</a></p>`);
@@ -178,7 +178,7 @@ const GF_hybrid = {
                 const svgEl = document.querySelector('#pattern > svg');
                 const w = svgEl.getAttribute('width').replace(/[^0-9]/g, '');
                 const h = svgEl.getAttribute('height').replace(/[^0-9]/g, '');
-                const t = `scale(0.75) translate(${-w*(1/8)},${-h*(4/8)})`;
+                const t = `scale(0.6) translate(${-w*(1/8)},${-h*(4/8)})`;
                 document.querySelector('#pattern > svg > g').setAttribute('transform', t)
             });
         const snow3Gallery = document.getElementById('snow3')

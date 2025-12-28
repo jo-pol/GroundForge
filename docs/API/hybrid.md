@@ -14,8 +14,6 @@ Work in progress
 
 TO DO: 
 * Add galleries for [basic stitches](/GroundForge/API/stitch-gallery) and [4/8-pair snow](/GroundForge-help/snow-mix/droste/#48-pair-recipes).
-  Maybe even some basic [pattern](/GroundForge-help/snow-mix/droste/#more-freedom)
-  variations, finally linking to the catalogues (tesselace first).
 * Toggle between the galleries (minimize all but the last one opened).
 * Apply to all (apply to ignored for step-0?), beep on invalid input (tweak and spinners).
 * Legend panel (should wrap nicely)
