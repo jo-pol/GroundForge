@@ -123,6 +123,18 @@ const GF_hybrid = {
         const n2 = document.getElementById('basicStitchInput');
         n2.value = flip(n2);
     },
+    setPattern(q) {
+        document.getElementById('pairStep').value = 0;
+        document.getElementById('threadStep').value = 0;
+        document.getElementById('droste0').value = q;
+        document.getElementById('droste1').value = '';
+        document.getElementById('droste2').value = '';
+        document.getElementById('droste3').value = '';
+        this.generateSelectedDiagram('pair');
+        GF_hybrid.setStitchEvents();
+        document.getElementById('selfRef').style.display = 'none';
+        document.getElementById('thread_panel').innerHTML = '';
+    },
 
     flip_b2p() {
         const n = document.getElementById('drosteStitches');
@@ -142,7 +154,7 @@ const GF_hybrid = {
         if (q === "" || !q.includes('shiftRows')) {
             q = "patchWidth=7&patchHeight=7&footside=---x,---4,---x,---4&tile=5-,-5,5-,-5&headside=-,c,-,c,&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=2&shiftRowsSE=2&e1=lclc&l2=llctt&f2=rcrc&d2=rrctt&e3=rcrc&l4=llctt&f4=lclc&d4=rrctt&droste2=e12=clcrcl,e13=ct,f42=ctcl,e32=f22=ctcr,e33=f43=lct,e31=f21=lctc,e11=rclcrc,f23=rct,f41=rctc,e10=tc,f20=tcl,e30=f40=tcr"
         }
-        GF_panel.load({caption: "Initialize (w.i.p.)", id: "pattern", controls: ["resize"], size:{width:'300px', height: '200px'}}, container);
+        GF_panel.load({caption: "Initialize (w.i.p.)", id: "pattern", controls: ["resize"], size:{width:'300px', height: '150px'}}, container);
         GF_panel.load({caption: "select (3/6-pair)", id: "snow3", controls: ["resize"], size:{width:'98%', height: '50px'}}, container);
         GF_panel.load({caption: "tweak selected", id: "tweak", size:{width:'´98%', height: 'auto'}}, container);
         container.insertAdjacentHTML('beforeend',`<p><a href="?${q}" id="selfRef" style="display:none;">Updated pattern</a></p>`);
@@ -160,8 +172,7 @@ const GF_hybrid = {
             <button onclick="GF_hybrid.flip_b2p()">&varr;</button>
             <button onclick="GF_hybrid.flip_b2d();GF_hybrid.flip_b2p()">both</button>
         `);
-        document.getElementById('tweak').parentNode.style = `width: calc(100% - 7px)`
-        document.getElementById('pattern').setAttribute('title', 'TODO: automatically activate wand of pairs (step 0), after clicking a linked letter');
+        document.getElementById('tweak').parentNode.style = `width: calc(100% - 7px)`;
         const svgFile = `${this.content_home}/images/tiling/index.svg`;
         fetch(svgFile)
             .then(response => {
@@ -172,16 +183,16 @@ const GF_hybrid = {
                 document.querySelectorAll("#pattern > svg a").forEach(el => {
                     const link = (el.getAttribute('xlink:href'));
                     if(link.includes('?')) {
-                        el.setAttribute('href', '?pairStep=0&'+ (link.split('?')[1])+'#pairStep');
+                        el.setAttribute('href', `javascript:GF_hybrid.setPattern('${link.split('?')[1]}')`);
                     }
                 })
                 const svgEl = document.querySelector('#pattern > svg');
+                const units = svgEl.getAttribute('width').replace(/[0-9]/g, '');
                 const w = svgEl.getAttribute('width').replace(/[^0-9]/g, '');
                 const h = svgEl.getAttribute('height').replace(/[^0-9]/g, '');
-                const t = `scale(0.65) translate(${-w*(1/8)},${-h*(4/8)})`;
-                svgEl.setAttribute('width', (w*0.65)+'mm');
-                svgEl.setAttribute('height', (h*0.65)+'mm')
-                // document.querySelector('#pattern > svg > g').setAttribute('transform', t)
+                // scale by changing page dimensions
+                svgEl.setAttribute('width', (w*0.65)+units);
+                svgEl.setAttribute('height', (h*0.65)+units)
             });
         const snow3Gallery = document.getElementById('snow3')
         for(let [img,basicStitch,droste] of GF_hybrid.snow3){
