@@ -181,7 +181,7 @@ const GF_hybrid = {
             <button onclick="GF_hybrid.flip_b2d();GF_hybrid.flip_b2p()">both</button>
         `);
         document.getElementById('tweak').parentNode.style = `width: calc(100% - 7px)`;
-        const svgFile = `${this.content_home}/images/tiling/index.svg`;
+        const svgFile = `${this.content_home}/tileGallery/index.svg`;
         fetch(svgFile)
             .then(response => {
                 return response.text();
