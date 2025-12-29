@@ -135,7 +135,7 @@ const GF_hybrid = {
         document.getElementById('selfRef').style.display = 'none';
         document.getElementById('thread_panel').innerHTML = '';
         // scroll into view if too little is visible
-        const threadPanel = document.getElementById('thread_panel');
+        const threadPanel = document.getElementById('pair_panel');
         const rect = threadPanel.getBoundingClientRect();
         const vh = window.innerHeight || document.documentElement.clientHeight;
         const visibleHeight = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
