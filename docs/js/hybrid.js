@@ -134,6 +134,14 @@ const GF_hybrid = {
         GF_hybrid.setStitchEvents();
         document.getElementById('selfRef').style.display = 'none';
         document.getElementById('thread_panel').innerHTML = '';
+        // scroll into view if too little is visible
+        const threadPanel = document.getElementById('thread_panel');
+        const rect = threadPanel.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const visibleHeight = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
+        if (visibleHeight / rect.height < 0.3) {
+            threadPanel.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }
     },
 
     flip_b2p() {
