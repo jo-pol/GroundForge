@@ -39,7 +39,7 @@ Some new scripts are started to share code between the user interfaces.
 
 * [Stitch gallery](stitch-gallery) shares code between _nets_, _stitches_ and _droste_.
 * [Panels](panels) is started to be resued on several existing pages before developing new pages.
-  The gallery is not yet felxible enough yet to be used along with the panels.
+  The stitches gallery is not yet flexible enough to be used along with the panels.
 * [Hybrid](hybrid) was started to test the _panel.js_ code.
   It is evolving into a page that combines functionality of
   the pages _stitches_, _droste_ and a variant of the _snow mixer_.
@@ -48,6 +48,10 @@ Some new scripts are started to share code between the user interfaces.
   it connects the 3/6 pair snowflakes in an [asymmetric](//GroundForge-help/snow-mix/droste/#spiderysnowyasym-connections/) way.
   By hiding or not generating certain components, the script could be used
   to replace the three pages.
+* A [tiling gallery](/GroundForge/images/tiling/index.svg) 
+  is emerging for the hybrid page. 
+  This gallery may also have a use case for the
+  [pattern editor](/Grounforge/pattern) page.
   
 
 Demonstrators
