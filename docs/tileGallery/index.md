@@ -9,6 +9,8 @@ javascript:
 Pattern gallery
 ===============
 
+TODO: show previews of _all_ variants with links to the pattern page to create another variant.
+
 <style>
     .gf_panel {display: inline-block; margin: 4px;}
     .gf_panel > div {width: 98%; overflow: auto; resize:both; border: #ddd solid 1px; }
@@ -25,7 +27,7 @@ Pattern gallery
 function setPattern(q){
     GF_panel.diagramSVG({id: 'previews', query: q, type: 'pair', steps: 0},document.getElementById('previews'));
 }
-GF_panel.load({caption: "gallery", id: "patterns", controls: ["resize"], size:{width:'480px', height: '300px'}}, document.getElementById('main-content'));
+GF_panel.load({caption: " ", id: "patterns", controls: ["resize"], size:{width:'480px', height: '300px'}}, document.getElementById('main-content'));
 fetch('index.svg')
     .then(response => {
         return response.text();
