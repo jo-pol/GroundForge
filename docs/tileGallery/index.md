@@ -23,9 +23,9 @@ Pattern gallery
 </style>
 <script>
 function setPattern(q){
-    GF_panel.diagramSVG({id: 'preview', query: q, type: 'pair', steps: 0});
+    GF_panel.diagramSVG({id: 'preview', query: q, type: 'pair', steps: 0},document.getElementById('previews'));
 }
-GF_panel.load({caption: "gallery", id: "patterns", controls: ["resize"], size:{width:'450px', height: '150px'}}, document.getElementById('main-content'));
+GF_panel.load({caption: "gallery", id: "patterns", controls: ["resize"], size:{width:'480px', height: '300px'}}, document.getElementById('main-content'));
 fetch('index.svg')
     .then(response => {
         return response.text();
