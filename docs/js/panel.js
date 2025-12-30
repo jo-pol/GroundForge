@@ -6,8 +6,8 @@ const GF_panel = {
     ],
     panelSize: {width: '300px', height: '300px'}, // default panel size
 
-    load(config, parent) {
-        const { caption, id, wandHref, controls = [], size = this.panelSize } = config;
+    load(config) {
+        const { caption, id, wandHref, controls = [], size = this.panelSize, parent } = config;
         const isArray = Array.isArray(controls);
         const sizeStr = JSON.stringify(size)
             .replace(/\n/g, "")

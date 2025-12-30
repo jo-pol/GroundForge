@@ -12,13 +12,13 @@ GF_tiles = {
                     <a href="${element.getAttribute('href')}">pattern</a>&nbsp;or&nbsp;
                     <a href="${element.getAttribute('href').replace(/pattern.html/,'stitches.html')}">stitches</a>
                 `;
-                GF_panel.load({caption: caption, id: panelId, size:{width:'280px', height: '200px'}}, previewDiv);
+                GF_panel.load({caption: caption, id: panelId, size:{width:'280px', height: '200px'}, parent: previewDiv});
                 GF_panel.diagramSVG({id: panelId, query: q, type: 'pair'},previewDiv);
             })
         return false;
     },
     load(parent = document.body) {
-        GF_panel.load({caption: "w.i.p.", id: "patterns", controls: ["resize"], size:{width:'310px', height: '300px'}}, parent);
+        GF_panel.load({caption: "w.i.p.", id: "patterns", controls: ["resize"], size:{width:'310px', height: '300px'}, parent: parent});
         parent.insertAdjacentHTML('beforeend', `<div id="previews"></div>`);
         this.loadSvg({});
     },
