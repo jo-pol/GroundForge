@@ -1,5 +1,5 @@
 GF_tiles = {
-    content_home: '..',
+    content_home: '/GroundForge',
     showPreview(clickedElement){
         const previewDiv = document.getElementById('previews');
         previewDiv.innerHTML = '';
@@ -17,7 +17,7 @@ GF_tiles = {
     load(parent = document.body, jsAction = 'GF_tiles.showPreview(this)') {
         GF_panel.load({caption: " ", id: "patterns", controls: ["resize"], size:{width:'480px', height: '300px'}}, parent);
         parent.insertAdjacentHTML('beforeend', `<div id="previews"></div>`);
-        const svg = `${this.content_home}/docs/tileGallery/index.svg`;
+        const svg = `${this.content_home}/tileGallery/index.svg`;
         fetch(svg)
             .then(response => response.text())
             .then(svg => {
