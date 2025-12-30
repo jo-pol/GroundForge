@@ -6,7 +6,7 @@
     <script src="../docs/js/nudgePairs.js" type="text/javascript"></script>
     <script src="../docs/js/panel.js" type="text/javascript"></script>
     <script src="../docs/js/hybrid.js" type="text/javascript"></script>
-    <title>Panel Test</title>
+    <title>Tile Gallery Test</title>
     <style>
         .gf_panel {display: inline-block; margin: 4px;}
         .gf_panel > div {width: 100%; overflow: auto; resize:both; border: #ddd solid 1px; }
@@ -23,12 +23,12 @@
 <body>
 <script type="text/javascript" src="../docs/tileGallery/tile-gallery.js"></script>
 <script>
-    GF_hybrid.content_home = window.location.origin.startsWith('http')
+    GF_tiles.content_home = window.location.origin.startsWith('http')
         ? window.location.origin + '/GroundForge/docs'
         : window.location.pathname.replace(/GroundForge.*/g, '/GroundForge/docs');
     GF_tiles.load();
     document.querySelectorAll('figcaption img').forEach(img => {
-        img.src = img.src.replace(/.*GroundForge/g, GF_hybrid.content_home);
+        img.src = img.src.replace(/.*GroundForge/g, GF_tiles.content_home);
     });
 </script>
 </body>
