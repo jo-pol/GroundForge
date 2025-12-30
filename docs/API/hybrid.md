@@ -13,6 +13,9 @@ javascript:
 Work in progress
 ================
 
+Inspired by [mix snow with two droste steps](/GroundForge-help/snow-mix/droste).
+With a bit undressing the same script could also be used for a _stitches_ pagee or _droste_ page.
+
 TO DO: 
 * Add galleries for [basic stitches](/GroundForge/API/stitch-gallery) and [4/8-pair snow](/GroundForge-help/snow-mix/droste/#48-pair-recipes).
 * Toggle between the galleries (minimize all but the last one opened).

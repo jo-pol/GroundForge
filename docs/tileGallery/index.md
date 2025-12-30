@@ -10,11 +10,11 @@ Pattern gallery
 ===============
 
 
-**TODO**: Add more letters. 
-Split gallery in images per square to use full width of a desktop and not use too much width on a mobile device. 
-Links in last square are intended for another [wip](API/hybrid) page 
-(which is inspired by [mixing snow](/GroundForge-help/snow-mix/droste/) in two droste steps), the D.I.Y. on that square should link to this page. 
-Sidebar subjects?
+**TODO**:
+* More squares need linked letters. 
+* Split gallery in images per square to use full width of a desktop and not use too much width on a mobile device. 
+* Links in last square are intended for another [wip](API/hybrid) page, the D.I.Y. on that last square should link to this page. 
+* Sidebar subjects?
 
 ---
 
