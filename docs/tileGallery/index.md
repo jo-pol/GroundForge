@@ -9,7 +9,7 @@ javascript:
 Pattern gallery
 ===============
 
-TODO: show previews of _all_ variants with links to the pattern page to create another variant.
+Clicking one letter shows all variants.
 
 <style>
     .gf_panel {display: inline-block; margin: 4px;}
@@ -23,25 +23,6 @@ TODO: show previews of _all_ variants with links to the pattern page to create a
     #tweak input {width: calc(100% - 2.5em); margin-left: 2em; }
     #snow3 {resize: vertical;}
 </style>
-<script>
-function setPattern(q){
-    GF_panel.diagramSVG({id: 'previews', query: q, type: 'pair', steps: 0},document.getElementById('previews'));
-}
-GF_panel.load({caption: " ", id: "patterns", controls: ["resize"], size:{width:'480px', height: '300px'}}, document.getElementById('main-content'));
-fetch('index.svg')
-    .then(response => {
-        return response.text();
-    })
-    .then(svg => {
-        document.getElementById('patterns').insertAdjacentHTML('beforeend', svg);
-        document.querySelectorAll("#patterns > svg a").forEach(el => {
-            const link = (el.getAttribute('xlink:href'));
-            if(link.includes('?')) {
-                el.setAttribute('href', `javascript:setPattern('${link.split('?')[1]}')`);
-            } else {
-                el.setAttribute('href', link.replace(/.*io.GroundForge/ , '/GroundForge'));
-            }
-        })
-    });
-</script>
+<script type="text/javascript" src="tile-gallery.js"></script>
+<script> GF_tiles.load(document.getElementById('main-content')); </script>
 <div id="previews"> </div>
