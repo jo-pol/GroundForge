@@ -10,7 +10,7 @@ Pattern gallery
 ===============
 
 
-**TODO**: Add more letters, fix a broken footside. 
+**TODO**: Add more letters. 
 Split gallery in images per square to use full width of a desktop and not use too much width on a mobile device. 
 Links in last square are intended for another [wip](API/hybrid) page 
 (which is inspired by [mixing](/GroundForge-help/snow-mix/droste/) snow in two droste steps), this square should link to this page. 
