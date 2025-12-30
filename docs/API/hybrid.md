@@ -7,6 +7,7 @@ javascript:
   - GroundForge-opt.js
   - nudgePairs.js
   - panel.js
+  - hybrid.js
 ---
 
 Work in progress
@@ -31,5 +32,5 @@ TO DO:
     #tweak input {width: calc(100% - 2.5em); margin-left: 2em; }
     #snow3 {resize: vertical;}
 </style>
-<script src="../js/hybrid.js" type="text/javascript"></script>
+<script src="../tileGallery/tile-gallery.js" type="text/javascript"></script>
 <script>GF_hybrid.load(document.getElementById('main-content'))</script>

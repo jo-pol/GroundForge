@@ -1,6 +1,6 @@
 GF_tiles = {
     content_home: '/GroundForge',
-    showPreview(clickedElement){
+    showPreviews(clickedElement){
         const previewDiv = document.getElementById('previews');
         previewDiv.innerHTML = '';
         Array.from(clickedElement.parentElement.children)
@@ -14,23 +14,33 @@ GF_tiles = {
             })
         return false;
     },
-    load(parent = document.body, jsAction = 'GF_tiles.showPreview(this)') {
-        GF_panel.load({caption: " ", id: "patterns", controls: ["resize"], size:{width:'480px', height: '300px'}}, parent);
+    load(parent = document.body, jsAction) {
+        GF_panel.load({caption: " ", id: "patterns", controls: ["resize"], size:{width:'310px', height: '300px'}}, parent);
         parent.insertAdjacentHTML('beforeend', `<div id="previews"></div>`);
+        this.loadSvg(jsAction);
+    },
+    loadSvg(jsAction = 'GF_tiles.showPreviews(this)', containerId = 'patterns') {
         const svg = `${this.content_home}/tileGallery/index.svg`;
         fetch(svg)
             .then(response => response.text())
             .then(svg => {
-                document.getElementById('patterns').insertAdjacentHTML('beforeend', svg);
-                document.querySelectorAll("#patterns > svg a").forEach(el => {
+                document.getElementById(containerId).insertAdjacentHTML('beforeend', svg);
+                document.querySelectorAll(`#${containerId} > svg a`).forEach(el => {
                     const link = el.getAttribute('xlink:href');
-                    if(link !== null) {
-                        el.setAttribute('href', link.replace(/.*io.GroundForge/ , '/GroundForge'));
-                        if(link.includes('?')) {
+                    if (link !== null) {
+                        el.setAttribute('href', link.replace(/.*io.GroundForge/, '/GroundForge'));
+                        if (link.includes('?')) {
                             el.setAttribute('onclick', `javascript:${jsAction};return false;`);
                         }
                     }
                 })
+                const svgEl = document.querySelector(`#${containerId} > svg`);
+                const units = svgEl.getAttribute('width').replace(/[0-9]/g, '');
+                const w = svgEl.getAttribute('width').replace(/[^0-9]/g, '');
+                const h = svgEl.getAttribute('height').replace(/[^0-9]/g, '');
+                // scale by changing page dimensions
+                svgEl.setAttribute('width', (w*0.65)+units);
+                svgEl.setAttribute('height', (h*0.65)+units)
             });
     }
 };
