@@ -8,18 +8,22 @@ GF_tiles = {
             .forEach(element => {
                 const q = element.getAttribute('xlink:href').split('?')[1];
                 const panelId = `preview_${(element.textContent)}`;
-                const caption = `<a href="${element.getAttribute('href')}">modify</a>: ${element.textContent}`;
+                const caption = `${element.textContent.trim()}: change&nbsp;
+                    <a href="${element.getAttribute('href')}">pattern</a>&nbsp;or&nbsp;
+                    <a href="${element.getAttribute('href').replace(/pattern.html/,'stitches.html')}">stitches</a>
+                `;
                 GF_panel.load({caption: caption, id: panelId, size:{width:'280px', height: '200px'}}, previewDiv);
                 GF_panel.diagramSVG({id: panelId, query: q, type: 'pair'},previewDiv);
             })
         return false;
     },
-    load(parent = document.body, jsAction) {
-        GF_panel.load({caption: " ", id: "patterns", controls: ["resize"], size:{width:'310px', height: '300px'}}, parent);
+    load(parent = document.body) {
+        GF_panel.load({caption: "w.i.p.", id: "patterns", controls: ["resize"], size:{width:'310px', height: '300px'}}, parent);
         parent.insertAdjacentHTML('beforeend', `<div id="previews"></div>`);
-        this.loadSvg(jsAction);
+        this.loadSvg({});
     },
-    loadSvg(jsAction = 'GF_tiles.showPreviews(this)', containerId = 'patterns') {
+    loadSvg(namedArgs) {
+        const {jsAction = 'GF_tiles.showPreviews(this)', containerId = 'patterns'} = namedArgs;
         const svg = `${this.content_home}/tileGallery/index.svg`;
         fetch(svg)
             .then(response => response.text())

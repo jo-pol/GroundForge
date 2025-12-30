@@ -181,7 +181,7 @@ const GF_hybrid = {
             <button onclick="GF_hybrid.flip_b2p()">&varr;</button>
             <button onclick="GF_hybrid.flip_b2d();GF_hybrid.flip_b2p()">both</button>
         `);
-        GF_tiles.loadSvg('GF_hybrid.setPattern(this);return false;', 'pattern');
+        GF_tiles.loadSvg({jsAction: 'GF_hybrid.setPattern(this);return false;', containerId: 'pattern'});
         const snow3Gallery = document.getElementById('snow3')
         for(let [img,basicStitch,droste] of GF_hybrid.snow3){
             snow3Gallery.insertAdjacentHTML('beforeend',

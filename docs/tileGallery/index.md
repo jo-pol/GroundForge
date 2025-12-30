@@ -13,8 +13,7 @@ Pattern gallery
 **TODO**: Add more letters. 
 Split gallery in images per square to use full width of a desktop and not use too much width on a mobile device. 
 Links in last square are intended for another [wip](API/hybrid) page 
-(which is inspired by [mixing](/GroundForge-help/snow-mix/droste/) snow in two droste steps), this square should link to this page. 
-Preview captions link to pattern, add link to stitches, perhaps even the currently wip page.
+(which is inspired by [mixing snow](/GroundForge-help/snow-mix/droste/) in two droste steps), the D.I.Y. on that square should link to this page. 
 Sidebar subjects?
 
 ---

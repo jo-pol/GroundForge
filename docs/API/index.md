@@ -48,10 +48,8 @@ Some new scripts are started to share code between the user interfaces.
   it connects the 3/6 pair snowflakes in an [asymmetric](//GroundForge-help/snow-mix/droste/#spiderysnowyasym-connections/) way.
   By hiding or not generating certain components, the script could be used
   to replace the three pages.
-* A [tiling gallery](/GroundForge/images/tiling/index.svg) 
-  is emerging for the hybrid page. 
-  This gallery may also have a use case for the
-  [pattern editor](/Grounforge/pattern) page.
+* A [tiling gallery](/GroundForge/tileGallery) 
+  is emerging, stand alone and for the hybrid page.
   
 
 Demonstrators
