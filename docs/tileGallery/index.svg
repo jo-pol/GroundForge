@@ -8,6 +8,9 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:ns="https://creativecommons.org/ns#">
@@ -26,6 +29,48 @@
          id="path2025" />
     </marker>
   </defs>
+  <sodipodi:namedview
+          id="base"
+          pagecolor="#ffffff"
+          bordercolor="#666666"
+          borderopacity="1.0"
+          inkscape:pageopacity="0.0"
+          inkscape:pageshadow="2"
+          inkscape:zoom="1.3118613"
+          inkscape:cx="200.47852"
+          inkscape:cy="437.9274"
+          inkscape:document-units="mm"
+          inkscape:current-layer="layer1"
+          inkscape:document-rotation="0"
+          showgrid="true"
+          inkscape:snap-center="true"
+          inkscape:window-width="2256"
+          inkscape:window-height="1435"
+          inkscape:window-x="0"
+          inkscape:window-y="41"
+          inkscape:window-maximized="1"
+          inkscape:snap-grids="true"
+          inkscape:snap-to-guides="false"
+          inkscape:snap-intersection-paths="true"
+          showguides="true"
+          inkscape:guide-bbox="true"
+          inkscape:showpageshadow="2"
+          inkscape:pagecheckerboard="0"
+          inkscape:deskcolor="#d1d1d1"
+          fit-margin-top="0.3"
+          fit-margin-left="0.3"
+          fit-margin-right="0.3"
+          fit-margin-bottom="0.3"
+          inkscape:snap-global="true"
+          height="38.1mm">
+    <inkscape:grid
+            type="xygrid"
+            id="grid1939"
+            originx="0.52916665"
+            originy="0.79375002"
+            spacingx="2.1166667"
+            spacingy="2.1166666" />
+  </sodipodi:namedview>
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -1058,51 +1103,54 @@
        y="152.60692"
        rx="0.43172264"
        ry="2.1166673" />
-    <a
-       id="a17452"
-       xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=7&amp;patchHeight=8&amp;footside=---b,----&amp;tile=-5-,5-5,-5-&amp;headside=c,-&amp;shiftColsSW=-2&amp;shiftRowsSW=2&amp;shiftColsSE=2&amp;shiftRowsSE=2&amp;l1=ctctt&amp;f1=ct&amp;d1=ctctt&amp;g2=crc&amp;e2=clc&amp;f3=cctc"
-       transform="matrix(2,0,0,2,23.352835,-189.40412)">
-      <text
-         xml:space="preserve"
-         style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
-         x="21.097168"
-         y="174.83191"
-         id="text16230"><tspan
-           id="tspan16228"
-           style="fill:#000000;stroke-width:0.565"
+    <g
+       id="g1331">
+      <a
+         id="a17452"
+         xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=7&amp;patchHeight=8&amp;footside=---b,----&amp;tile=-5-,5-5,-5-&amp;headside=c,-&amp;shiftColsSW=-2&amp;shiftRowsSW=2&amp;shiftColsSE=2&amp;shiftRowsSE=2&amp;l1=ctctt&amp;f1=ct&amp;d1=ctctt&amp;g2=crc&amp;e2=clc&amp;f3=cctc"
+         transform="matrix(2,0,0,2,23.352835,-189.40412)">
+        <text
+           xml:space="preserve"
+           style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
            x="21.097168"
-           y="174.83191">A</tspan></text>
-    </a>
-    <a
-       id="a18669"
-       xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=7&amp;patchHeight=8&amp;footside=---b,----&amp;tile=-5-,5-5,-5-&amp;headside=c,-&amp;shiftColsSW=-2&amp;shiftRowsSW=2&amp;shiftColsSE=1&amp;shiftRowsSE=3&amp;l1=ctctt&amp;f1=ct&amp;d1=ctctt&amp;g2=crc&amp;e2=clc&amp;f3=cctc"
-       transform="matrix(2,0,0,2,27.851272,-147.55551)">
-      <text
-         xml:space="preserve"
-         style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
-         x="24.575508"
-         y="153.90761"
-         id="text18667"><tspan
-           id="tspan18665"
-           style="fill:#000000;stroke-width:0.565"
+           y="174.83191"
+           id="text16230"><tspan
+             id="tspan16228"
+             style="fill:#000000;stroke-width:0.565"
+             x="21.097168"
+             y="174.83191">A</tspan></text>
+      </a>
+      <a
+         id="a18669"
+         xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=7&amp;patchHeight=8&amp;footside=---b,----&amp;tile=-5-,5-5,-5-&amp;headside=c,-&amp;shiftColsSW=-2&amp;shiftRowsSW=2&amp;shiftColsSE=1&amp;shiftRowsSE=3&amp;l1=ctctt&amp;f1=ct&amp;d1=ctctt&amp;g2=crc&amp;e2=clc&amp;f3=cctc"
+         transform="matrix(2,0,0,2,27.851272,-147.55551)">
+        <text
+           xml:space="preserve"
+           style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
            x="24.575508"
-           y="153.90761">B</tspan></text>
-    </a>
-    <a
-       id="a19601"
-       xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=7&amp;patchHeight=8&amp;footside=---b,----&amp;tile=-5-,5-5,-5-&amp;headside=c,-&amp;shiftColsSW=-3&amp;shiftRowsSW=1&amp;shiftColsSE=2&amp;shiftRowsSE=2&amp;l1=ctctt&amp;f1=ct&amp;d1=ctctt&amp;g2=crc&amp;e2=clc&amp;f3=cctc"
-       transform="matrix(2,0,0,2,39.227836,-147.55758)">
-      <text
-         xml:space="preserve"
-         style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
-         x="24.575508"
-         y="153.90761"
-         id="text19599"><tspan
-           id="tspan19597"
-           style="fill:#000000;stroke-width:0.565"
+           y="153.90761"
+           id="text18667"><tspan
+             id="tspan18665"
+             style="fill:#000000;stroke-width:0.565"
+             x="24.575508"
+             y="153.90761">B</tspan></text>
+      </a>
+      <a
+         id="a19601"
+         xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=7&amp;patchHeight=8&amp;footside=---b,----&amp;tile=-5-,5-5,-5-&amp;headside=c,-&amp;shiftColsSW=-3&amp;shiftRowsSW=1&amp;shiftColsSE=2&amp;shiftRowsSE=2&amp;l1=ctctt&amp;f1=ct&amp;d1=ctctt&amp;g2=crc&amp;e2=clc&amp;f3=cctc"
+         transform="matrix(2,0,0,2,39.227836,-147.55758)">
+        <text
+           xml:space="preserve"
+           style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
            x="24.575508"
-           y="153.90761">C</tspan></text>
-    </a>
+           y="153.90761"
+           id="text19599"><tspan
+             id="tspan19597"
+             style="fill:#000000;stroke-width:0.565"
+             x="24.575508"
+             y="153.90761">C</tspan></text>
+      </a>
+    </g>
     <rect
        style="opacity:0.25;fill:#cccccc;stroke:#000000;stroke-width:1.05833333;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect24603"
@@ -1143,66 +1191,78 @@
        rx="2.2449596"
        ry="1.8027649"
        transform="rotate(90)" />
-    <a
-       id="a25181"
-       xlink:href="https://d-bl.github.io/GroundForge/pattern.html?patchWidth=7&amp;patchHeight=8&amp;footside=----,---b,&amp;tile=5-5,-5-,5-5&amp;headside=-,c,&amp;shiftColsSW=-4&amp;shiftRowsSW=2&amp;shiftColsSE=3&amp;shiftRowsSE=1&amp;e1=crcc&amp;e1=crcl&amp;g1=clcc&amp;e3=ctc&amp;g3=ccrc&amp;f2=cclc&amp;f3=crcl"
-       transform="matrix(2,0,0,2,70.184608,-147.55551)">
-      <text
-         xml:space="preserve"
-         style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
-         x="24.575508"
-         y="153.90761"
-         id="text25179"><tspan
-           id="tspan25177"
-           style="fill:#000000;stroke-width:0.565"
+    <g
+       id="g1349">
+      <a
+         id="a25181"
+         xlink:href="https://d-bl.github.io/GroundForge/pattern.html?patchWidth=7&amp;patchHeight=8&amp;footside=----,---b,&amp;tile=5-5,-5-,5-5&amp;headside=-,c,&amp;shiftColsSW=-4&amp;shiftRowsSW=2&amp;shiftColsSE=3&amp;shiftRowsSE=1&amp;e1=crcc&amp;e1=crcl&amp;g1=clcc&amp;e3=ctc&amp;g3=ccrc&amp;f2=cclc&amp;f3=crcl"
+         transform="matrix(2,0,0,2,70.184608,-147.55551)">
+        <text
+           xml:space="preserve"
+           style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
            x="24.575508"
-           y="153.90761">A</tspan></text>
-    </a>
-    <a
-       id="a1439"
-       xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=6&amp;patchHeight=6&amp;footside=----,---b,&amp;tile=1,8&amp;headside=c,-,&amp;shiftColsSW=0&amp;shiftRowsSW=2&amp;shiftColsSE=1&amp;shiftRowsSE=2&amp;k1=ctctt&amp;e1=ct&amp;e2=ctct&amp;d2=ctctt"
-       transform="matrix(2,0,0,2,-14.482062,-189.89094)">
-      <text
-         xml:space="preserve"
-         style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
-         x="24.575508"
-         y="153.90761"
-         id="text1437"><tspan
-           id="tspan1435"
-           style="fill:#000000;stroke-width:0.565"
+           y="153.90761"
+           id="text25179"><tspan
+             id="tspan25177"
+             style="fill:#000000;stroke-width:0.565"
+             x="24.575508"
+             y="153.90761">A</tspan></text>
+      </a>
+    </g>
+    <g
+       id="g1359">
+      <a
+         id="a1439"
+         xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=6&amp;patchHeight=6&amp;footside=----,---b,&amp;tile=1,8&amp;headside=c,-,&amp;shiftColsSW=0&amp;shiftRowsSW=2&amp;shiftColsSE=1&amp;shiftRowsSE=2&amp;k1=ctctt&amp;e1=ct&amp;e2=ctct&amp;d2=ctctt"
+         transform="matrix(2,0,0,2,-14.482062,-189.89094)">
+        <text
+           xml:space="preserve"
+           style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
            x="24.575508"
-           y="153.90761">A</tspan></text>
-    </a>
-    <a
-       id="a1445"
-       xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=6&amp;patchHeight=6&amp;footside=----,---b,&amp;tile=11,88&amp;headside=c,-,&amp;shiftColsSW=-1&amp;shiftRowsSW=2&amp;shiftColsSE=1&amp;shiftRowsSE=2&amp;k1=ctctt&amp;f1=ctc&amp;e1=ct&amp;f2=ctc&amp;e2=ctc&amp;d2=ctctt"
-       transform="matrix(2,0,0,2,27.851272,-189.89094)">
-      <text
-         xml:space="preserve"
-         style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
-         x="24.575508"
-         y="153.90761"
-         id="text1443"><tspan
-           id="tspan1441"
-           style="fill:#000000;stroke-width:0.565"
+           y="153.90761"
+           id="text1437"><tspan
+             id="tspan1435"
+             style="fill:#000000;stroke-width:0.565"
+             x="24.575508"
+             y="153.90761">A</tspan></text>
+      </a>
+    </g>
+    <g
+       id="g1364">
+      <a
+         id="a1445"
+         xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=6&amp;patchHeight=6&amp;footside=----,---b,&amp;tile=11,88&amp;headside=c,-,&amp;shiftColsSW=-1&amp;shiftRowsSW=2&amp;shiftColsSE=1&amp;shiftRowsSE=2&amp;k1=ctctt&amp;f1=ctc&amp;e1=ct&amp;f2=ctc&amp;e2=ctc&amp;d2=ctctt"
+         transform="matrix(2,0,0,2,27.851272,-189.89094)">
+        <text
+           xml:space="preserve"
+           style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
            x="24.575508"
-           y="153.90761">A</tspan></text>
-    </a>
-    <a
-       id="a1531"
-       xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=6&amp;patchHeight=6&amp;footside=----,---b,&amp;tile=11,88&amp;headside=c,-,&amp;shiftColsSW=0&amp;shiftRowsSW=2&amp;shiftColsSE=2&amp;shiftRowsSE=2&amp;k1=ctctt&amp;f1=ctc&amp;e1=ct&amp;f2=ctc&amp;e2=ctc&amp;d2=ctctt"
-       transform="matrix(2,0,0,2,70.184608,-189.89094)">
-      <text
-         xml:space="preserve"
-         style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
-         x="24.575508"
-         y="153.90761"
-         id="text1529"><tspan
-           id="tspan1527"
-           style="fill:#000000;stroke-width:0.565"
+           y="153.90761"
+           id="text1443"><tspan
+             id="tspan1441"
+             style="fill:#000000;stroke-width:0.565"
+             x="24.575508"
+             y="153.90761">A</tspan></text>
+      </a>
+    </g>
+    <g
+       id="g1354">
+      <a
+         id="a1531"
+         xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=6&amp;patchHeight=6&amp;footside=----,---b,&amp;tile=11,88&amp;headside=c,-,&amp;shiftColsSW=0&amp;shiftRowsSW=2&amp;shiftColsSE=2&amp;shiftRowsSE=2&amp;k1=ctctt&amp;f1=ctc&amp;e1=ct&amp;f2=ctc&amp;e2=ctc&amp;d2=ctctt"
+         transform="matrix(2,0,0,2,70.184608,-189.89094)">
+        <text
+           xml:space="preserve"
+           style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
            x="24.575508"
-           y="153.90761">A</tspan></text>
-    </a>
+           y="153.90761"
+           id="text1529"><tspan
+             id="tspan1527"
+             style="fill:#000000;stroke-width:0.565"
+             x="24.575508"
+             y="153.90761">A</tspan></text>
+      </a>
+    </g>
     <rect
        style="opacity:0.25;fill:#808080;stroke:#000000;stroke-width:1.05833333;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect1925"
@@ -1912,51 +1972,57 @@
        id="path41849"
        style="opacity:0.25;fill:#808080;stroke:#000000;stroke-width:1.05833333;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        d="m 83.346252,394.01602 h 8.634864 c 1.24371,0 2.827487,1.23841 2.24496,2.48703 -1.13853,2.44038 -7.037347,0.0886 -8.661907,1.68289 -0.7968,0.78195 -4.652507,3.20535 -5.854387,4.35573 -2.362757,2.2615 -9.148464,0.28205 -11.416394,0.2316 -0.915707,-0.0204 -2.272637,-0.56129 -2.259917,-2.50615 0.0144,-2.19721 1.26786,-2.03044 2.15953,-2.12682 0,0 6.254994,0.42649 7.377464,0.42841 2.68716,0.005 2.42227,-4.93265 7.775787,-4.55269 z" />
-    <a
-       id="a41935"
-       xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=7&amp;patchHeight=8&amp;footside=----,---b&amp;tile=5-&amp;headside=-,c&amp;shiftColsSW=-1&amp;shiftRowsSW=1&amp;shiftColsSE=1&amp;shiftRowsSE=1&amp;e1=ctc&amp;l2=ctctt&amp;d2=ctctt"
-       transform="matrix(2,0,0,2,-14.482062,-147.55551)">
-      <text
-         xml:space="preserve"
-         style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
-         x="24.575508"
-         y="153.90761"
-         id="text41933"><tspan
-           id="tspan41931"
-           style="fill:#000000;stroke-width:0.565"
+    <g
+       id="g1336">
+      <a
+         id="a41935"
+         xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=7&amp;patchHeight=8&amp;footside=----,---b&amp;tile=5-&amp;headside=-,c&amp;shiftColsSW=-1&amp;shiftRowsSW=1&amp;shiftColsSE=1&amp;shiftRowsSE=1&amp;e1=ctc&amp;l2=ctctt&amp;d2=ctctt"
+         transform="matrix(2,0,0,2,-14.482062,-147.55551)">
+        <text
+           xml:space="preserve"
+           style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
            x="24.575508"
-           y="153.90761">A</tspan></text>
-    </a>
-    <a
-       id="a41941"
-       xlink:href="https://d-bl.github.io/GroundForge/pattern.html?patchWidth=7&amp;patchHeight=8&amp;footside=----,---b&amp;tile=5-&amp;headside=-,c&amp;shiftColsSW=-1&amp;shiftRowsSW=1&amp;shiftColsSE=1&amp;shiftRowsSE=1&amp;e1=ctc&amp;l2=ctctt&amp;d2=ctctt"
-       transform="matrix(2,0,0,2,-28.240398,-105.22215)">
-      <text
-         xml:space="preserve"
-         style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
-         x="24.575508"
-         y="153.90761"
-         id="text41939"><tspan
-           id="tspan41937"
-           style="fill:#000000;stroke-width:0.565"
+           y="153.90761"
+           id="text41933"><tspan
+             id="tspan41931"
+             style="fill:#000000;stroke-width:0.565"
+             x="24.575508"
+             y="153.90761">A</tspan></text>
+      </a>
+    </g>
+    <g
+       id="g1344">
+      <a
+         id="a41941"
+         xlink:href="https://d-bl.github.io/GroundForge/pattern.html?patchWidth=7&amp;patchHeight=8&amp;footside=----,---b&amp;tile=5-&amp;headside=-,c&amp;shiftColsSW=-1&amp;shiftRowsSW=1&amp;shiftColsSE=1&amp;shiftRowsSE=1&amp;e1=ctc&amp;l2=ctctt&amp;d2=ctctt"
+         transform="matrix(2,0,0,2,-28.240398,-105.22215)">
+        <text
+           xml:space="preserve"
+           style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
            x="24.575508"
-           y="153.90761">A</tspan></text>
-    </a>
-    <a
-       id="a42033"
-       xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=7&amp;patchHeight=8&amp;footside=---b,----&amp;tile=-5,5-&amp;headside=-,c&amp;shiftColsSW=0&amp;shiftRowsSW=2&amp;shiftColsSE=2&amp;shiftRowsSE=2&amp;f1=ctc&amp;d1=ctctt&amp;l2=ctctt&amp;e2=ctc"
-       transform="matrix(2,0,0,2,-20.302898,-105.22215)">
-      <text
-         xml:space="preserve"
-         style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
-         x="24.575508"
-         y="153.90761"
-         id="text42031"><tspan
-           id="tspan42029"
-           style="fill:#000000;stroke-width:0.565"
+           y="153.90761"
+           id="text41939"><tspan
+             id="tspan41937"
+             style="fill:#000000;stroke-width:0.565"
+             x="24.575508"
+             y="153.90761">A</tspan></text>
+      </a>
+      <a
+         id="a42033"
+         xlink:href="https://d-bl.github.io/GroundForge/stitches.html?patchWidth=7&amp;patchHeight=8&amp;footside=---b,----&amp;tile=-5,5-&amp;headside=-,c&amp;shiftColsSW=0&amp;shiftRowsSW=2&amp;shiftColsSE=2&amp;shiftRowsSE=2&amp;f1=ctc&amp;d1=ctctt&amp;l2=ctctt&amp;e2=ctc"
+         transform="matrix(2,0,0,2,-20.302898,-105.22215)">
+        <text
+           xml:space="preserve"
+           style="font-size:2.11667px;fill:#000000;fill-opacity:0.998542;stroke:none;stroke-width:0.564999;stroke-linecap:square"
            x="24.575508"
-           y="153.90761">B</tspan></text>
-    </a>
+           y="153.90761"
+           id="text42031"><tspan
+             id="tspan42029"
+             style="fill:#000000;stroke-width:0.565"
+             x="24.575508"
+             y="153.90761">B</tspan></text>
+      </a>
+    </g>
     <path
        id="path42153"
        style="opacity:0.25;fill:#808080;stroke:#000000;stroke-width:1.05833;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
