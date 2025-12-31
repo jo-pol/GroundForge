@@ -8,12 +8,19 @@ GF_tiles = {
             .forEach(element => {
                 const q = element.getAttribute('xlink:href').split('?')[1];
                 const panelId = `preview_${(element.textContent)}`;
-                const caption = `${element.textContent.trim()}: change&nbsp;
+                GF_panel.load({id: panelId, parent: previewDiv, caption: `
+                    ${element.textContent.trim()}: change&nbsp;
                     <a href="${element.getAttribute('href')}">pattern</a>&nbsp;or&nbsp;
-                    <a href="${element.getAttribute('href').replace(/pattern.html/,'stitches.html')}">stitches</a>
-                `;
-                GF_panel.load({caption: caption, id: panelId, size:{width:'280px', height: '200px'}, parent: previewDiv});
-                GF_panel.diagramSVG({id: panelId, query: q, type: 'pair'},previewDiv);
+                    <a href="${element.getAttribute('href').replace(/pattern.html/, 'stitches.html')}">stitches</a>&nbsp;
+                `});
+                GF_panel.diagramSVG({id: panelId, query: q, type: 'pair'});
+                const diagram = document.getElementById(panelId);
+                diagram.style.resize = 'none';
+                diagram.style.overflow = 'hidden';
+                diagram.style.width = '182px';
+                diagram.style.height = '166px';
+                diagram.querySelector(':scope > svg > g')
+                    .setAttribute('transform','scale(1.3) translate(-65,-18)');
             })
         return false;
     },
@@ -28,8 +35,10 @@ GF_tiles = {
         fetch(svg)
             .then(response => response.text())
             .then(svg => {
-                document.getElementById(containerId).insertAdjacentHTML('beforeend', svg);
-                document.querySelectorAll(`#${containerId} > svg a`).forEach(el => {
+                const containerEl = document.getElementById(containerId);
+                containerEl.insertAdjacentHTML('beforeend', svg);
+                const svgEl = containerEl.querySelector(`:scope > svg`);
+                svgEl.querySelectorAll(`:scope a`).forEach(el => {
                     const link = el.getAttribute('xlink:href');
                     if (link !== null) {
                         el.setAttribute('href', link.replace(/.*io.GroundForge/, '/GroundForge'));
@@ -38,7 +47,6 @@ GF_tiles = {
                         }
                     }
                 })
-                const svgEl = document.querySelector(`#${containerId} > svg`);
                 const units = svgEl.getAttribute('width').replace(/[0-9]/g, '');
                 const w = svgEl.getAttribute('width').replace(/[^0-9]/g, '');
                 const h = svgEl.getAttribute('height').replace(/[^0-9]/g, '');
