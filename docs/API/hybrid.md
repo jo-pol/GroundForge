@@ -19,7 +19,8 @@ With a bit undressing the same script could also be used for a _stitches_ pagee 
 TO DO: 
 * Add galleries for [basic stitches](/GroundForge/API/stitch-gallery) and [4/8-pair snow](/GroundForge-help/snow-mix/droste/#48-pair-recipes).
 * Toggle between the galleries (minimize all but the last one opened).
-* Apply to all (apply to ignored only for step-0), beep on invalid input (tweak and spinners).
+* Apply to all (apply to ignored only for step-0)
+* Beep on invalid input (tweak and spinners). When pasting a URL in the first specifications field: strip until question mark.
 * Legend panel (should wrap nicely)
 * Update sidebar subjects
 

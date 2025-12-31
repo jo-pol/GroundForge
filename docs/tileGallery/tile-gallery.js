@@ -22,13 +22,7 @@ GF_tiles = {
                 diagram.querySelector(':scope > svg > g')
                     .setAttribute('transform','scale(1.3) translate(-65,-18)');
             })
-        // scroll into view if too little is visible TODO this duplicates code in panel.js
-        const rect = previewDiv.getBoundingClientRect();
-        const vh = window.innerHeight || document.documentElement.clientHeight;
-        const visibleHeight = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
-        if (visibleHeight / rect.height < 0.3) {
-            previewDiv.scrollIntoView({behavior: 'smooth', block: 'center'});
-        }
+        GF_panel.scrollIfTooLittleIsVisible(previewDiv);
         return false;
     },
     load(parent = document.body) {
@@ -37,7 +31,10 @@ GF_tiles = {
         this.loadSvg({});
     },
     loadSvg(namedArgs) {
-        const {jsAction = 'GF_tiles.showPreviews(this)', containerId = 'patterns'} = namedArgs;
+        const {
+            jsAction = 'GF_tiles.showPreviews(this)',
+            containerId = 'patterns'
+        } = namedArgs;
         const svg = `${this.content_home}/tileGallery/index.svg`;
         fetch(svg)
             .then(response => response.text())

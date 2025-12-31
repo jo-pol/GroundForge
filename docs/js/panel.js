@@ -96,9 +96,23 @@ const GF_panel = {
         }
         return false;
     },
+    scrollIfTooLittleIsVisible(element) {
+        const rect = element.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const visibleHeight = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
+        if (visibleHeight / rect.height < 0.3) {
+            element.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }
+    },
     diagramSVG(namedArgs) {
         console.time('diagramSVG');
-        const { id, type='pair', steps: steps = [], query, size = this.svgSize[2] } = namedArgs;
+        const {
+            id,
+            type='pair',
+            steps: steps = [],
+            query,
+            size = this.svgSize[2]
+        } = namedArgs;
         const {width, height} = {
             ...this.svgSize[steps.length < this.svgSize.length ? steps.length : this.svgSize.length],
             ...(typeof size === 'object' && size !== null ? size : {})

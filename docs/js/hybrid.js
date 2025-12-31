@@ -123,6 +123,15 @@ const GF_hybrid = {
         const n2 = document.getElementById('basicStitchInput');
         n2.value = flip(n2);
     },
+    scrollIfTooLittleIsVisible(elementId) {
+        const threadPanel = document.getElementById(elementId);
+        const rect = threadPanel.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        const visibleHeight = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
+        if (visibleHeight / rect.height < 0.3) {
+            threadPanel.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }
+    },
     setPattern(element) {
         let q = element.getAttribute('xlink:href').split('?')[1];
         document.getElementById('pairStep').value = 0;
@@ -135,16 +144,8 @@ const GF_hybrid = {
         GF_hybrid.setStitchEvents();
         document.getElementById('selfRef').style.display = 'none';
         document.getElementById('thread_panel').innerHTML = '';
-        // scroll into view if too little is visible
-        const threadPanel = document.getElementById('pair_panel');
-        const rect = threadPanel.getBoundingClientRect();
-        const vh = window.innerHeight || document.documentElement.clientHeight;
-        const visibleHeight = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
-        if (visibleHeight / rect.height < 0.3) {
-            threadPanel.scrollIntoView({behavior: 'smooth', block: 'center'});
-        }
+        GF_panel.scrollIfTooLittleIsVisible(document.getElementById('pair_panel'));
     },
-
     flip_b2p() {
         const n = document.getElementById('drosteStitches');
         n.value = n.value.toLowerCase()
