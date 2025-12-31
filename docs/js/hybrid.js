@@ -154,22 +154,62 @@ const GF_hybrid = {
             .split(/[,.]/).reverse().join(",");
         n.focus();
     },
-    twister(type){
-      return `${type}s <input type='number' min='0' max='2' value='0' id='${type}Step' name='${type}Step' title='droste step' >`
+    otherGallery(chooser){
+        chooser.parentNode.parentNode.style.display = 'none';
+        document.getElementById(chooser.value).parentNode.style.display = 'block';
+        chooser.selectedIndex = 0;
     },
     load(container) {
+        function twister(type){
+            return `${type}s <input type='number' min='0' max='2' value='0' id='${type}Step' name='${type}Step' title='droste step' >`
+        }
+        function galleryPanels() {
+            const galleries = {
+                'pattern': {caption: 'Pattern gallery', height: '150px'},
+                'snow3': {caption: '3/6 pair snow gallery', height: '50px'},
+                'snow4': {caption: '4/8 pair snow gallery', height: '50px'},
+                'stitches': {caption: 'Stitches gallery', height: '50px'}
+            };
+            Object.keys(galleries).forEach(function (key1) {
+                let options = ''
+                Object.keys(galleries).forEach(function (key2) {
+                    if (key2 === key1) {
+                        options += `<option value='${key2}' disabled selected>${galleries[key2]['caption']}</option>`;
+                    } else {
+                        options += `<option value='${key2}'>${galleries[key2]['caption']}</option>`;
+                    }
+                });
+                const chooser = `<select onchange="GF_hybrid.otherGallery(this);">${options}</select>`;
+                const sizeOptions = {width:'310px', height: galleries[key1]['height']};
+                GF_panel.load({caption: chooser, id: key1, controls: ["resize"], size: sizeOptions, parent: container});
+                if (key1 !== 'snow3') {
+                    document.getElementById(key1).parentNode.style.display = 'none';
+                }
+            });
+            GF_tiles.loadSvg({jsAction: 'GF_hybrid.setPattern(this);return false;', containerId: 'pattern'});
+            const snow3Gallery = document.getElementById('snow3')
+            for(let [img,basicStitch,droste] of GF_hybrid.snow3){
+                snow3Gallery.insertAdjacentHTML('beforeend',
+                    `<a href="javascript:GF_hybrid.setRecipe('${basicStitch}','${droste}')"><img src="${GF_hybrid.content_home}/mix4snow/${img}.png" alt="${img}"></a> `);
+            }
+            document.getElementById('snow4').innerHTML = `
+                W.I.P, for now see this <a href="${GF_hybrid.content_home}-help/snow-mix/droste/#48-pair-recipes">table</a>.
+            `;
+            document.getElementById('stitches').innerHTML = `
+                W.I.P, for now see this <a href="${GF_hybrid.content_home}/API/stitch-gallery">table</a>.
+            `;
+        }
         const pairWandHref = "javascript:GF_hybrid.generateSelectedDiagram('pair');GF_hybrid.setStitchEvents()";
         const threadWandHref = "javascript:GF_hybrid.generateSelectedDiagram('thread')";
         let q = new URL(document.documentURI).search.slice(1);
         if (q === "" || !q.includes('shiftRows')) {
             q = "patchWidth=7&patchHeight=7&footside=---x,---4,---x,---4&tile=5-,-5,5-,-5&headside=-,c,-,c,&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=2&shiftRowsSE=2&e1=lclc&l2=llctt&f2=rcrc&d2=rrctt&e3=rcrc&l4=llctt&f4=lclc&d4=rrctt&droste2=e12=clcrcl,e13=ct,f42=ctcl,e32=f22=ctcr,e33=f43=lct,e31=f21=lctc,e11=rclcrc,f23=rct,f41=rctc,e10=tc,f20=tcl,e30=f40=tcr"
         }
-        GF_panel.load({caption: "Initialize (w.i.p.)", id: "pattern", controls: ["resize"], size:{width:'310px', height: '150px'}, parent: container});
-        GF_panel.load({caption: "select (3/6-pair)", id: "snow3", controls: ["resize"], size:{width:'98%', height: '50px'}, parent: container});
+        galleryPanels();
         GF_panel.load({caption: "tweak selected", id: "tweak", size:{width:'´98%', height: 'auto'}, parent: container});
         container.insertAdjacentHTML('beforeend',`<p><a href="?${q}" id="selfRef" style="display:none;">Updated pattern</a></p>`);
-        GF_panel.load({caption: this.twister("pair"), id: "pair_panel", wandHref: pairWandHref, controls: ["resize"], parent: container});
-        GF_panel.load({caption: this.twister("thread"), id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"], parent: container});
+        GF_panel.load({caption: twister("pair"), id: "pair_panel", wandHref: pairWandHref, controls: ["resize"], parent: container});
+        GF_panel.load({caption: twister("thread"), id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"], parent: container});
         GF_panel.load({caption: "specifications", id: "specs", controls: ["resize"], parent: container});
         document.getElementById('tweak').insertAdjacentHTML('beforeend',`
             <label for="basicStitchInput">Basic stitch:</label>
@@ -182,12 +222,6 @@ const GF_hybrid = {
             <button onclick="GF_hybrid.flip_b2p()">&varr;</button>
             <button onclick="GF_hybrid.flip_b2d();GF_hybrid.flip_b2p()">both</button>
         `);
-        GF_tiles.loadSvg({jsAction: 'GF_hybrid.setPattern(this);return false;', containerId: 'pattern'});
-        const snow3Gallery = document.getElementById('snow3')
-        for(let [img,basicStitch,droste] of GF_hybrid.snow3){
-            snow3Gallery.insertAdjacentHTML('beforeend',
-                `<a href="javascript:GF_hybrid.setRecipe('${basicStitch}','${droste}')"><img src="${this.content_home}/mix4snow/${img}.png" alt="${img}"></a> `);
-        }
         const params = new URLSearchParams(q);
         document.getElementById('tweak').parentNode.style = `width: calc(100% - 7px)`;
         document.getElementById('pairStep').value = params.get('pairStep') || 0;
