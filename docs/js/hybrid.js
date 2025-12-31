@@ -167,8 +167,8 @@ const GF_hybrid = {
             const galleries = {
                 'pattern': {caption: 'Pattern gallery', height: '150px'},
                 'snow3': {caption: '3/6 pair snow gallery', height: '50px'},
-                'snow4': {caption: '4/8 pair snow gallery', height: '5em'},
-                'stitches': {caption: 'Stitches gallery', height: '7em'}
+                'snow4': {caption: '4/8 pair snow gallery', height: '2em'},
+                'stitches': {caption: 'Stitches gallery', height: '2em'}
             };
             Object.keys(galleries).forEach(function (key1) {
                 let options = ''
@@ -180,9 +180,11 @@ const GF_hybrid = {
                     }
                 });
                 const chooser = `<select onchange="GF_hybrid.otherGallery(this);">${options}</select>`;
-                const sizeOptions = {width:'310px', height: galleries[key1]['height']};
+                const sizeOptions = {width:'100%', height: galleries[key1]['height']};
                 GF_panel.load({caption: chooser, id: key1, controls: ["resize"], size: sizeOptions, parent: container});
-                if (key1 !== 'snow3') {
+                if (key1 === 'snow3') {
+                    document.getElementById(key1).parentNode.style.display = 'block';
+                } else {
                     document.getElementById(key1).parentNode.style.display = 'none';
                 }
             });
@@ -193,15 +195,12 @@ const GF_hybrid = {
                     `<a href="javascript:GF_hybrid.setRecipe('${basicStitch}','${droste}')"><img src="${GF_hybrid.content_home}/mix4snow/${img}.png" alt="${img}"></a> `);
             }
             document.getElementById('snow4').innerHTML = `
-                W.I.P. For now: copy values from this
-                <a href="${GF_hybrid.content_home}-help/snow-mix/droste/#48-pair-recipes">table</a>
-                and paste in the <em>tweak</em> fields.
-                Then click a stitch in the pair diagram to apply.
+                W.I.P. For ideas see this <a href="${GF_hybrid.content_home}/../GroundForge-help/snow-mix/droste/#48-pair-recipes">table</a>.
             `;
             document.getElementById('stitches').innerHTML = `
-                W.I.P. For now: just type a <em>basic stitch</em> and clear <em>droste applied to basic stitch<em>. 
+                W.I.P. For now: just type a <em>basic stitch</em> and clear <em>droste applied to basic stitch</em>. 
                 Then click a stitch in the pair diagram to apply.
-                For ideas see this <a href="${GF_hybrid.content_home}/API/stitch-gallery">table</a>.
+                For ideas see this <a href="${GF_hybrid.content_home}/API/stitch-gallery">page</a>.
             `;
         }
         const pairWandHref = "javascript:GF_hybrid.generateSelectedDiagram('pair');GF_hybrid.setStitchEvents()";
@@ -215,7 +214,7 @@ const GF_hybrid = {
         container.insertAdjacentHTML('beforeend',`<p><a href="?${q}" id="selfRef" style="display:none;">Updated pattern</a></p>`);
         GF_panel.load({caption: twister("pair"), id: "pair_panel", wandHref: pairWandHref, controls: ["resize"], parent: container});
         GF_panel.load({caption: twister("thread"), id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"], parent: container});
-        GF_panel.load({caption: "specifications", id: "specs", controls: ["resize"], parent: container});
+        GF_panel.load({caption: "specifications", id: "specs", controls: ["resize"], size:{width: '100%', height: '300px'}, parent: container});
         document.getElementById('tweak').insertAdjacentHTML('beforeend',`
             <label for="basicStitchInput">Basic stitch:</label>
             <input type="text" id="basicStitchInput" value="lclc" placeholder="Example: clct"/>
@@ -231,15 +230,18 @@ const GF_hybrid = {
         document.getElementById('tweak').parentNode.style = `width: calc(100% - 7px)`;
         document.getElementById('pairStep').value = params.get('pairStep') || 0;
         document.getElementById('threadStep').value = params.get('threadStep') || 1;
-        document.getElementById('specs').innerHTML = `
+        const specsPanelContent = document.getElementById('specs');
+        specsPanelContent.innerHTML = `
           <a href="javascript:['droste1','droste2','droste3'].forEach(GF_hybrid.cleanupStitches)" title="Reduce panel content"><img src="/GroundForge/images/broom.png"></a>
           Specs collected from URL and clicks:
           <input type="text" id="droste0" value="${q}">
           <textarea id="droste1" spellcheck="false" placeholder="droste step 1, default all: ctc">${(params.get('droste2')||'').replaceAll(',','\n') || ''}</textarea>
-          <textarea id="droste2" spellcheck="false" placeholder="droste step 3, default all: ctc">${(params.get('droste3')||'').replaceAll(',','\n') || ''}</textarea>
+          <textarea id="droste2" spellcheck="false" placeholder="droste step 2, default all: ctc">${(params.get('droste3')||'').replaceAll(',','\n') || ''}</textarea>
           <textarea id="droste3" spellcheck="false" placeholder="droste step 3, default all: ctc">${(params.get('droste4')||'').replaceAll(',','\n') || ''}</textarea>
         `;
-        document.getElementById('specs').style.height = "2px";
+        specsPanelContent.parentNode.style.display = "block";
+        specsPanelContent.style.width = "100%";
+        specsPanelContent.style.height = "2px";
         for (let type of ["pair", "thread"]) {
             document.querySelectorAll(`input[name="${type}Step"]`).forEach(function (elem) {
                 elem.addEventListener('change', function () {
