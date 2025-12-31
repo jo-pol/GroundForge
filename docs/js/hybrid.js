@@ -167,8 +167,8 @@ const GF_hybrid = {
             const galleries = {
                 'pattern': {caption: 'Pattern gallery', height: '150px'},
                 'snow3': {caption: '3/6 pair snow gallery', height: '50px'},
-                'snow4': {caption: '4/8 pair snow gallery', height: '50px'},
-                'stitches': {caption: 'Stitches gallery', height: '50px'}
+                'snow4': {caption: '4/8 pair snow gallery', height: '5em'},
+                'stitches': {caption: 'Stitches gallery', height: '7em'}
             };
             Object.keys(galleries).forEach(function (key1) {
                 let options = ''
@@ -193,10 +193,15 @@ const GF_hybrid = {
                     `<a href="javascript:GF_hybrid.setRecipe('${basicStitch}','${droste}')"><img src="${GF_hybrid.content_home}/mix4snow/${img}.png" alt="${img}"></a> `);
             }
             document.getElementById('snow4').innerHTML = `
-                W.I.P, for now see this <a href="${GF_hybrid.content_home}-help/snow-mix/droste/#48-pair-recipes">table</a>.
+                W.I.P. For now: copy values from this
+                <a href="${GF_hybrid.content_home}-help/snow-mix/droste/#48-pair-recipes">table</a>
+                and paste in the <em>tweak</em> fields.
+                Then click a stitch in the pair diagram to apply.
             `;
             document.getElementById('stitches').innerHTML = `
-                W.I.P, for now see this <a href="${GF_hybrid.content_home}/API/stitch-gallery">table</a>.
+                W.I.P. For now: just type a <em>basic stitch</em> and clear <em>droste applied to basic stitch<em>. 
+                Then click a stitch in the pair diagram to apply.
+                For ideas see this <a href="${GF_hybrid.content_home}/API/stitch-gallery">table</a>.
             `;
         }
         const pairWandHref = "javascript:GF_hybrid.generateSelectedDiagram('pair');GF_hybrid.setStitchEvents()";
