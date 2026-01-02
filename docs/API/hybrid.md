@@ -18,7 +18,7 @@ With a bit undressing the same script(s) could also be used for a _stitches_ pag
 
 TO DO: 
 * Apply to all (apply to ignored only for step-0)
-* Beep on invalid input (tweak and spinners). When pasting a URL in the first specifications field: strip until question mark.
+* Beep on invalid input (tweak, spinners, specs). When pasting a URL in the first specifications field: strip until question mark.
 * Update sidebar subjects
 
 <style>

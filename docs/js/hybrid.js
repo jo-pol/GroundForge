@@ -217,7 +217,7 @@ const GF_hybrid = {
     },
     load(container) {
         function twister(type){
-            return `${type}s <input type='number' min='0' max='2' value='0' id='${type}Step' name='${type}Step' title='droste step' >`
+            return `${type}s, step: <input type='number' min='0' max='2' value='0' id='${type}Step' name='${type}Step' title='droste step' >`
         }
         function galleryPanels() {
             const galleries = {
@@ -288,10 +288,11 @@ const GF_hybrid = {
             <br>
             <label for="drosteStitches">Droste applied to basic stitch:</label>
             <input type="text" id="drosteStitches" value="tc,rclcrc,clcrcl,ct" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
-            Flip:
+            <p>Flip:
             <button onclick="GF_hybrid.flip_b2d()">&harr;</button>
             <button onclick="GF_hybrid.flip_b2p()">&varr;</button>
             <button onclick="GF_hybrid.flip_b2d();GF_hybrid.flip_b2p()">both</button>
+            </p>
         `);
         const params = new URLSearchParams(q);
         document.getElementById('tweak').parentNode.style = `width: calc(100% - 7px)`;
