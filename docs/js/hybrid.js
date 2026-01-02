@@ -50,6 +50,8 @@ const GF_hybrid = {
         const q = document.getElementById('droste0').value;
         GF_panel.diagramSVG({id: diagramType+ '_panel', query: q, type: diagramType, steps: steps});
         document.getElementById(diagramType+ '_panel').style.backgroundColor = "";
+        if(diagramType==='pair')
+            this.generateLegend();
     },
     setStitchEvents() {
         function stitchHandler(event) {
@@ -176,6 +178,44 @@ const GF_hybrid = {
         document.getElementById(chooser.value).parentNode.style.display = 'block';
         chooser.selectedIndex = 0;
     },
+    generateLegend(){
+        const dict = {};
+        Array.from(document.getElementById('pair_panel')
+            .querySelectorAll('.node'))
+            .forEach(node => {
+                const text = node.textContent.toLowerCase();
+                if (!text.startsWith('pair')) {
+                    const minorKey = text.split(' ')[0];
+                    const majorKey = minorKey
+                        .replace(/^[tlr]+/g, '')
+                        .replace(/[tlr]+$/g, '');
+                    const value = text.substring(text.lastIndexOf(' ') + 1);
+                    if (!dict[majorKey]) dict[majorKey] = {};
+                    if (!dict[majorKey][minorKey])
+                        dict[majorKey][minorKey] = value;
+                    else
+                        dict[majorKey][minorKey] += `, ${value}`;
+                }
+            });
+        const target = document.getElementById('legend_panel');
+        target.innerHTML = '';
+        Object.keys(dict).forEach(key => {
+            target.insertAdjacentHTML('beforeend',`
+                  <svg width="20px" height="25px">
+                      <g transform="scale(2,2)">
+                        <g transform="translate(5,6)">
+                          ${PairSvg.shapes(key)}
+                        </g>
+                      </g>
+                    </svg><br>
+                    ${
+                        Object.entries(dict[key])
+                            .map(([k, v]) => `${k}: ${v}`)
+                            .join('<br>')
+                    }
+                <br>`)
+        });
+    },
     load(container) {
         function twister(type){
             return `${type}s <input type='number' min='0' max='2' value='0' id='${type}Step' name='${type}Step' title='droste step' >`
@@ -230,6 +270,7 @@ const GF_hybrid = {
         }
         const pairWandHref = "javascript:GF_hybrid.generateSelectedDiagram('pair');GF_hybrid.setStitchEvents()";
         const threadWandHref = "javascript:GF_hybrid.generateSelectedDiagram('thread')";
+        const legendWandHref = "javascript:GF_hybrid.generateLegend()";
         let q = new URL(document.documentURI).search.slice(1)
             .replaceAll(/[^a-zA-Z0-9=,.-]/g,'');
         if (q === "" || !q.includes('shiftRows')) {
@@ -240,6 +281,7 @@ const GF_hybrid = {
         container.insertAdjacentHTML('beforeend',`<p><a href="?${q}" id="selfRef" style="display:none;">Updated pattern</a></p>`);
         GF_panel.load({caption: twister("pair"), id: "pair_panel", wandHref: pairWandHref, controls: ["resize"], parent: container});
         GF_panel.load({caption: twister("thread"), id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"], parent: container});
+        GF_panel.load({caption: 'legend', id: "legend_panel", controls: ["resize"], parent: container});
         GF_panel.load({caption: "specifications", id: "specs", controls: ["resize"], size:{width: '100%', height: '300px'}, parent: container});
         document.getElementById('tweak').insertAdjacentHTML('beforeend',`
             <label for="basicStitchInput">Basic stitch:</label>

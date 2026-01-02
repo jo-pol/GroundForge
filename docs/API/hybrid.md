@@ -13,8 +13,8 @@ javascript:
 Work in progress
 ================
 
-Inspired by [mix snow with two droste steps](/GroundForge-help/snow-mix/droste).
-With a bit undressing the same script could also be used for a _stitches_ pagee or _droste_ page.
+Inspired by [mix snow with two droste steps](/GroundForge-help/snow-mix/droste) and the desire to develop scripts for reusable widgets.
+With a bit undressing the same script(s) could also be used for a _stitches_ pagee or _droste_ page.
 
 TO DO: 
 * Apply to all (apply to ignored only for step-0)
