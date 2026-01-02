@@ -283,12 +283,13 @@ const GF_hybrid = {
         GF_panel.load({caption: 'legend', id: "legend_panel", controls: ["resize"], parent: container});
         GF_panel.load({caption: "specifications", id: "specs", controls: ["resize"], size:{width: '100%', height: '300px'}, parent: container});
         document.getElementById('tweak').insertAdjacentHTML('beforeend',`
+            <p>
             <label for="basicStitchInput">Basic stitch:</label>
             <input type="text" id="basicStitchInput" value="lclc" placeholder="Example: clct"/>
             <br>
             <label for="drosteStitches">Droste applied to basic stitch:</label>
             <input type="text" id="drosteStitches" value="tc,rclcrc,clcrcl,ct" placeholder="Example: cl,cr,tt; As many as clr actions in basic stitch (t=lr)" />
-            <p>Flip:
+            </p><p>Flip:
             <button onclick="GF_hybrid.flip_b2d()">&harr;</button>
             <button onclick="GF_hybrid.flip_b2p()">&varr;</button>
             <button onclick="GF_hybrid.flip_b2d();GF_hybrid.flip_b2p()">both</button>
