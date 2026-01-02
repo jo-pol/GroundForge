@@ -191,26 +191,25 @@ const GF_hybrid = {
                         .replace(/[tlr]+$/g, '');
                     const value = text.substring(text.lastIndexOf(' ') + 1);
                     if (!dict[majorKey]) dict[majorKey] = {};
-                    if (!dict[majorKey][minorKey])
-                        dict[majorKey][minorKey] = value;
-                    else
-                        dict[majorKey][minorKey] += `, ${value}`;
+                    if (!dict[majorKey][minorKey]) {
+                        dict[majorKey][minorKey] = new Set();
+                    }
+                    dict[majorKey][minorKey].add(value);
                 }
             });
         const target = document.getElementById('legend_panel');
         target.innerHTML = '';
-        Object.keys(dict).forEach(key => {
+        Object.keys(dict).sort().forEach(key => {
             target.insertAdjacentHTML('beforeend',`
-                  <svg width="20px" height="25px">
-                      <g transform="scale(2,2)">
-                        <g transform="translate(5,6)">
+                  <svg width="25px" height="25px">
+                      <g transform="scale(3,3)">
+                        <g transform="translate(4,4)">
                           ${PairSvg.shapes(key)}
                         </g>
                       </g>
                     </svg><br>
-                    ${
-                        Object.entries(dict[key])
-                            .map(([k, v]) => `${k}: ${v}`)
+                    ${Object.entries(dict[key]).sort()
+                            .map(([k, v]) => `${k}: ${Array.from(v).join(', ')}`)
                             .join('<br>')
                     }
                 <br>`)
