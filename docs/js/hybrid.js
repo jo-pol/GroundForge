@@ -89,27 +89,24 @@ const GF_hybrid = {
                 drosteInput.value += `\n${selectedStitchId}=${newStitchValue}`;
             }
             if (drosteValue.trim() === '') {
-                // TODO beep
                 return;
             }
             let extraSteps = ''
             if (drosteValue.includes('=')) {
                 const count = newStitchValue.replaceAll(/t/g, 'lr').length;
                 for (let i = 0; i < count; i++) {
+                    // make sure not to inherit previous definitions
+                    // TODO more complicated for a second droste step
                     extraSteps += `${selectedStitchId}${i}=`;
                 }
-                extraSteps += 'ctc\n' + drosteValue
-                    .replaceAll(/x/g,selectedStitchId)
-                    // .replaceAll(',', '\n')
-                ;
-                // TODO: reset missing stitch ids to default ctc
+                extraSteps += 'ctc\n';
+                extraSteps += drosteValue.replaceAll(/x/g,selectedStitchId);
             } else {
                 const newDrosteStitches = drosteValue.split(/[,.]/);
                 for (let i = 0; i < newDrosteStitches.length; i++) {
                     extraSteps += `\n${selectedStitchId}${i}=${newDrosteStitches[i]}`;
                 }
             }
-            console.log('extraSteps:::::::::::', extraSteps);
             const drosteId = 'droste'+ (drosteIndex + 1);
             const droste0 = document.getElementById('droste0');
             const params = new URLSearchParams(droste0.value);
@@ -208,16 +205,22 @@ const GF_hybrid = {
                     document.getElementById(key1).parentNode.style.display = 'none';
                 }
             });
-            GF_tiles.loadSvg({jsAction: 'GF_hybrid.setPattern(this);return false;', containerId: 'pattern'});
+            GF_tiles.loadGallery({jsAction: 'GF_hybrid.setPattern(this);return false;', containerId: 'pattern'});
             const snow3Gallery = document.getElementById('snow3')
             for(let [img,basicStitch,droste] of GF_hybrid.snow3){
-                snow3Gallery.insertAdjacentHTML('beforeend',
-                    `<a href="javascript:GF_hybrid.setRecipe('${basicStitch}','${droste}')"><img src="${GF_hybrid.content_home}/mix4snow/${img}.png" alt="${img}"></a> `);
+                snow3Gallery.insertAdjacentHTML('beforeend', `
+                    <a href="javascript:GF_hybrid.setRecipe('${basicStitch}','${droste}')">
+                    <img src="${GF_hybrid.content_home}/mix4snow/${img}.png" alt="${img}">
+                    </a>
+                `);
             }
             const snow4Gallery = document.getElementById('snow4')
             for(let [img,basicStitch,droste1, droste2] of GF_hybrid.snow4){
-                snow4Gallery.insertAdjacentHTML('beforeend',
-                    `<a href="javascript:GF_hybrid.setRecipe('${basicStitch}','${droste1}','${droste2}')"><img src="${GF_hybrid.content_home}/images/4-8-legs/${img}" alt="${img}"></a> `);
+                snow4Gallery.insertAdjacentHTML('beforeend', `
+                    <a href="javascript:GF_hybrid.setRecipe('${basicStitch}','${droste1}','${droste2}')">
+                    <img src="${GF_hybrid.content_home}/images/4-8-legs/${img}" alt="${img}">
+                    </a> 
+                `);
             }
             document.getElementById('stitches').innerHTML = `
                 W.I.P. For now: just type a <em>basic stitch</em> and clear <em>droste applied to basic stitch</em>. 
@@ -227,12 +230,13 @@ const GF_hybrid = {
         }
         const pairWandHref = "javascript:GF_hybrid.generateSelectedDiagram('pair');GF_hybrid.setStitchEvents()";
         const threadWandHref = "javascript:GF_hybrid.generateSelectedDiagram('thread')";
-        let q = new URL(document.documentURI).search.slice(1);
+        let q = new URL(document.documentURI).search.slice(1)
+            .replaceAll(/[^a-zA-Z0-9=,.-]/g,'');
         if (q === "" || !q.includes('shiftRows')) {
             q = "patchWidth=7&patchHeight=7&footside=---x,---4,---x,---4&tile=5-,-5,5-,-5&headside=-,c,-,c,&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=2&shiftRowsSE=2&e1=lclc&l2=llctt&f2=rcrc&d2=rrctt&e3=rcrc&l4=llctt&f4=lclc&d4=rrctt&droste2=e12=clcrcl,e13=ct,f42=ctcl,e32=f22=ctcr,e33=f43=lct,e31=f21=lctc,e11=rclcrc,f23=rct,f41=rctc,e10=tc,f20=tcl,e30=f40=tcr"
         }
         galleryPanels();
-        GF_panel.load({caption: "tweak selected", id: "tweak", size:{width:'´98%', height: 'auto'}, parent: container});
+        GF_panel.load({caption: "tweak selected stitch", id: "tweak", size:{width:'´98%', height: 'auto'}, parent: container});
         container.insertAdjacentHTML('beforeend',`<p><a href="?${q}" id="selfRef" style="display:none;">Updated pattern</a></p>`);
         GF_panel.load({caption: twister("pair"), id: "pair_panel", wandHref: pairWandHref, controls: ["resize"], parent: container});
         GF_panel.load({caption: twister("thread"), id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"], parent: container});
@@ -254,7 +258,7 @@ const GF_hybrid = {
         document.getElementById('threadStep').value = params.get('threadStep') || 1;
         const specsPanelContent = document.getElementById('specs');
         specsPanelContent.innerHTML = `
-          <a href="javascript:['droste1','droste2','droste3'].forEach(GF_hybrid.cleanupStitches)" title="Reduce panel content"><img src="/GroundForge/images/broom.png"></a>
+          <a href="javascript:['droste1','droste2','droste3'].forEach(GF_panel.cleanupStitches)" title="Reduce panel content"><img src="${this.content_home}/images/broom.png"></a>
           Specs collected from URL and clicks:
           <input type="text" id="droste0" value="${q}">
           <textarea id="droste1" spellcheck="false" placeholder="droste step 1, default all: ctc">${(params.get('droste2')||'').replaceAll(',','\n') || ''}</textarea>
@@ -275,6 +279,6 @@ const GF_hybrid = {
     setRecipe(basicStitch, drosteStitches) {
         document.getElementById('basicStitchInput').value = basicStitch;
         document.getElementById('drosteStitches').value = drosteStitches;
-        // TODO: second step of droste stitches
+        // TODO: second step of droste stitches, requires more intelligence in resetting previously assigned stitches
     }
 }

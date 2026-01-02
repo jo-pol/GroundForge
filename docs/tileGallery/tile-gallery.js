@@ -28,15 +28,15 @@ GF_tiles = {
     load(parent = document.body) {
         GF_panel.load({caption: "w.i.p.", id: "patterns", controls: ["resize"], size:{width:'310px', height: '300px'}, parent: parent});
         parent.insertAdjacentHTML('beforeend', `<div id="previews"></div>`);
-        this.loadSvg({});
+        this.loadGallery({});
     },
-    loadSvg(namedArgs) {
+    loadGallery(namedArgs) {
         const {
             jsAction = 'GF_tiles.showPreviews(this)',
             containerId = 'patterns'
         } = namedArgs;
         const svg = `${this.content_home}/tileGallery/index.svg`;
-        fetch(svg)
+        fetch(svg) // as <img src> it would not be part of the dom
             .then(response => response.text())
             .then(svg => {
                 const containerEl = document.getElementById(containerId);
