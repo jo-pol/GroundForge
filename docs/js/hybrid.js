@@ -173,10 +173,12 @@ const GF_hybrid = {
             .split(/[,.]/).reverse().join(",");
         n.focus();
     },
-    otherGallery(chooser){
+    otherGallery(chooser, initialIndex){
         chooser.parentNode.parentNode.style.display = 'none';
         document.getElementById(chooser.value).parentNode.style.display = 'block';
-        chooser.selectedIndex = 0;
+        chooser.options[initialIndex].disabled = false;
+        chooser.selectedIndex = initialIndex;
+        chooser.options[initialIndex].disabled = true;
     },
     generateLegend(){
         const dict = {};
@@ -226,16 +228,18 @@ const GF_hybrid = {
                 'snow4': {caption: '4/8 pair snow gallery', height: '65px'},
                 'stitches': {caption: 'Stitches gallery', height: '4em'}
             };
-            Object.keys(galleries).forEach(function (key1) {
+            const galleryKeys = Object.keys(galleries);
+            for(i = 0; i<galleryKeys.length; i++){
+                const key1 = galleryKeys[i];
                 let options = ''
-                Object.keys(galleries).forEach(function (key2) {
+                galleryKeys.forEach(function (key2) {
                     if (key2 === key1) {
                         options += `<option value='${key2}' disabled selected>${galleries[key2]['caption']}</option>`;
                     } else {
                         options += `<option value='${key2}'>${galleries[key2]['caption']}</option>`;
                     }
                 });
-                const chooser = `<select onchange="GF_hybrid.otherGallery(this);">${options}</select>`;
+                const chooser = `<select onchange="GF_hybrid.otherGallery(this, ${i});">${options}</select>`;
                 const sizeOptions = {width:'100%', height: galleries[key1]['height']};
                 GF_panel.load({caption: chooser, id: key1, controls: ["resize"], size: sizeOptions, parent: container});
                 if (key1 === 'snow3') {
@@ -243,7 +247,7 @@ const GF_hybrid = {
                 } else {
                     document.getElementById(key1).parentNode.style.display = 'none';
                 }
-            });
+            }
             GF_tiles.loadGallery({jsAction: 'GF_hybrid.setPattern(this);return false;', containerId: 'pattern'});
             const snow3Gallery = document.getElementById('snow3')
             for(let [img,basicStitch,droste] of GF_hybrid.snow3){
