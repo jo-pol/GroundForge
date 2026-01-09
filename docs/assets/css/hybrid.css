@@ -9,5 +9,11 @@
 #tweak input {width: calc(100% - 2.5em); margin-left: 2em; }
 #snow3 {resize: vertical;}
 
-.inner { width: 100%; margin-left: 2em; margin-right: 2em; }
-aside#sidebar {padding-left: 10px; padding-right: 10px; }
+/* use full page width */
+.inner { width: calc(100% - 6em); margin-left: 2em; margin-right: 2em; }
+#main-content { width: calc(100% - 260px); }
+@media (max-width: 767px) {
+    .inner { margin-left: 1em; margin-right: 1em; }
+    .inner, #main-content { width: 100%; }
+}
+p, h1, h2 {max-width: 690px; padding-left: calc((100% - 690px)/2); }
