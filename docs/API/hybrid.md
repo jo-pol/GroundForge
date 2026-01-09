@@ -8,30 +8,28 @@ javascript:
   - nudgePairs.js
   - panel.js
   - hybrid.js
+css:
+  - hybrid.css
 ---
 
 Work in progress
 ================
 
 Inspired by [mix snow with two droste steps](/GroundForge-help/snow-mix/droste) and the desire to develop scripts for reusable widgets.
-With a bit undressing the same script(s) could also be used for a _stitches_ pagee or _droste_ page.
+With a bit undressing the same script(s) could replace current pages:
+* _stitches_: only stitches gallery; step values zero and hidden.
+* _droste_: only stitches gallery; step values adjustable but the same for both diagrams,
+  perhaps show a single step field outside the diagram captions.
+
+Usage: see sources
+for [.md]({{ site.github.repository_url}}/docs/API/hybrid.md)
+and [.html]({{ site.github.repository_url}}/test-docs/hybrid.html).
+Note the different locations of the scripts, mark down front matter expects them in docs/js.
 
 TO DO: 
 * Apply to all (apply to ignored only for step-0)
 * Beep on invalid input (tweak, spinners, specs). When pasting a URL in the first specifications field: strip until question mark.
 * Update sidebar subjects
 
-<style>
-    .gf_panel {display: inline-block; margin: 4px;}
-    .gf_panel > div {width: 98%; overflow: auto; resize:both; border: #ddd solid 1px; }
-    .gf_panel > figcaption {width: 100%; height:2.5em; padding-bottom: 0.2em; padding-left:0.5em; margin-left:0; margin-bottom:0; box-sizing: border-box; display: flex; align-items: center; background-color: #ddd; }
-    .gf_panel > figcaption img {margin-left: 0.5em;}
-    .gf_panel > figcaption > input {margin-left: 0.5em; width: 3em;}
-    .gf_panel > div > textarea { height: 4.5em; width: 100%}
-    .gf_panel > div > input { width: calc(100% - 1px)}
-    #tweak {resize: none;}
-    #tweak input {width: calc(100% - 2.5em); margin-left: 2em; }
-    #snow3 {resize: vertical;}
-</style>
 <script src="../tileGallery/tile-gallery.js" type="text/javascript"></script>
 <script>GF_hybrid.load(document.getElementById('main-content'))</script>

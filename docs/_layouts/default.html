@@ -13,6 +13,11 @@
     <![endif]-->
 
     <link rel="stylesheet" href="/{{ site.github.repository_name }}/assets/css/help.css" type="text/css">
+    {% if page.css %}
+        {% for css in page.css %}
+            <link rel="stylesheet" href="/{{ site.github.repository_name }}/assets/css/{{ css }}" type="text/css">
+        {% endfor %}
+    {% endif %}
     {% if page.javascript %}
         {% for javascript in page.javascript %}
             <script src="/GroundForge/js/{{ javascript }}"></script>
