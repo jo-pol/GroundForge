@@ -22,8 +22,8 @@ With a bit undressing the same script(s) could replace current pages:
   perhaps show a single step field outside the diagram captions.
 
 Usage: see sources
-for [.md]({{ site.github.repository_url}}/docs/API/hybrid.md)
-and [.html]({{ site.github.repository_url}}/test-docs/hybrid.html).
+for [.md]({{ site.github.repository_url}}/blob/master/test-docs/hybrid.html)
+and [.html]({{ site.github.repository_url}}/blob/master/test-docs/hybrid.html).
 Note the different locations of the scripts, mark down front matter expects them in docs/js.
 
 TO DO: 
