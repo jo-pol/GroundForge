@@ -9,11 +9,11 @@
 #tweak input {width: calc(100% - 2.5em); margin-left: 2em; }
 #snow3 {resize: vertical;}
 
-/* use full page width */
+/* use full page width but leave room for sidebar */
 .inner { width: calc(100% - 6em); margin-left: 2em; margin-right: 2em; }
 #main-content { width: calc(100% - 260px); }
 @media (max-width: 767px) {
     .inner { margin-left: 1em; margin-right: 1em; }
     .inner, #main-content { width: 100%; }
 }
-p, h1, h2 {max-width: 690px; padding-left: calc((100% - 690px)/2); }
+p, h1, h2, h3, h4, pre, blockquote, hr, ul, ol, table, .deprecated {max-width: 690px; padding-left: calc((100% - 690px)/2); }
