@@ -14,6 +14,7 @@
 #main-content { width: calc(100% - 260px); }
 @media (max-width: 767px) {
     .inner { margin-left: 1em; margin-right: 1em; }
-    .inner, #main-content { width: 100%; }
+    .inner, #main-content { calc(100% - 2em); }
 }
-p, h1, h2, h3, h4, pre, blockquote, hr, ul, ol, table, .deprecated {max-width: 690px; padding-left: calc((100% - 690px)/2); }
+p, h1, h2, h3, h4, pre, blockquote, hr, table, .deprecated {max-width: 690px; padding-left: calc((100% - 690px)/2); }
+ul, ol {padding-left: calc((100% - 690px - 2em)/2); }
