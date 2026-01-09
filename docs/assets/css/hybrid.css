@@ -13,8 +13,8 @@
 .inner { width: calc(100% - 6em); margin-left: 2em; margin-right: 2em; }
 #main-content { width: calc(100% - 260px); }
 @media (max-width: 767px) {
-    .inner { margin-left: 1em; margin-right: 1em; }
-    .inner, #main-content { calc(100% - 2em); }
+    .inner { margin-left: 0.5em; margin-right: 0.5em; }
+    .inner, #main-content { calc(100% - 1.5em); }
 }
 p, h1, h2, h3, h4, pre, blockquote, hr, table, .deprecated {max-width: 690px; padding-left: calc((100% - 690px)/2); }
-ul, ol {padding-left: calc((100% - 690px - 2em)/2); }
+ul, ol {padding-left: calc((100% - 690px + 2em)/2); }
