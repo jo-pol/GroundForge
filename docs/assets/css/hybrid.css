@@ -14,8 +14,8 @@
 #main-content { width: calc(100% - 260px); }
 @media (max-width: 767px) {
     .inner { margin-left: 0.5em; margin-right: 0.5em; }
-    .inner { calc(100% - 1.5em); }
-    #main-content { calc(100% - 1.5em); }
+    .inner { width: calc(100% - 1.5em); }
+    #main-content { width: 100%; }
 }
 ul, ol, p, h1, h2, h3, h4, pre, blockquote, hr, table, .deprecated {max-width: 690px; padding-left: calc((100% - 690px)/2); }
 ul, ol {padding-left: calc(max(1em,(100% - 690px)/2 + 1em)); }
