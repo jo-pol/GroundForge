@@ -17,5 +17,12 @@
     .inner { width: calc(100% - 1.5em); }
     #main-content { width: 100%; }
 }
-ul, ol, p, h1, h2, h3, h4, pre, blockquote, hr, table, .deprecated {max-width: 690px; padding-left: calc((100% - 690px)/2); }
-ul, ol {padding-left: calc(max(1em,(100% - 690px)/2 + 1em)); }
+
+#main-content > ul, #main-content > ol, #main-content > p, #main-content > h1, #main-content > h2, #main-content > h3, #main-content > h4, #main-content > pre, #main-content > blockquote, #main-content > hr, #main-content > table, #main-content > .deprecated {
+    max-width: 690px;
+    padding-left: calc((100% - 690px)/2);
+}
+
+#main-content > ul, #main-content > ol {
+    padding-left: calc(max(1em, (100% - 690px)/2 + 1em));
+}
