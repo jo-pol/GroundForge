@@ -21,10 +21,10 @@ Stitches and threads
     GF_hybrid.snow4 = []; // clear for performance
     GF_hybrid.load(document.getElementById('main-content'));
     for (let id of ['pairStep', 'threadStep']) {
-        document.getElementsById(id).value = 0;
+        document.getElementById(id).value = 0;
     }
     for (let id of ['specs', 'pattern', 'snow3', 'snow4', 'drosteStitches', 'pairStep', 'threadStep']) {
-        document.getElementsById(id).parentNode.style.display = 'none';
+        document.getElementById(id).parentNode.style.display = 'none';
     }
     document.getElementsById('stitches').parentNode.getElementsByTagName('selecti').outerHTML = 'stitches';
 </script>
