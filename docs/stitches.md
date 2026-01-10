@@ -19,7 +19,7 @@ Stitches and threads
     GF_tiles = {loadGallery (namedArgs){ }}; // dummy to avoid errors
     GF_hybrid.snow3 = []; // clear for performance
     GF_hybrid.snow4 = []; // clear for performance
-    GF_hybrid.load(document.getElementById('main-content');
+    GF_hybrid.load(document.getElementById('main-content'));
     for (let id of ['pairStep', 'threadStep']) {
         document.getElementsById(id).value = 0;
     }
