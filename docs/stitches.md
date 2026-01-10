@@ -15,6 +15,7 @@ Stitches and threads
 ================
 
 <script>
+    console.log('================ Loading hybrid panels ================');
     GF_tiles = {loadGallery (namedArgs){ }}; // dummy to avoid errors
     GF_hybrid.snow3 = []; // clear for performance
     GF_hybrid.snow4 = []; // clear for performance
