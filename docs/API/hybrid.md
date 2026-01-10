@@ -17,7 +17,7 @@ Work in progress
 
 Inspired by [mix snow with two droste steps](/GroundForge-help/snow-mix/droste) and the desire to develop scripts for reusable widgets.
 With a bit undressing the same script(s) could replace current pages:
-* _stitches_: only stitches gallery; step values zero and hidden.
+* _stitches_: only stitches gallery; step values zero and hidden; no specs.
 * _droste_: only stitches gallery; step values adjustable but the same for both diagrams,
   perhaps show a single step field outside the diagram captions.
 
