@@ -9,6 +9,7 @@ javascript:
 - hybrid.js
 css:
 - hybrid.css
+sidebar: stitches
 ---
 
 <script>
