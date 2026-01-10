@@ -219,7 +219,7 @@ const GF_hybrid = {
     },
     load(container) {
         function twister(type){
-            return `${type}s, step: <input type='number' min='0' max='2' value='0' id='${type}Step' name='${type}Step' title='droste step' >`
+            return `${type}s,<label> step: <input type='number' min='0' max='2' value='0' id='${type}Step' name='${type}Step' title='droste step' ></label>`;
         }
         function galleryPanels() {
             const galleries = {

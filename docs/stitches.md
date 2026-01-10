@@ -23,7 +23,8 @@ Stitches and threads
     for (let id of ['pairStep', 'threadStep']) {
         document.getElementsById(id).value = 0;
     }
-    for (let id of ['specs', 'pattern', 'snow3', 'snow4', 'drosteStitches']) {
+    for (let id of ['specs', 'pattern', 'snow3', 'snow4', 'drosteStitches', 'pairStep', 'threadStep']) {
         document.getElementsById(id).parentNode.style.display = 'none';
     }
+    document.getElementsById('stitches').parentNode.getElementsByTagName('selecti').outerHTML = 'stitches';
 </script>
