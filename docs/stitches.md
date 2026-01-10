@@ -26,5 +26,5 @@ Stitches and threads
     for (let id of ['specs', 'pattern', 'snow3', 'snow4', 'drosteStitches', 'pairStep', 'threadStep']) {
         document.getElementById(id).parentNode.style.display = 'none';
     }
-    document.getElementsById('stitches').parentNode.getElementsByTagName('selecti').outerHTML = 'stitches';
+    document.getElementById('stitches').parentNode.getElementsByTagName('select').outerHTML = 'stitches';
 </script>
