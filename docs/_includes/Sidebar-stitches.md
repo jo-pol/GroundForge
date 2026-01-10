@@ -1,7 +1,7 @@
 - Features on this page
   - [Icons](/GroundForge-help/Icons)
-  - [Color code (4 per stitch)](/GroundForge-help/color-rules)
-  - [Swatch size](/GroundForge-help/Patch-Size) NYI
+  - [Color code](/GroundForge-help/color-rules)
+  - [Swatch size](/GroundForge-help/Patch-Size) (NYI)
   - [Download](/GroundForge-help/Download)
 - Half minute captures
   - [Flip and rotate stitches](/GroundForge-help/clips/flip)
@@ -10,7 +10,7 @@
   - [Resize panels](/GroundForge-help/clips/resize)
   - [Print as PDF](/GroundForge-help/clips/print-as-pdf)
 - Pattern galleries
-  - [basic](tileGallery) 
-  - [sampler (donated to the MET) by Gertrude Whiting](/gw-lace-to-gf)
-  - [computer generated pair diagrams (tesselace)](/tesselace-to-gf)
-  - [More Attractive Examples (MAE: community contributions)](/MAE-gf)
+  - - [basic](tileGallery) 
+  - - [sampler (donated to the MET) by Gertrude Whiting](/gw-lace-to-gf)
+  - - [computer generated pair diagrams (tesselace)](/tesselace-to-gf)
+  - - [More Attractive Examples (MAE: community contributions)](/MAE-gf)
