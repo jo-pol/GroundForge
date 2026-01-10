@@ -22,10 +22,10 @@ Stitches and threads
     for (let id of ['pairStep', 'threadStep']) {
         document.getElementById(id).value = 0;
     }
-    for (let id of ['specs', 'drosteStitches', 'pairStep', 'threadStep']) {
+    for (let id of ['specs', 'drosteStitches', 'pairStep', 'threadStep', 'snow3']) {
         document.getElementById(id).parentNode.style.display = 'none';
     }
-    document.getElementById('stitches').style.display = 'block';
+    document.getElementById('stitches').parentNode.style.display = 'block';
     document.getElementById('stitches').parentNode.getElementsByTagName('select')[0].outerHTML = 'stitches';
     console.log('================ Loaded hybrid panels ================');
 </script>
