@@ -24,7 +24,11 @@ sidebar: stitches
     for (let id of ['specs', 'drosteStitches', 'pairStep', 'threadStep', 'snow3']) {
         document.getElementById(id).parentNode.style.display = 'none';
     }
-    document.getElementById('stitches').parentNode.style.display = 'block';
-    document.getElementById('stitches').parentNode.getElementsByTagName('select')[0].outerHTML = 'stitches';
+    document.getElementById('stitches').style.width = 'auto';
+    const stitchesEl = document.getElementById('stitches').parentNode;
+    stitchesEl.style.display = 'block';
+    stitchesEl.style.width = 'auto';
+    stitchesEl.textContent = '';
+    stitchesEl.getElementsByTagName('select')[0].outerHTML = 'stitches';
     console.log('================ Loaded hybrid panels ================');
 </script>

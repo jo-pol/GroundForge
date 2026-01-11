@@ -219,7 +219,7 @@ const GF_hybrid = {
     },
     load(container) {
         function twister(type){
-            return `${type}s,<label> step: <input type='number' min='0' max='2' value='0' id='${type}Step' name='${type}Step' title='droste step' ></label>`;
+            return `${type}s<label>, step: <input type='number' min='0' max='2' value='0' id='${type}Step' name='${type}Step' title='droste step' ></label>`;
         }
         function galleryPanels() {
             const galleries = {
@@ -284,7 +284,7 @@ const GF_hybrid = {
         container.insertAdjacentHTML('beforeend',`<p><a href="?${q}" id="selfRef" style="display:none;">Updated pattern</a></p>`);
         GF_panel.load({caption: twister("pair"), id: "pair_panel", wandHref: pairWandHref, controls: ["resize"], parent: container});
         GF_panel.load({caption: twister("thread"), id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"], parent: container});
-        GF_panel.load({caption: 'legend', id: "legend_panel", controls: ["resize"], parent: container});
+        GF_panel.load({caption: 'stitch enumeration', id: "legend_panel", controls: ["resize"], parent: container});
         GF_panel.load({caption: "specifications", id: "specs", controls: ["resize"], size:{width: '100%', height: '300px'}, parent: container});
         document.getElementById('tweak').insertAdjacentHTML('beforeend',`
             <p>
