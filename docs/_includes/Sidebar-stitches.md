@@ -10,7 +10,7 @@
   - [Resize panels](/GroundForge-help/clips/resize)
   - [Print as PDF](/GroundForge-help/clips/print-as-pdf)
 - Pattern galleries
-  - \- [basic](tileGallery) 
-  - \- [sampler (donated to the MET) by Gertrude Whiting](/gw-lace-to-gf)
-  - \- [computer generated pair diagrams (tesselace)](/tesselace-to-gf)
-  - \- [More Attractive Examples (MAE: community contributions)](/MAE-gf)
+  - [Basic](tileGallery) 
+  - [Tesselace](/tesselace-to-gf "computer generated pair diagrams")
+  - [MAE](/MAE-gf "More Attractive Examples (community contributions)")
+  - [Sampler by G. Whiting](/gw-lace-to-gf "donated to the MET")
