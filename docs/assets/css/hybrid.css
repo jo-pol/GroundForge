@@ -24,6 +24,13 @@
 
 @media print {
     .gf_panel > a, .gf_panel > input[type="color"] { display: none }
-    .gf_pael > div { overflow: hidden; }
+    .gf_panel > div { overflow: hidden; }
+    .gf_panel > figcaption { outline: 2px solid #ddd;}
+    .gf_panel:not(.hidden):not([style*="display: none"]) {
+        display: inline-block !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        vertical-align: top;
+    }
 }
 

@@ -27,6 +27,6 @@ sidebar: stitches
     document.getElementById('basicStitchInput').previousSibling.remove(); // remove label
     const stitchesEl = document.getElementById('stitches').parentNode;
     stitchesEl.style.display = 'block'; // make visible, whichever gallery is visible by default
-    stitchesEl.getElementsByTagName('select')[0].outerHTML = 'stitches'; // no choice for other galleries
+    stitchesEl.getElementsByTagName('select')[0].outerHTML = 'stitch gallery'; // no choice for other galleries
     console.log('================ Loaded hybrid panels ================');
 </script>
