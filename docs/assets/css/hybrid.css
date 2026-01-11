@@ -24,5 +24,6 @@
 
 @media print {
     .gf_panel > a, .gf_panel > input[type="color"] { display: none }
+    .gf_pael > div { overflow: hidden; }
 }
 
