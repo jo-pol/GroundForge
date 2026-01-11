@@ -23,7 +23,6 @@
 }
 
 @media print {
-    form, header, figcaption { display: none }
-    #to_self { display: block }
+    .gf_panel > a, .gf_panel > input[type="color"] { display: none }
 }
 
