@@ -21,11 +21,8 @@ sidebar: stitches
     for (let id of ['pairStep', 'threadStep']) {
         document.getElementById(id).value = 0;
     }
-    for (let id of ['pairStep', 'threadStep']) {
+    for (let id of ['specs', 'drosteStitches', 'pairStep', 'threadStep', 'snow3']) {
         document.getElementById(id).parentNode.style.display = 'none';
-    }
-    for (let id of ['specs', 'drosteStitches', 'snow3']) {
-        document.getElementById(id).parentNode.remove();
     }
     document.getElementById('basicStitchInput').previousSibling.remove(); // remove label
     const stitchesEl = document.getElementById('stitches').parentNode;
