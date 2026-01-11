@@ -25,6 +25,7 @@ sidebar: stitches
     for (let id of ['specs', 'drosteStitches', 'pairStep', 'threadStep', 'snow3']) {
         document.getElementById(id).parentNode.style.display = 'none';
     }
+    document.getElementById('basicStitchInput').previousSibling.remove(); // remove label
     const stitchesEl = document.getElementById('stitches').parentNode;
     stitchesEl.style.display = 'block'; // make visible, whichever gallery is visible by default
     stitchesEl.getElementsByTagName('select')[0].outerHTML = 'stitches'; // no choice for other galleries

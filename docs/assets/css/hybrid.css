@@ -21,3 +21,9 @@
 #main-content > ul, #main-content > ol, #main-content > p, #main-content > h1, #main-content > h2, #main-content > h3, #main-content > h4, #main-content > pre, #main-content > blockquote, #main-content > hr, #main-content > table, #main-content > .deprecated {
     max-width: 690px;
 }
+
+@media print {
+    form, header, figcaption { display: none }
+    #to_self { display: block }
+}
+
