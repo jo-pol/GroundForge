@@ -1,5 +1,5 @@
 const GF_hybrid = {
-    content_home: '..',
+    content_home: '.',
     snow4:[
         // screenshots taken at 50% zoom level
         // ndb: patterns from "naar de bron" by Nora Andries

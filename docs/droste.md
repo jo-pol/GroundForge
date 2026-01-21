@@ -27,6 +27,7 @@ sidebar: droste
     GF_tiles = {loadGallery (namedArgs){ }}; // dummy to avoid errors
     GF_hybrid.snow3 = []; // clear for performance
     GF_hybrid.snow4 = []; // clear for performance
+    GF_hybrid.content_home = '.';
     GF_hybrid.load(document.getElementById('main-content'));
     for (let id of ['pairStep', 'threadStep']) {
         document.getElementById(id).value = 1;
