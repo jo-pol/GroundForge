@@ -21,6 +21,7 @@ sidebar: droste
     document.getElementById("drosteStep")
         .addEventListener('change', e => {
             const step = Math.min(3, Math.max(1, parseInt(e.target.value)));
+            document.getElementById("drosteStep").value = step;
             document.getElementById("threadStep").value = step;
             document.getElementById("pairStep").value = step;
         });
