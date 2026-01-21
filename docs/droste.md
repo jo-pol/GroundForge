@@ -15,7 +15,7 @@ sidebar: droste
 <script>
     console.log('================ Loading hybrid panels ================');
     document.getElementById('main-content').insertAdjacentHTML("beforeend",`
-        <label for="">Step number</label>
+        <label for=""><strong>Droste step number</strong></label>
         <input type="number", min="0" max="3" id="drosteStep" value="1">
     `);
     document.getElementById("drosteStep")
