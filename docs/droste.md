@@ -31,7 +31,7 @@ sidebar: droste
     for (let id of ['pairStep', 'threadStep']) {
         document.getElementById(id).value = 1;
     }
-    for (let id of ['specs', 'drosteStitches', 'pairStep', 'threadStep', 'snow3']) {
+    for (let id of ['drosteStitches', 'pairStep', 'threadStep', 'snow3']) {
         document.getElementById(id).parentNode.style.display = 'none';
     }
     document.getElementById('basicStitchInput').previousSibling.remove(); // remove label
