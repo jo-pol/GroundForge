@@ -134,7 +134,7 @@ The query mimics what would be sent to a server when submitting the form.
 Many fields of the form are hidden to the user.
 
 To avoid outdated documentation: look for the usage of `TilesConfig.queryFields`.
-* Droste patterns use additional parameters in the load function of `droste.js`.
+* Droste patterns use additional parameters
 * `API/proto.html` uses only some of the `queryFields`.
 * `API/sheet.html` does not use a query at all.
 
