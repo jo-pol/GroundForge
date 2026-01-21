@@ -29,7 +29,7 @@ sidebar: droste
     GF_hybrid.snow4 = []; // clear for performance
     GF_hybrid.load(document.getElementById('main-content'));
     for (let id of ['pairStep', 'threadStep']) {
-        document.getElementById(id).value = 0;
+        document.getElementById(id).value = 1;
     }
     for (let id of ['specs', 'drosteStitches', 'pairStep', 'threadStep', 'snow3']) {
         document.getElementById(id).parentNode.style.display = 'none';
