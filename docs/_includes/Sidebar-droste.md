@@ -2,6 +2,7 @@
   - [Icons](/GroundForge-help/Icons)
   - [Droste effect](/GroundForge-help/Droste-effect)
   - [Color code](/GroundForge-help/color-rules)
+  - [Swatch size](/GroundForge-help/Patch-Size) (NYI)
   - [Download](/GroundForge-help/Download)
 - Half minute captures
   - [Flip and rotate stitches](/GroundForge-help/clips/flip)

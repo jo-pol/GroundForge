@@ -6,6 +6,17 @@ const GF_panel = {
     ],
     panelSize: {width: '300px', height: '300px'}, // default panel size
 
+    /**
+     * Creates and appends a diagram panel with controls to the specified parent element.
+     *
+     * @param {Object} config - Configuration for the panel.
+     * @param {string} config.caption - The caption text for the panel.
+     * @param {string} config.id - The unique ID for the panel container.
+     * @param {string} [config.wandHref] - Optional URL for the reload (wand) icon.
+     * @param {Array<string>} [config.controls] - List of control names to include (e.g., 'cleanup', 'color', 'resize').
+     * @param {Object} [config.size] - Optional size for the panel (e.g., `{width: '300px', height: '300px'}`).
+     * @param {HTMLElement} config.parent - The parent element to which the panel will be appended.
+     */
     load(config) {
         const { caption, id, wandHref, controls = [], size = this.panelSize, parent } = config;
         const isArray = Array.isArray(controls);
@@ -46,6 +57,12 @@ const GF_panel = {
         parent.append(figure);
         this.resetDimensions(id, size);
     },
+
+    /**
+     * Downloads the SVG content of the specified container as a file.
+     * @param containerId
+     * @param filename
+     */
     downloadSVG(containerId, filename = "diagram.svg") {
         const el = document.querySelector('#'+ containerId + " svg");
         if (!el) return;

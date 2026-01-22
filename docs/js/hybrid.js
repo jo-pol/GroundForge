@@ -1,5 +1,11 @@
+/**
+ *
+ */
 const GF_hybrid = {
     content_home: '.',
+    /**
+     * 4/8 pair snow gallery patterns
+     */
     snow4:[
         // screenshots taken at 50% zoom level
         // ndb: patterns from "naar de bron" by Nora Andries
@@ -9,6 +15,9 @@ const GF_hybrid = {
         ['spider-2-rings.png','ctct','x1=ctcrctc,x2=ctclctc,x4=x5=tt'],
         ['spider-3-rings.png','ctcctct','x3=ctcctc,x8=x9=tt','x33=ctcctc,x80=x81=x90=x91=tt']
     ],
+    /**
+     * 3/6 pair snow gallery patterns
+     */
     snow3: [
         ['123-a',   'rcrcrc','crc,crclctc,ctcrc,rcl,c,c'],
         ['123-b',   'lclclc','rcl,ctc,crcllc,crrclcr,ctc,cl'],
@@ -217,6 +226,10 @@ const GF_hybrid = {
                 <br>`)
         });
     },
+    /**
+     * Loads all components required for the droste mixer
+     * @param {!HTMLElement} container receives the generated components
+     */
     load(container) {
         function twister(type){
             return `${type}s<label>, step: <input type='number' min='0' max='2' value='0' id='${type}Step' name='${type}Step' title='droste step' ></label>`;
@@ -330,7 +343,12 @@ const GF_hybrid = {
         document.getElementById('drosteStitches').value = drosteStitches;
         // TODO: second step of droste stitches, requires more intelligence in resetting previously assigned stitches
     },
-    loadDroste(parent){
+    /**
+     * Load panels for droste page
+     * @param {!HTMLElement} parent receives the generated components
+     * @param {!number} initialStep default: 1, 0 for a combination of the stitches page and droste page
+     */
+    loadDroste(parent, initialStep = 1){
         parent.insertAdjacentHTML("beforeend",`
             <label for=""><strong>Droste step number</strong></label>
             <input type="number" min="0" max="3" id="drosteStep" value="1">
@@ -338,16 +356,28 @@ const GF_hybrid = {
         document.getElementById("drosteStep")
             .addEventListener('change', e => {
                 const val = parseInt(e.target.value, 10);
-                const step = isNaN(val) ? 1 : Math.min(3, Math.max(1, val));
+                const step = isNaN(val) ? initialStep : Math.min(3, Math.max(initialStep, val));
                 document.getElementById("drosteStep").value = step;
                 document.getElementById("threadStep").value = step;
                 document.getElementById("pairStep").value = step;
             });
-        this.loadSimple(parent, 1, ['drosteStitches', 'pairStep', 'threadStep', 'snow3'] );
+        this.loadSimple(parent, initialStep, ['drosteStitches', 'pairStep', 'threadStep', 'snow3'] );
     },
+    /**
+     * Load panels for stitches page
+     * @param {!HTMLElement} parent receives the generated components
+     */
     loadStitches(parent){
         this.loadSimple(parent, 0, ['drosteStitches', 'pairStep', 'threadStep', 'snow3', 'specs'] );
     },
+    /**
+     * Common loading code for droste and stitches pages
+     * @param {!HTMLElement} parent receives the generated components
+     * @param {!number} initialStep 0 for stitches page, 1 for droste page, 0 for a combination of both
+     * @param {!String[]} hiddenElements
+     *   for droste: ['drosteStitches', 'pairStep', 'threadStep', 'snow3'], for stitches add 'specs'
+     *   note that a droste page needs a drosteStep input to control the hidden pair and thread step values
+     */
     loadSimple(parent, initialStep, hiddenElements){
         console.log('================ Loading panels ================');
         GF_tiles = {loadGallery (namedArgs){ }}; // dummy to avoid errors
