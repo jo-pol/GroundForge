@@ -329,5 +329,41 @@ const GF_hybrid = {
         document.getElementById('basicStitchInput').value = basicStitch;
         document.getElementById('drosteStitches').value = drosteStitches;
         // TODO: second step of droste stitches, requires more intelligence in resetting previously assigned stitches
+    },
+    loadDroste(parent){
+        parent.insertAdjacentHTML("beforeend",`
+            <label for=""><strong>Droste step number</strong></label>
+            <input type="number" min="0" max="3" id="drosteStep" value="1">
+        `);
+        document.getElementById("drosteStep")
+            .addEventListener('change', e => {
+                const val = parseInt(e.target.value, 10);
+                const step = isNaN(val) ? 1 : Math.min(3, Math.max(1, val));
+                document.getElementById("drosteStep").value = step;
+                document.getElementById("threadStep").value = step;
+                document.getElementById("pairStep").value = step;
+            });
+        this.loadSimple(parent, 1, ['drosteStitches', 'pairStep', 'threadStep', 'snow3'] );
+    },
+    loadStitches(parent){
+        this.loadSimple(parent, 0, ['drosteStitches', 'pairStep', 'threadStep', 'snow3', 'specs'] );
+    },
+    loadSimple(parent, initialStep, hiddenElements){
+        console.log('================ Loading panels ================');
+        GF_tiles = {loadGallery (namedArgs){ }}; // dummy to avoid errors
+        this.snow3 = []; // clear for performance
+        this.snow4 = []; // clear for performance
+        this.load(parent);
+        for (let id of ['pairStep', 'threadStep']) {
+            document.getElementById(id).value = initialStep;
+        }
+        for (let id of hiddenElements) {
+            document.getElementById(id).parentNode.style.display = 'none';
+        }
+        document.getElementById('basicStitchInput').previousSibling.remove(); // remove label
+        const stitchesEl = document.getElementById('stitches').parentNode;
+        stitchesEl.style.display = 'block'; // make visible, whichever gallery is visible by default
+        stitchesEl.getElementsByTagName('select')[0].outerHTML = 'select stitch example'; // no choice for other galleries
+        console.log('================ Loaded panels ================');
     }
 }

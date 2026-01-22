@@ -13,20 +13,5 @@ sidebar: stitches
 ---
 
 <script>
-    console.log('================ Loading hybrid panels ================');
-    GF_tiles = {loadGallery (namedArgs){ }}; // dummy to avoid errors
-    GF_hybrid.snow3 = []; // clear for performance
-    GF_hybrid.snow4 = []; // clear for performance
-    GF_hybrid.load(document.getElementById('main-content'));
-    for (let id of ['pairStep', 'threadStep']) {
-        document.getElementById(id).value = 0;
-    }
-    for (let id of ['specs', 'drosteStitches', 'pairStep', 'threadStep', 'snow3']) {
-        document.getElementById(id).parentNode.style.display = 'none';
-    }
-    document.getElementById('basicStitchInput').previousSibling.remove(); // remove label
-    const stitchesEl = document.getElementById('stitches').parentNode;
-    stitchesEl.style.display = 'block'; // make visible, whichever gallery is visible by default
-    stitchesEl.getElementsByTagName('select')[0].outerHTML = 'select stitch example'; // no choice for other galleries
-    console.log('================ Loaded hybrid panels ================');
+    GF_hybrid.loadStitches(document.getElementById('main-content'));
 </script>
