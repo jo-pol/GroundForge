@@ -37,19 +37,43 @@ jobs:
       - name: Generate JSDoc
         run: npx jsdoc docs/js -d docs/jsdoc -t ./node_modules/jsdoc-baseline
 
-      - name: Install Puppeteer
-        run: npm install puppeteer
+      - name: Install Puppeteer and pdf-lib
+        run: npm install puppeteer pdf-lib
 
-      - name: Generate PDF from JSDoc index.html
+      - name: Generate PDF from selected JSDoc HTML files
         run: |
           node -e "
+          const fs = require('fs');
+          const path = require('path');
           const puppeteer = require('puppeteer');
+          const { PDFDocument } = require('pdf-lib');
+          
           (async () => {
+            const dir = path.join(process.cwd(), 'docs/jsdoc');
+            const files = fs.readdirSync(dir)
+              .filter(f => f.endsWith('.html') && f !== 'index.html' && !f.endsWith('.js.html'))
+              .map(f => path.join(dir, f));
+          
             const browser = await puppeteer.launch({args: ['--no-sandbox']});
-            const page = await browser.newPage();
-            await page.goto('file://' + process.cwd() + '/docs/jsdoc/index.html', {waitUntil: 'networkidle0'});
-            await page.pdf({path: 'docs/jsdoc/jsdoc.pdf', format: 'A4'});
+            const pdfBuffers = [];
+            for (const file of files) {
+              const page = await browser.newPage();
+              await page.goto('file://' + file, {waitUntil: 'networkidle0'});
+              const pdf = await page.pdf({format: 'A4'});
+              pdfBuffers.push(pdf);
+              await page.close();
+            }
             await browser.close();
+          
+            // Merge PDFs
+            const mergedPdf = await PDFDocument.create();
+            for (const pdfBytes of pdfBuffers) {
+              const pdf = await PDFDocument.load(pdfBytes);
+              const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+              copiedPages.forEach((p) => mergedPdf.addPage(p));
+            }
+            const mergedBytes = await mergedPdf.save();
+            fs.writeFileSync(path.join(dir, 'jsdoc.pdf'), mergedBytes);
           })();
           "
 
