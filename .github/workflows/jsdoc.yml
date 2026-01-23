@@ -42,3 +42,19 @@ jobs:
         with:
           name: jsdoc
           path: docs/jsdoc/
+
+      - name: Install Puppeteer
+        run: npm install puppeteer
+
+      - name: Generate PDF from JSDoc index.html
+        run: |
+          node -e "
+          const puppeteer = require('puppeteer');
+          (async () => {
+            const browser = await puppeteer.launch({args: ['--no-sandbox']});
+            const page = await browser.newPage();
+            await page.goto('file://' + process.cwd() + '/docs/jsdoc/index.html', {waitUntil: 'networkidle0'});
+            await page.pdf({path: 'docs/jsdoc/jsdoc.pdf', format: 'A4'});
+            await browser.close();
+          })();
+          "
