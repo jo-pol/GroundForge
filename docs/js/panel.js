@@ -1,3 +1,9 @@
+/**
+ * GroundForge component generator.
+ *
+ * Requires: d3.v4.min.js - GroundForge-opt.js - nudgePairs.js (nudgeDiagram)
+ * @namespace
+ */
 const GF_panel = {
     svgSize: [ // portrait pages, size increases per droste step
         {width: 793.70079, height: 1122.5197}, // A4
@@ -97,6 +103,12 @@ const GF_panel = {
         }
         return false;
     },
+    /**
+     * Calls nudgeDiagram to start or resume the layout animation.
+     *
+     * @param containerId
+     * @param type
+     */
     nudge(containerId, type = 'thread') {
         console.log(`nudge called for container ${containerId} and diagram type ${type}`);
         nudgeDiagram(d3.select('#' + containerId).select("svg"), type);

@@ -5,6 +5,7 @@
  * Uses d3-force to apply forces to the nodes and links of the diagram.
  * Requires d3.js
  *
+ * @Ignore
  * @param {string} containerId
  *   of element containing an SVG generated with PairSvg.create
  *   in other words: the primary pair diagram
@@ -30,7 +31,7 @@ function nudgePairs(containerId) {
  * Requires d3.js and DiagramSvg.linkPath function of GroundForge-opt.js. See also
  * - https://devdocs.io/d3~4/d3-force
  * - https://devdocs.io/d3~4/d3-selection
- * @param svg SVG selection
+ * @param svg SVG element selected with d3.select
  * @param diagramType 'pair' or 'thread' (default: 'thread')
  */
 function nudgeDiagram(svg, diagramType='thread') {

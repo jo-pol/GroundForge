@@ -1,5 +1,5 @@
 /**
- * GroundForge page component generator.
+ * GroundForge page generator.
  *
  * The surrounding page should take care of the house style like headers footers and menu's with help pages..
  *
@@ -227,7 +227,6 @@ const GF_hybrid = {
     },
     /**
      * Loads all components required for the droste mixer.
-     * @function
      * @memberof GF_hybrid
      * @param {!HTMLElement} container receives the generated components
      */
@@ -346,7 +345,6 @@ const GF_hybrid = {
     },
     /**
      * Load components for the droste page.
-     * @function
      * @memberof GF_hybrid
      * @param {!HTMLElement} container receives the generated components
      * @param {!number} initialStep default: 1, 0 for a combination of the stitches page and droste page
@@ -368,7 +366,6 @@ const GF_hybrid = {
     },
     /**
      * Load components for the stitches page.
-     * @function
      * @memberof GF_hybrid
      * @param {!HTMLElement} container receives the generated components
      * */

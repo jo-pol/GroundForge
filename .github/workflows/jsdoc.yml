@@ -81,4 +81,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: jsdoc
-          path: docs/jsdoc/
+          path: docs/jsdoc/jsdoc.pdf
