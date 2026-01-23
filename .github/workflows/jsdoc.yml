@@ -24,7 +24,8 @@ jobs:
             "name": "temp-jsdoc",
             "version": "1.0.0",
             "devDependencies": {
-              "jsdoc": "^4.0.0"
+              "jsdoc": "^4.0.0",
+              "docdash": "^2.0.0"
             }
           }' > package.json
 
@@ -32,7 +33,7 @@ jobs:
         run: npm install
 
       - name: Generate JSDoc
-        run: npx jsdoc docs/js -d docs/jsdoc
+        run: npx jsdoc docs/js -d docs/jsdoc -t ./node_modules/docdash
 
       - name: Upload JSDoc to artifact
         uses: actions/upload-artifact@v4
