@@ -37,12 +37,6 @@ jobs:
       - name: Generate JSDoc
         run: npx jsdoc docs/js -d docs/jsdoc -t ./node_modules/jsdoc-baseline
 
-      - name: Upload JSDoc to artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: jsdoc
-          path: docs/jsdoc/
-
       - name: Install Puppeteer
         run: npm install puppeteer
 
@@ -58,3 +52,9 @@ jobs:
             await browser.close();
           })();
           "
+
+      - name: Upload JSDoc to artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jsdoc
+          path: docs/jsdoc/
