@@ -18,8 +18,18 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Create temporary package.json
+        run: |
+          echo '{
+            "name": "temp-jsdoc",
+            "version": "1.0.0",
+            "devDependencies": {
+              "jsdoc": "^4.0.0"
+            }
+          }' > package.json
+
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Generate JSDoc
         run: npx jsdoc docs/js -d docs/jsdoc
