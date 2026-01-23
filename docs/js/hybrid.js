@@ -1,22 +1,6 @@
 /**
- *
- * Page content generator for GroundForge.
- *
- * Requires:
- * - d3.v4.min.js
- * - GroundForge-opt.js
- * - nudgePairs.js
- * - panel.js
- * - hybrid.css
- *
- * @constant
- * @type {{load: function, loadStitches: function, loadDroste: function, content_home: string, snow3: Array, snow4: Array, generateSelectedDiagram: function, setStitchEvents: function, flip_b2d: function, scrollIfTooLittleIsVisible: function, setPattern: function, flip_b2p: function, otherGallery: function, generateLegend: function, loadSimple: function}}
- * @property {function} load - loads all components required for the droste mixer
- * @property {function} loadStitches - loads all components required for the stitches page
- * @property {function} loadDroste - loads all components required for the droste page
- * @property {string} content_home - base path for content like images
- * @property {Array} snow3 - 3/6 pair snow gallery recipes
- * @property {Array} snow4 - 4/8 pair snow gallery recipes
+ * GF_hybrid namespace.
+ * @namespace
  */
 const GF_hybrid = {
     content_home: '.',
