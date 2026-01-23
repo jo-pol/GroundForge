@@ -1,10 +1,18 @@
 /**
  *
+ * Page content generator for GroundForge.
+ *
+ * Requires:
+ * - d3.v4.min.js
+ * - GroundForge-opt.js
+ * - nudgePairs.js
+ * - panel.js
+ * - hybrid.css
  */
 const GF_hybrid = {
     content_home: '.',
     /**
-     * 4/8 pair snow gallery patterns
+     * 4/8 pair snow gallery recipes (W.I.P.)
      */
     snow4:[
         // screenshots taken at 50% zoom level
@@ -16,7 +24,7 @@ const GF_hybrid = {
         ['spider-3-rings.png','ctcctct','x3=ctcctc,x8=x9=tt','x33=ctcctc,x80=x81=x90=x91=tt']
     ],
     /**
-     * 3/6 pair snow gallery patterns
+     * 3/6 pair snow gallery recipes
      */
     snow3: [
         ['123-a',   'rcrcrc','crc,crclctc,ctcrc,rcl,c,c'],
