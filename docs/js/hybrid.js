@@ -10,6 +10,7 @@
  * - hybrid.css
  *
  * @constant
+ * @type {{load: function, loadStitches: function, loadDroste: function, content_home: string, snow3: Array, snow4: Array, generateSelectedDiagram: function, setStitchEvents: function, flip_b2d: function, scrollIfTooLittleIsVisible: function, setPattern: function, flip_b2p: function, otherGallery: function, generateLegend: function, loadSimple: function}}
  * @property {function} load - loads all components required for the droste mixer
  * @property {function} loadStitches - loads all components required for the stitches page
  * @property {function} loadDroste - loads all components required for the droste page
@@ -244,7 +245,10 @@ const GF_hybrid = {
     },
     /**
      * Loads all components required for the droste mixer
+     * @function
+     * @memberof GF_hybrid
      * @param {!HTMLElement} container receives the generated components
+     * @returns {void}
      */
     load(container) {
         function twister(type){
@@ -361,8 +365,11 @@ const GF_hybrid = {
     },
     /**
      * Load panels for droste page
+     * @function
+     * @memberof GF_hybrid
      * @param {!HTMLElement} parent receives the generated components
      * @param {!number} initialStep default: 1, 0 for a combination of the stitches page and droste page
+     * @returns {void}
      */
     loadDroste(parent, initialStep = 1){
         parent.insertAdjacentHTML("beforeend",`
@@ -381,18 +388,24 @@ const GF_hybrid = {
     },
     /**
      * Load panels for stitches page
-     * @param {!HTMLElement} parent receives the generated components
-     */
+     * @function
+     * @memberof GF_hybrid
+     * @param {!HTMLElement} container receives the generated components
+     * @returns {void}
+     * */
     loadStitches(parent){
         this.loadSimple(parent, 0, ['drosteStitches', 'pairStep', 'threadStep', 'snow3', 'specs'] );
     },
     /**
      * Common loading code for droste and stitches pages
+     * @function
+     * @memberof GF_hybrid
      * @param {!HTMLElement} parent receives the generated components
      * @param {!number} initialStep 0 for stitches page, 1 for droste page, 0 for a combination of both
      * @param {!String[]} hiddenElements
      *   for droste: ['drosteStitches', 'pairStep', 'threadStep', 'snow3'], for stitches add 'specs'
      *   note that a droste page needs a drosteStep input to control the hidden pair and thread step values
+     * @returns {void}
      */
     loadSimple(parent, initialStep, hiddenElements){
         console.log('================ Loading panels ================');
