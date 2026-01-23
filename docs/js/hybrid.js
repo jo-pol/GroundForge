@@ -8,6 +8,14 @@
  * - nudgePairs.js
  * - panel.js
  * - hybrid.css
+ *
+ * @constant
+ * @property {function} load - loads all components required for the droste mixer
+ * @property {function} loadStitches - loads all components required for the stitches page
+ * @property {function} loadDroste - loads all components required for the droste page
+ * @property {string} content_home - base path for content like images
+ * @property {Array} snow3 - 3/6 pair snow gallery recipes
+ * @property {Array} snow4 - 4/8 pair snow gallery recipes
  */
 const GF_hybrid = {
     content_home: '.',

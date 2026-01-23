@@ -1,7 +1,13 @@
 
 /**
- * container: d3.selection of element containing an SVG generated with PairSvg.create
- * in other words: the primary pair diagram
+ * Spreads nodes in a pair diagram to reduce overlaps.
+ *
+ * Uses d3-force to apply forces to the nodes and links of the diagram.
+ * Requires d3.js
+ *
+ * @param {string} containerId
+ *   of element containing an SVG generated with PairSvg.create
+ *   in other words: the primary pair diagram
  */
 function nudgePairs(containerId) {
 
@@ -12,6 +18,11 @@ function nudgePairs(containerId) {
 }
 
 /**
+ * Spreads nodes in a pair diagram to reduce overlaps.
+ *
+ * Uses d3-force to apply forces to the nodes and links of the diagram.
+ * Requires d3.js
+ *
  * @param svg has
  *  - elements with
  *    - class node
