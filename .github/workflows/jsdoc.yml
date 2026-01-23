@@ -24,7 +24,7 @@ jobs:
             "name": "temp-jsdoc",
             "version": "1.0.0",
             "devDependencies": {
-              "jsdoc": "^4.0.0",
+              "jsdoc": "^3.6.3",
               "docdash": "^2.0.0"
             }
           }' > package.json
