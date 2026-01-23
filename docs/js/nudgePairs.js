@@ -20,22 +20,18 @@ function nudgePairs(containerId) {
 /**
  * Spreads nodes in a pair diagram to reduce overlaps.
  *
- * Uses d3-force to apply forces to the nodes and links of the diagram.
- * Requires d3.js
+ * **SVG requirements:**
+ * - Elements with class `node` and an `id` attribute
+ *   - Must have attribute `transform="translate(x,y)"`
+ * - Elements with class `link` and an `id` attribute containing node IDs separated by `-`
+ *   - Must have attribute `d` defining a path
  *
- * @param svg has
- *  - elements with
- *    - class node
- *    - an id attribute
- *    - an attribute transform="translate(x,y)"
- *  - elements with
- *    - class link
- *    - an id attribute containing the IDs of their nodes separated with '-'
- *    - an attribute d defining a path with or without a midpoint
+ * Uses d3-force to apply forces to the nodes and links of the diagram.
+ * Requires d3.js and DiagramSvg.linkPath function of GroundForge-opt.js. See also
+ * - https://devdocs.io/d3~4/d3-force
+ * - https://devdocs.io/d3~4/d3-selection
+ * @param svg SVG selection
  * @param diagramType 'pair' or 'thread' (default: 'thread')
- * See also
- *   https://devdocs.io/d3~4/d3-force
- *   https://devdocs.io/d3~4/d3-selection
  */
 function nudgeDiagram(svg, diagramType='thread') {
 
