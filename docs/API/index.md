@@ -26,9 +26,10 @@ Current User Interfaces
   * [pattern editor](/GroundForge/pattern)
   * [stitches](/GroundForge/stitches)
   * [droste](/GroundForge/droste)
-* [nets](/GroundForge/nets)
-* [snow mixer](/GroundForge/mix4snow)
-* [symmetry](/GroundForge/symmetry)
+* Later pages
+  * [nets](/GroundForge/nets)
+  * [snow mixer](/GroundForge/mix4snow)
+  * [symmetry](/GroundForge/symmetry)
 
 Widgets / Work in progress
 ================
@@ -40,7 +41,7 @@ Some new scripts are started to share code between the user interfaces.
 * [Stitch gallery](stitch-gallery) shares code between _nets_, _stitches_ and _droste_.
 * [Panels](panels) is started to be resued on several existing pages before developing new pages.
   The stitches gallery is not yet flexible enough to be used along with the panels.
-* [Hybrid](hybrid) was started to test the _panel.js_ code.
+* [Hybrid](../drosteMixer.md) was started to test the _panel.js_ code.
   It is evolving into a page that combines functionality of
   the pages _stitches_, _droste_ and a variant of the _snow mixer_.
   This variant wass inspired when writing 

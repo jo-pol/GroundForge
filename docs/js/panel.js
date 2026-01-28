@@ -13,15 +13,26 @@ const GF_panel = {
     panelSize: {width: '300px', height: '300px'}, // default panel size
 
     /**
-     * Creates and appends a diagram panel with controls to the specified parent element.
+     * Creates the panel structure with a configurable set of controls in the caption.
+     *
+     *     <figure class="gf-panel"><figcaption>...</figcaption><div id="..."></div></figure>
      *
      * @param {Object} config - Configuration for the panel.
-     * @param {string} config.caption - The caption text for the panel.
-     * @param {string} config.id - The unique ID for the panel container.
-     * @param {string} [config.wandHref] - Optional URL for the reload (wand) icon.
-     * @param {Array<string>} [config.controls] - List of control names to include (e.g., 'cleanup', 'color', 'resize').
+     * @param {string} config.caption - Plain text or HTML string generated at the start of the `figcaption`.
+     * @param {string} config.id - The unique ID for the `div` element.
+     * @param {string} [config.wandHref] - Optional URL for the reload (wand) icon, typically: `javascript:...`.
+     *   Creates the controls _wand_ and _href_.
+     * @param {Array<string>} [config.controls] - List of control names to include.
+     *   Recognized values:
+     *   - 'cleanup': Adds a cleanup (broom) button to clean up content.
+     *        Intended for the specification panel on a droste page.
+     *   - 'color': Adds a color chooser.
+     *        looks and dialog may vary per browser.
+     *        Its value is used to highlight threads or stitches in thread diagrams.
+     *   - 'resize': Adds maximize, minimize, and reset size controls.
      * @param {Object} [config.size] - Optional size for the panel (e.g., `{width: '300px', height: '300px'}`).
-     * @param {HTMLElement} config.parent - The parent element to which the panel will be appended.
+     * @param {HTMLElement} [config.parent] - The parent element to which the panel will be appended.
+     *   Default: `document.body`.
      */
     load(config) {
         const { caption, id, wandHref, controls = [], size = this.panelSize, parent } = config;
@@ -104,10 +115,24 @@ const GF_panel = {
         return false;
     },
     /**
-     * Calls nudgeDiagram to start or resume the layout animation.
+     * Spreads nodes in a pair diagram to reduce overlaps.
      *
-     * @param containerId
-     * @param type
+     * Called by default for all diagrams except for a primary pair diagram (no `steps`),
+     * Also called by resume control which is also available for the primary pair diagram.
+     *
+     * Uses d3-force to apply forces to the nodes and links of a diagram.
+     * Requires d3.js and DiagramSvg.linkPath function of GroundForge-opt.js. See also
+     * - https://devdocs.io/d3~4/d3-force
+     * - https://devdocs.io/d3~4/d3-selection
+     *
+     * Wrapper for nudgeDiagram to hide D3js for the caller.
+     *
+     * @param {string} containerId Id of an element containing an SVG with the following requirements.
+     *   - Elements with class `node` and an `id` attribute
+     *     - Must have attribute `transform="translate(x,y)"`
+     *   - Elements with class `link` and an `id` attribute containing node IDs separated by `-`
+     *     - Must have attribute `d` defining a path
+     * @param {string} [type] Defaults to 'pair'. Other option is 'thread'.
      */
     nudge(containerId, type = 'thread') {
         console.log(`nudge called for container ${containerId} and diagram type ${type}`);
@@ -133,6 +158,25 @@ const GF_panel = {
             element.scrollIntoView({behavior: 'smooth', block: 'center'});
         }
     },
+    /**
+     * Generates an SVG diagram.
+     *
+     * @param {Object} namedArgs
+     * @param {string} [namedArgs.id] - Optional ID of the container element to render the SVG into.
+     * @param {string} [namedArgs.type='pair'] - Type of diagram: 'pair' or 'thread'.
+     * @param {Array<string>} [namedArgs.steps=[]] - droste stitch definitions:
+     *   for each element a pair diagram is created from the (previous) thread diagram.
+     * @param {string} namedArgs.query - URL arguments.
+     *   Note that the arguments _droste2_ and _droste3_ are the equivalent of _steps[0]_ and _steps[1]_ respectively.
+     *   This method uses the values of the _steps_ option.
+     *   The pages of GroundForge use the query parameters to pass a pattern
+     *   back and forth between _pattern_, _stitches_ and _droste_.
+     *   The query keys were numbered with 2nd and 3rd pair diagram in mind.
+     * @param {Object} [namedArgs.size] - Size configuration for the SVG.
+     *   Default (A4 similar to US letter, A3 similar to Tabloid or Ledger, A2) depends on the number of steps.
+     * @returns {HTMLElement} SVG unless `id` is provided.
+     *   To be used outside a panel context, no nudging is applied.
+     */
     diagramSVG(namedArgs) {
         console.time('diagramSVG');
         const {

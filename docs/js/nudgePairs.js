@@ -1,15 +1,3 @@
-
-/**
- * Spreads nodes in a pair diagram to reduce overlaps.
- *
- * Uses d3-force to apply forces to the nodes and links of the diagram.
- * Requires d3.js
- *
- * @Ignore
- * @param {string} containerId
- *   of element containing an SVG generated with PairSvg.create
- *   in other words: the primary pair diagram
- */
 function nudgePairs(containerId) {
 
     var svg = d3.select(containerId+" svg")
