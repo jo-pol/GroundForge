@@ -331,9 +331,11 @@ const GF_hybrid = {
         specsPanelContent.style.width = "100%";
         specsPanelContent.style.height = "2px";
         for (let type of ["pair", "thread"]) {
+            document.getElementById(type + '_panel').innerHTML = "Click/tap the wand to (re)generate the diagram.";
+            document.getElementById(type + '_panel').style.color = "#bbbbbb";
             document.querySelectorAll(`input[name="${type}Step"]`).forEach(function (elem) {
                 elem.addEventListener('change', function () {
-                    document.getElementById(type + '_panel').style.backgroundColor = "rgb(238, 238, 238)";
+                    this.markPanelDirty(type);
                 });
             });
         }
@@ -359,6 +361,9 @@ const GF_hybrid = {
     loadStitches(container){
         this.loadSimple(container, 0, ['drosteStitches', 'pairStep', 'threadStep', 'snow3', 'specs'] );
     },
+    markPanelDirty(type) {
+        document.getElementById(type + '_panel').style.backgroundColor = "rgb(238, 238, 238)";
+    },
     /**
      * Wrapper for load. Hiding some elements and adding a control that keeps both step inputs in sync.
      */
@@ -371,7 +376,7 @@ const GF_hybrid = {
         document.getElementById("drosteStep")
             .addEventListener('change', e => {
                 const val = parseInt(e.target.value, 10);
-                const step = isNaN(val) ? 0 : Math.min(3, Math.max(initialStep, val));
+                const step = isNaN(val) ? 0 : Math.min(3, Math.max(0, val));
                 document.getElementById("drosteStep").value = step;
                 document.getElementById("threadStep").value = step;
                 document.getElementById("pairStep").value = step;
@@ -379,6 +384,9 @@ const GF_hybrid = {
                 if(step>0 && specsStyle.display === "none"){
                     specsStyle.display = "block";
                     document.getElementById("specs").style.height = "0";
+                }
+                for (let type of ["pair", "thread"]) {
+                    this.markPanelDirty(type);
                 }
             });
         GF_tiles = {loadGallery (namedArgs){ }}; // dummy to avoid errors
