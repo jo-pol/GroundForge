@@ -232,7 +232,8 @@ const GF_hybrid = {
      */
     load(container) {
         function twister(type){
-            return `${type}s<label>, step: <input type='number' min='0' max='2' value='0' id='${type}Step' name='${type}Step' title='droste step' ></label>`;
+            // TODO: shared code on top of loadSimple
+            return `${type}s<label>, step: <input type='number' min='0' max='3' value='0' id='${type}Step' name='${type}Step' title='droste step' ></label>`;
         }
         function galleryPanels() {
             const galleries = {
@@ -294,7 +295,14 @@ const GF_hybrid = {
         }
         galleryPanels();
         GF_panel.load({caption: "tweak selected stitch", id: "tweak", size:{width:'´98%', height: 'auto'}, parent: container});
-        container.insertAdjacentHTML('beforeend',`<p><a href="?${q}" id="selfRef" style="display:none;">Updated pattern</a></p>`);
+        container.insertAdjacentHTML('beforeend',`
+            <p>
+                Assign tweaked stitch <button onclick="alert('not yet implemented')">to all</button>
+                <button onclick="alert('not yet implemented')" id="ignored">to ignored</button>
+                or click a stich in the pair diagram.
+                <a href="?${q}" id="selfRef" style="display:none;">Updated pattern</a>
+            </p>
+        `);
         GF_panel.load({caption: twister("pair"), id: "pair_panel", wandHref: pairWandHref, controls: ["resize"], parent: container});
         GF_panel.load({caption: twister("thread"), id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"], parent: container});
         GF_panel.load({caption: 'stitch enumeration', id: "legend_panel", controls: ["resize"], parent: container});
@@ -333,11 +341,7 @@ const GF_hybrid = {
         for (let type of ["pair", "thread"]) {
             document.getElementById(type + '_panel').innerHTML = "Click/tap the wand to (re)generate the diagram.";
             document.getElementById(type + '_panel').style.color = "#bbbbbb";
-            document.querySelectorAll(`input[name="${type}Step"]`).forEach(function (elem) {
-                elem.addEventListener('change', function () {
-                    this.markPanelDirty(type);
-                });
-            });
+            document.getElementById(`${type}Step`).addEventListener('change', GF_hybrid.stepNrChanged);
         }
     },
     setRecipe(basicStitch, drosteStitches) {
@@ -361,8 +365,26 @@ const GF_hybrid = {
     loadStitches(container){
         this.loadSimple(container, 0, ['drosteStitches', 'pairStep', 'threadStep', 'snow3', 'specs'] );
     },
-    markPanelDirty(type) {
-        document.getElementById(type + '_panel').style.backgroundColor = "rgb(238, 238, 238)";
+    stepNrChanged(e) {
+        const id = e.target.getAttribute("id");
+        const val = parseInt(e.target.value, 10);
+        const step = isNaN(val) ? 0 : Math.min(3, Math.max(0, val));
+        document.getElementById(id).value = step;
+        if (id !== 'threadStep') {
+            // id can be pairStep or drosteStep, the latter changes both others
+            document.getElementById("ignored").style.display =
+                step === 0 ? "inline-block" : "none";
+        }
+        const panelIds = id === 'drosteStep'
+            ? ['pair_panel', 'thread_panel']
+            : [id.replace('Step', '') + '_panel'];
+
+        panelIds.forEach(pid => {
+            const panelEl = document.getElementById(pid);
+            if (panelEl.getElementsByTagName('svg').length > 0)
+                panelEl.style.backgroundColor = 'rgb(238, 238, 238)';
+        });
+        return step;
     },
     /**
      * Wrapper for load. Hiding some elements and adding a control that keeps both step inputs in sync.
@@ -375,23 +397,22 @@ const GF_hybrid = {
         `);
         document.getElementById("drosteStep")
             .addEventListener('change', e => {
-                const val = parseInt(e.target.value, 10);
-                const step = isNaN(val) ? 0 : Math.min(3, Math.max(0, val));
+                const step = GF_hybrid.stepNrChanged(e);
                 document.getElementById("drosteStep").value = step;
                 document.getElementById("threadStep").value = step;
                 document.getElementById("pairStep").value = step;
                 const specsStyle = document.getElementById("specs").parentNode.style;
-                if(step>0 && specsStyle.display === "none"){
+                if(step>0){
+                    if(specsStyle.display === "none")
+                        document.getElementById("specs").style.height = "0";
                     specsStyle.display = "block";
-                    document.getElementById("specs").style.height = "0";
-                }
-                for (let type of ["pair", "thread"]) {
-                    this.markPanelDirty(type);
                 }
             });
+        // Disable galleries that will not be used
         GF_tiles = {loadGallery (namedArgs){ }}; // dummy to avoid errors
         this.snow3 = []; // clear for performance
         this.snow4 = []; // clear for performance
+
         this.load(container);
         for (let id of ['pairStep', 'threadStep']) {
             document.getElementById(id).value = initialStep;
