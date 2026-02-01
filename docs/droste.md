@@ -12,12 +12,13 @@ css:
 sidebar: droste
 ---
 
+Starts with step 1 unless a URL argument specifies a higher number. Always reveal specification panel but initially closed.
 
 TO DO:
-* Stitches gallery
-* Apply to all (apply to ignored only for step-0)
+* Stitches gallery.
+* Swatch size.
+* Apply to all/ignored.
 * Beep on invalid input (tweak, spinners, specs). When pasting a URL in the first specifications field: strip until question mark.
-* Start with step 1 unless a URL argument specifies a higher number. Always reveal specification panel but initially closed.
 * Dynamic link to pattern page for the current pattern. For now, we only have a link to a changed pattern.
 
 <div id="droste_panels"></div>
