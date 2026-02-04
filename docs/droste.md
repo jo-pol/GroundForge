@@ -14,12 +14,7 @@ sidebar: droste
 
 Starts with step 1 unless a URL argument specifies a higher number. Always reveal specification panel but initially closed.
 
-TO DO:
-* Stitches gallery.
-* Swatch size.
-* Apply to all/ignored.
-* Beep on invalid input (tweak, spinners, specs). When pasting a URL in the first specifications field: strip until question mark.
-* Dynamic link to pattern page for the current pattern. For now, we only have a link to a changed pattern.
+[W.I.P](https://github.com/d-bl/GroundForge/issues/259)
 
 <div id="droste_panels"></div>
 <script>

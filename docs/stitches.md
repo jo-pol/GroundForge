@@ -14,12 +14,7 @@ sidebar: stitches
 
 Allows droste steps but starts with step 0 and the pair diagram rendered. Reveals specification panel once another step nummer is selected.
 
-TO DO:
-* Stitches gallery.
-* Swatch size.
-* Apply to all/ignored.
-* Beep on invalid input (tweak, spinners, specs). When pasting a URL in the first specifications field: strip until question mark.
-* Dynamic link to pattern page for the current pattern. For now, we only have a link to a changed pattern. 
+[W.I.P](https://github.com/d-bl/GroundForge/issues/259)
 
 <div id="stitches_panels"></div>
 <script>

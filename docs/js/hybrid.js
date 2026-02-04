@@ -125,9 +125,10 @@ const GF_hybrid = {
             params.set("threadStep", document.getElementById('threadStep').value);
             params.set(drosteId, extraSteps.replaceAll('\n',',').trim());
             droste0.value = decodeURIComponent(params.toString());
-            document.getElementById(drosteId).value += extraSteps + '\n';
             document.getElementById('selfRef').href = '?'+droste0.value
             document.getElementById('selfRef').style.display = 'inline';
+            // last as it may fail when stepLevel is too high for the froste applied to basic stitch
+            document.getElementById(drosteId).value += extraSteps + '\n';
         }
 
         Array.from(document
