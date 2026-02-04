@@ -12,9 +12,9 @@ css:
 sidebar: droste
 ---
 
-Starts with step 1 unless a URL argument specifies a higher number. Always reveal specification panel but initially closed.
+Starts with step 1 unless a URL argument specifies a higher number. Always reveals specification panel but initially closed.
 
-[W.I.P](https://github.com/d-bl/GroundForge/issues/259)
+[W.I.P.](https://github.com/d-bl/GroundForge/issues/259)
 
 <div id="droste_panels"></div>
 <script>
