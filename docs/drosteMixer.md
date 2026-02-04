@@ -1,6 +1,6 @@
 ---
 layout: default
-title: wip
+title: Mixer with two droste steps
 sidebar: mix4snow
 javascript:
   - d3.v4.min.js
