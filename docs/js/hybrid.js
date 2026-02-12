@@ -65,10 +65,10 @@ const GF_hybrid = {
         function stitchHandler(event) {
             const newStitchValue = document.getElementById('basicStitchInput').value;
             const drosteValue = document.getElementById('drosteStitches').value;
-            if(newStitchValue === '') return;
+            if (newStitchValue === '') return;
 
             const selectedText = event.currentTarget.textContent;
-            const selectedStitchId = selectedText.replace(/.* /,"");
+            const selectedStitchId = selectedText.replace(/.* /, "");
 
             const pairPanel = document.getElementById('pair_panel');
             for (let title of pairPanel.getElementsByTagName('title')) {
@@ -81,16 +81,16 @@ const GF_hybrid = {
             }
             const threadPanel = document.getElementById('thread_panel');
             for (let path of threadPanel.getElementsByTagName('path')) {
-                if (path.textContent.includes(' - '+selectedStitchId)) {
+                if (path.textContent.includes(' - ' + selectedStitchId)) {
                     path.style.opacity = 0.5;
                 }
             }
             const drosteIndex = parseInt(document.getElementById("pairStep").value);
-            const drosteInput = document.getElementById('droste'+ drosteIndex);
-            if (drosteIndex===0){
-                for(let kv of drosteInput.value.split(/&/)){
+            const drosteInput = document.getElementById('droste' + drosteIndex);
+            if (drosteIndex === 0) {
+                for (let kv of drosteInput.value.split(/&/)) {
                     let [key, value] = kv.split('=');
-                    if(key === selectedStitchId){
+                    if (key === selectedStitchId) {
                         drosteInput.value = drosteInput.value.replace(kv, `${selectedStitchId}=${newStitchValue}`);
                         break;
                     }
@@ -110,22 +110,22 @@ const GF_hybrid = {
                     extraSteps += `${selectedStitchId}${i}=`;
                 }
                 extraSteps += 'ctc\n';
-                extraSteps += drosteValue.replaceAll(/x/g,selectedStitchId);
+                extraSteps += drosteValue.replaceAll(/x/g, selectedStitchId);
             } else {
                 const newDrosteStitches = drosteValue.split(/[,.]/);
                 for (let i = 0; i < newDrosteStitches.length; i++) {
                     extraSteps += `\n${selectedStitchId}${i}=${newDrosteStitches[i]}`;
                 }
             }
-            const drosteId = 'droste'+ (drosteIndex + 1);
+            const drosteId = 'droste' + (drosteIndex + 1);
             const droste0 = document.getElementById('droste0');
             const params = new URLSearchParams(droste0.value);
             params.set(selectedStitchId, newStitchValue);
             params.set("pairStep", document.getElementById('pairStep').value);
             params.set("threadStep", document.getElementById('threadStep').value);
-            params.set(drosteId, extraSteps.replaceAll('\n',',').trim());
+            params.set(drosteId, extraSteps.replaceAll('\n', ',').trim());
             droste0.value = decodeURIComponent(params.toString());
-            document.getElementById('selfRef').href = '?'+droste0.value
+            document.getElementById('selfRef').href = '?' + droste0.value
             document.getElementById('selfRef').style.display = 'inline';
             // last as it may fail when stepLevel is too high for the froste applied to basic stitch
             document.getElementById(drosteId).value += extraSteps + '\n';
@@ -301,7 +301,7 @@ const GF_hybrid = {
         GF_panel.load({caption: "tweak selected stitch", id: "tweak", size:{width:'98%', height: 'auto'}, parent: container});
         container.insertAdjacentHTML('beforeend',`
             <p>
-                Assign tweaked stitch <button onclick="alert('not yet implemented')">to all</button>
+                Assign tweaked stitch <button onclick="GF_hybrid.assignToAll()">to all</button>
                 <button onclick="alert('not yet implemented')" id="ignored">to ignored</button>
                 or click a stich in the pair diagram.
                 <a href="?${q}" id="selfRef" style="display:none;">Updated pattern</a>
@@ -434,5 +434,19 @@ const GF_hybrid = {
         const stitchesEl = document.getElementById('stitches').parentNode;
         stitchesEl.style.display = 'block'; // make visible, whichever gallery is visible by default
         stitchesEl.getElementsByTagName('select')[0].outerHTML = 'select stitch example'; // no choice for other galleries
+    },
+    assignToAll() {
+        const stepValue = document.getElementById('pairStep').value * 1;
+        if(stepValue > 0){
+            if (document.getElementById('drosteStitches').value.trim() !== '') {
+                alert("not implemented for droste applied to basic stitch")
+            } else {
+                document.getElementById('droste' + stepValue).value =
+                    document.getElementById('basicStitchInput').value;
+                document.getElementById('pair_panel').style.backgroundColor = "#f3f3f3"; // TODO share code with markDirty
+            }
+        } else {
+            alert("not implemented for step 0")
+        }
     }
 }
