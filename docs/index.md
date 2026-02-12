@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Home
+title: Introduction
 ---
 
 {% include fallback.html %}
