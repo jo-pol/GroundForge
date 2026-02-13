@@ -453,16 +453,14 @@ const GF_hybrid = {
                         params.delete(key);
                     }
                 }
-                if (stitchValue !== "ctc") {
-                    Array.from(document.getElementById('pair_panel')
-                        .getElementsByTagName('title')
-                    ).forEach(el => {
-                        const [stitch,tag = ''] = el.textContent.toLowerCase().split(/ - /);
-                        if (tag !== '') {
-                            params.set(tag, stitchValue);
-                        }
-                    });
-                }
+                Array.from(document.getElementById('pair_panel')
+                    .getElementsByTagName('title')
+                ).forEach(el => {
+                    const [stitch,tag = ''] = el.textContent.toLowerCase().split(/ - /);
+                    if (tag !== '') {
+                        params.set(tag, stitchValue);
+                    }
+                });
                 d0.value = Array.from(params).map(([k, v]) => `${k}=${v}`).join('&');
                 console.log("---------"+d0.value);
             }
