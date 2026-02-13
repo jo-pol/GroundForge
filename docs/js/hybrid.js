@@ -437,16 +437,35 @@ const GF_hybrid = {
     },
     assignToAll() {
         const stepValue = document.getElementById('pairStep').value * 1;
-        if(stepValue > 0){
-            if (document.getElementById('drosteStitches').value.trim() !== '') {
-                alert("not implemented for droste applied to basic stitch")
-            } else {
-                document.getElementById('droste' + stepValue).value =
-                    document.getElementById('basicStitchInput').value;
-                document.getElementById('pair_panel').style.backgroundColor = "#f3f3f3"; // TODO share code with markDirty
-            }
+        if (document.getElementById('drosteStitches').value.trim() !== '') {
+            alert("not implemented for droste applied to basic stitch")
         } else {
-            alert("not implemented for step 0")
+            const stitchValue = document.getElementById('basicStitchInput').value;
+            const d0 = document.getElementById('droste0');
+            document.getElementById('pair_panel').style.backgroundColor = "#f3f3f3"; // TODO share code with markDirty
+            if (stepValue !== 0) {
+                document.getElementById('droste' + stepValue).value =
+                    stitchValue;
+            } else {
+                const params = new URLSearchParams(d0.value);
+                for (const key of Array.from(params.keys())) {
+                    if (/^[a-zA-Z]\d+$/.test(key)) {
+                        params.delete(key);
+                    }
+                }
+                if (stitchValue !== "ctc") {
+                    Array.from(document.getElementById('pair_panel')
+                        .getElementsByTagName('title')
+                    ).forEach(el => {
+                        const [stitch,tag = ''] = el.textContent.toLowerCase().split(/ - /);
+                        if (tag !== '') {
+                            params.set(tag, stitchValue);
+                        }
+                    });
+                }
+                d0.value = Array.from(params).map(([k, v]) => `${k}=${v}`).join('&');
+                console.log("---------"+d0.value);
+            }
         }
     }
 }
