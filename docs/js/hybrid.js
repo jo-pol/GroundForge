@@ -3,7 +3,13 @@
  *
  * The surrounding page should take care of the house style like headers footers and menu's with help pages..
  *
- * Requires: d3.v4.min.js - GroundForge-opt.js - nudgePairs.js (nudgeDiagram) - panel.js - hybrid.css
+ * Requires:
+ * - d3.v4.min.js
+ * - GroundForge-opt.js
+ * - nudgePairs.js (nudgeDiagram)
+ * - panel.js
+ * - hybrid.css
+ * - stitch-gallery.js
  * @namespace
  */
 const GF_hybrid = {
@@ -52,7 +58,7 @@ const GF_hybrid = {
         const steps = [];
         for (let i = 1; i <= drosteIndex; i++) {
             const textarea = document.getElementById(`droste${i}`);
-            txt = textarea && textarea.value.trim() ? textarea.value.trim() : "ctc";
+            const txt = textarea && textarea.value.trim() ? textarea.value.trim() : "ctc";
             steps.push(txt);
         }
         const q = document.getElementById('droste0').value;
@@ -231,14 +237,19 @@ const GF_hybrid = {
      * @memberof GF_hybrid
      * @param {!HTMLElement} container receives the generated components
      */
-    load(container, initialStep=0) {
+    load(container) {
         console.log('================ Loading panels ================');
+        GF_stitches.setStitch = function(stitch) {
+            document.getElementById('basicStitchInput').value = stitch;
+            document.getElementById('drosteStitches').value = "";
+            GF_hybrid.setColorCode();
+        }
         function galleryPanels() {
             const galleries = {
                 'pattern': {caption: 'Pattern gallery', height: '150px'},
                 'snow3': {caption: '3/6 pair snow gallery', height: '50px'},
                 'snow4': {caption: '4/8 pair snow gallery', height: '65px'},
-                'stitches': {caption: 'Stitches gallery', height: '4em'}
+                'stitches': {caption: 'Stitches gallery', height: '100px'}
             };
             const galleryKeys = Object.keys(galleries);
             for(i = 0; i<galleryKeys.length; i++){
@@ -277,11 +288,7 @@ const GF_hybrid = {
                     </a> 
                 `);
             }
-            document.getElementById('stitches').innerHTML = `
-                W.I.P. For now: just type a <em>basic stitch</em> and clear <em>droste applied to basic stitch</em>. 
-                Then click a stitch in the pair diagram to apply.
-                For ideas see this <a href="${GF_hybrid.content_home}/API/stitch-gallery">page</a>.
-            `;
+            GF_stitches.loadStitchExamples("#stitches");
         }
         function twister(type) {
             return `<input type='number' min='0' max='3' value='0' id='${type}Step' name='${type}Step' title='droste step'></label>`;

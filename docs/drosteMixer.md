@@ -8,6 +8,7 @@ javascript:
   - nudgePairs.js
   - panel.js
   - hybrid.js
+  - stitch-gallery.js
 css:
   - hybrid.css
 ---
