@@ -6,6 +6,7 @@
 .gf_panel > div > textarea { height: 6em; width: 100%}
 .gf_panel > div > input { width: calc(100% - 1px)}
 .gf_panel > #stitches > figure { display: inline-block; margin: 2px; }
+.gf_panel > #stitches > figure > figcaption{ background-color: #ffffff; }
 #tweak {resize: none;}
 #tweak input {width: calc(100% - 2.5em); margin-left: 2em; }
 #snow3 {resize: vertical;}
