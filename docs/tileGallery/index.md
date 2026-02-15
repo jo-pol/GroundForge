@@ -10,10 +10,11 @@ Pattern gallery
 ===============
 
 
-**TODO**:
+**Work in progress, to do**:
 * More squares need linked letters. 
+* Research for duplicates and missing patterns.
 * Split gallery in images per square to use full width of a desktop and not use too much width on a mobile device. 
-* Links in last square are intended for another [wip](API/hybrid) page, the D.I.Y. on that last square should link to this page. 
+* Links in last square are intended for another page under development.
 * Sidebar subjects?
 
 ---
