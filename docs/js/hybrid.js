@@ -206,7 +206,10 @@ const GF_hybrid = {
                     return stitches.every(g => groupRegex.test(g));
                 }
                 const value = drosteOnBasicEl.value.trim().toUpperCase();
-                if (isValid(value)) {
+                if (this.lastValid.trim() === '' && value !== '') {
+                    GF_hybrid.showToast("No droste applied to basic stitch for pair step 3." );
+                    drosteOnBasicEl.value = this.lastValid;
+                } else if (isValid(value)) {
                     this.lastValid = value;
                     drosteOnBasicEl.value = value;
                 } else {
@@ -360,38 +363,35 @@ const GF_hybrid = {
         }
     },
     swatchSize: {
-        getHtmlString() { return `
+        getHtmlString(q) {
+            return `
             Swatch size:
             <span style="display: inline-block; vertical-align: top">
                 <label>
-                    <input type="number" name="patchWidth" id="patchWidth" min="1" max="28" value="3" oninput="GF_hybrid.swatchSize.valueChanged(this)" autofocus="">
+                    <input type="number" name="patchWidth" id="patchWidth"
+                     min="1" max="28" value="${GF_hybrid.patternLink.getValueOf('patchWidth')}"
+                      oninput="GF_hybrid.swatchSize.valueChanged(this)">
                     columns
                 </label>
                 <br>
                 <label>
-                    <input type="number" name="patchHeight" id="patchHeight" min="1" max="35" value="3" oninput="GF_hybrid.swatchSize.valueChanged(this)">
+                    <input type="number" name="patchHeight" id="patchHeight"
+                     min="1" max="35" value="${GF_hybrid.patternLink.getValueOf('patchHeight')}"
+                      oninput="GF_hybrid.swatchSize.valueChanged(this)">
                     rows
                 </label>
             </span>
             `;},
-        init(width,height){
-            const widthEl = document.getElementById('patchWidth');
-            widthEl.value = width;
-            widthEl.setAttribute("data-last-valid", width);
-            const heightEl = document.getElementById('patchHeight');
-            heightEl.value = height;
-            heightEl.setAttribute("data-last-valid", width);
-        },
         valueChanged(changedEl) {
             if (changedEl.validity.badInput) {
                 GF_hybrid.showToast("Please enter positive numbers for the swatch size.");
                 return;
             }
             if (changedEl.value === "")
-                return; // allow empty field, but don't update specs
-            const q = GF_hybrid.patternInfo.changeParam(changedEl.name, changedEl.value);
+                return; // allow empty field
+            GF_hybrid.patternLink.setKeyValue(changedEl.name, changedEl.value);
 
-            const config = TilesConfig(q);
+            const config = TilesConfig(GF_hybrid.patternLink.getValue());
             const width = Number.parseInt(document.getElementById('patchWidth')?.value ?? '', 10) || 0;
             const height = Number.parseInt(document.getElementById('patchHeight')?.value ?? '', 10) || 0;
             if (config.centerMatrixRows * 1.5 > height || config.centerMatrixCols * 1.5 > width) {
@@ -404,40 +404,38 @@ const GF_hybrid = {
             console.log('');
         }
     },
-    patternInfo: { // TODO also the specs fields for droste
-        getLinkHtmlString(q) {return `<a href="${q}" id="selfRef" style="display:none;">Updated pattern</a>`},
-        getSpecsHtmlString(q) {return `<input type="text" id="droste0" value="${q}">`},
-        changeParam(paramName,paramValue) {
-            const specsEl = document.getElementById('droste0');
-            const params = new URLSearchParams(specsEl.value);
-            params.set(paramName,paramValue);
-            const newQuery = decodeURIComponent(params.toString());
-            specsEl.value = newQuery;
-            this.setValue(newQuery);
-            return newQuery;
+    patternLink: {
+        params: new URLSearchParams((window.location.search).includes('patchWidth')?window.location.search:"patchWidth=7&patchHeight=7&footside=---x,---4,---x,---4&tile=5-,-5,5-,-5&headside=-,c,-,c,&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=2&shiftRowsSE=2&e1=lclc&l2=llctt&f2=rcrc&d2=rrctt&e3=rcrc&l4=llctt&f4=lclc&d4=rrctt&droste2=e12=clcrcl,e13=ct,f42=ctcl,e32=f22=ctcr,e33=f43=lct,e31=f21=lctc,e11=rclcrc,f23=rct,f41=rctc,e10=tc,f20=tcl,e30=f40=tcr"),
+        getLinkHtmlString() {return `<a id="selfRef" href="?${decodeURIComponent(this.params.toString())}">Pattern</a>`},
+        setParams(newParams) {
+            // for historical reasons: step-1 is URL argument &droste2
+            for(const [key,value] of Object.entries(newParams)) {
+                this.params.set(key, value);
+                if (/^droste[123]$/.test(key)) {
+                    document.getElementById(key).value = value;
+                }
+            }
+            this.setValue(decodeURIComponent(this.params.toString()));
         },
         setValue(value) {
-            const specsField = document.getElementById('droste0');
-            if(specsField) {
-                specsField.value = value;
-            }
-            const patternLink = document.getElementById('selfRef');
-            if(patternLink) {
-                patternLink.href = '?' + value;
-                patternLink.style.display = 'inline';
-            }
-            console.log("---------" + value);
+            document.getElementById('selfRef').href = '?' + value;
+        },
+        getValueOf(key) {
+            return new URLSearchParams(this.getValue()).get(key);
         },
         getValue() {
-            const specsField = document.getElementById('droste0');
-            if(specsField) {
-                return specsField.value;
-            }
-            const patternLink = document.getElementById('selfRef');
-            if(patternLink) {
-                return patternLink.href.split('?')[1];
-            }
-        }
+            return decodeURIComponent(this.params.toString());
+        },
+        appendToDroste(stepNr, keyValuePairs) {
+            const id = 'droste' + (stepNr + 2);
+            const oldValue = this.params.get(id);
+            this.params.set(id, (oldValue ? oldValue + ',' : '') + keyValuePairs);
+            this.setValue(decodeURIComponent(this.params.toString()));
+        },
+        setKeyValue(key, value) {
+            this.params.set(key, value);
+            this.setValue(decodeURIComponent(this.params.toString()));
+        },
     },
     isVisible(id) {
         const el = document.getElementById(id);
@@ -460,8 +458,7 @@ const GF_hybrid = {
             `;
         },
         init(pageType) {
-            const specs = document.getElementById('droste0');
-            const params = new URLSearchParams(specs ? specs.value : '');
+            const params = new URLSearchParams(GF_hybrid.patternLink.getValue());
             const pairStep = document.getElementById('pairStep');
             const threadStep = document.getElementById('threadStep');
             const drosteStep = document.getElementById('drosteStep');
@@ -495,7 +492,8 @@ const GF_hybrid = {
             }
             function fixStepNr(e) {
                 const val = parseInt(e.target.value, 10);
-                const max = GF_hybrid.galleryPanels.isSnowVisible() && e.target.id === 'pairStep' ? 2 : 3;
+                const snowVisible = GF_hybrid.galleryPanels.isSnowVisible() || document.getElementById("drosteStitches").value.trim() !== '';
+                const max = snowVisible && e.target.id === 'pairStep' ? 2 : 3;
                 const step = isNaN(val) ? 0 : Math.min(max, Math.max(0, val));
                 if (val !== step) {
                     if (GF_hybrid.isVisible('drosteStep')) {
@@ -528,14 +526,14 @@ const GF_hybrid = {
         }
     },
     generateSelectedDiagram(diagramType) {
-        const drosteIndex = parseInt(document.getElementById(`${diagramType}Step`).value, 10);
+        const stepNr = parseInt(document.getElementById(`${diagramType}Step`).value, 10);
+        const q = this.patternLink.getValue();
         const steps = [];
-        for (let i = 1; i <= drosteIndex; i++) {
-            const textarea = document.getElementById(`droste${i}`);
-            const txt = textarea && textarea.value.trim() ? textarea.value.trim() : "ctc";
-            steps.push(txt);
+        const params = new URLSearchParams(q);
+        for (let i = 0; i < stepNr; i++) {
+            const s = params.get('droste'+(i+2));
+            steps[i] = s ? s : "ctc";
         }
-        const q = this.patternInfo.getValue();
         GF_panel.diagramSVG({id: diagramType+ '_panel', query: q, type: diagramType, steps: steps});
         document.getElementById(diagramType+ '_panel').style.backgroundColor = "";
         if(diagramType==='pair')
@@ -543,7 +541,7 @@ const GF_hybrid = {
     },
     setStitchEvents() {
         function stitchHandler(event) {
-            const drosteValue = document.getElementById(GF_hybrid.tweak.drosteOnBasicStitch.id).value;
+            const drosteOnBasicValue = document.getElementById(GF_hybrid.tweak.drosteOnBasicStitch.id).value;
             const newStitchInput = document.getElementById(GF_hybrid.tweak.basicStitch.id).value;
             const newStitchValue = newStitchInput
                 ? newStitchInput
@@ -567,47 +565,34 @@ const GF_hybrid = {
                     path.style.opacity = 0.5;
                 }
             }
-            const drosteIndex = parseInt(document.getElementById("pairStep").value);
-            const drosteInput = document.getElementById('droste' + drosteIndex);
-            if (drosteIndex === 0) {
-                for (let kv of drosteInput.value.split(/&/)) {
-                    let [key, value] = kv.split('=');
-                    if (key === selectedStitchId) {
-                        drosteInput.value = drosteInput.value.replace(kv, `${selectedStitchId}=${newStitchValue}`);
-                        break;
-                    }
-                }
+            const stepNr = parseInt(document.getElementById("pairStep").value);
+            // TODO  patternLink instead
+            if (0 === stepNr) {
+                GF_hybrid.patternLink.setKeyValue(selectedStitchId, newStitchValue);
             } else {
-                drosteInput.value += `\n${selectedStitchId}=${newStitchValue}`;
+                GF_hybrid.patternLink.appendToDroste(stepNr,selectedStitchId+"="+newStitchValue);
             }
-            if (drosteValue.trim() === '') {
+            if (drosteOnBasicValue.trim() === '') {
                 return;
             }
-            let extraSteps = '\n'
-            if (drosteValue.includes('=')) {
+            let extraSteps = ''
+            if (drosteOnBasicValue.includes('=')) {
                 const count = newStitchValue.replaceAll(/t/g, 'lr').length;
                 for (let i = 0; i < count; i++) {
                     // make sure not to inherit previous definitions
                     // TODO more complicated for a second droste step
                     extraSteps += `${selectedStitchId}${i}=`;
                 }
-                extraSteps += 'ctc\n';
-                extraSteps += drosteValue.replaceAll(/x/gi, selectedStitchId);
+                extraSteps += 'ctc,';
+                extraSteps += drosteOnBasicValue.replaceAll(/x/gi, selectedStitchId);
             } else {
-                const newDrosteStitches = drosteValue.split(/[,.]/);
+                const newDrosteStitches = drosteOnBasicValue.split(/[,.]/);
                 for (let i = 0; i < newDrosteStitches.length; i++) {
-                    extraSteps += `\n${selectedStitchId}${i}=${newDrosteStitches[i]}`;
+                    extraSteps += `,${selectedStitchId}${i}=${newDrosteStitches[i]}`;
                 }
             }
-            const drosteId = 'droste' + (drosteIndex + 1);
-            const params = new URLSearchParams(GF_hybrid.patternInfo.getValue());
-            params.set(selectedStitchId, newStitchValue);
-            params.set("pairStep", document.getElementById('pairStep').value);
-            params.set("threadStep", document.getElementById('threadStep').value);
-            params.set(drosteId, extraSteps.replaceAll('\n', ',').trim());
-            GF_hybrid.patternInfo.setValue(decodeURIComponent(params.toString()));
-            // last as it may fail when stepLevel is too high for the droste applied to basic stitch
-            document.getElementById(drosteId).value += extraSteps + '\n';
+            GF_hybrid.patternLink.setKeyValue(selectedStitchId, newStitchValue);
+            GF_hybrid.patternLink.appendToDroste(stepNr, extraSteps);
         }
 
         Array.from(document
@@ -629,13 +614,14 @@ const GF_hybrid = {
     },
     setPattern(element) {
         let q = element.getAttribute('xlink:href').split('?')[1];
-        this.patternInfo.setValue(q);
+        this.patternLink.setValue(q);
         document.getElementById('pairStep').value = 0;
         document.getElementById('droste1').value = '';
         document.getElementById('droste2').value = '';
         document.getElementById('droste3').value = '';
         this.generateSelectedDiagram('pair');
-        GF_hybrid.setStitchEvents();
+        this.setStitchEvents();
+        this.generateLegend();
         document.getElementById('thread_panel').innerHTML = '';
         GF_panel.scrollIfTooLittleIsVisible(document.getElementById('pair_panel'));
     },
@@ -699,13 +685,10 @@ const GF_hybrid = {
      */
     load(container) {
         console.log('================ Loading panels ================');
-        const pairWandHref = "javascript:GF_hybrid.generateSelectedDiagram('pair');GF_hybrid.setStitchEvents()";
+        const pairWandHref = "javascript:GF_hybrid.generateSelectedDiagram('pair');GF_hybrid.setStitchEvents();document.getElementById('thread_panel').style.backgroundColor = GF_hybrid.dirtyBackGround;void(0);";
         const threadWandHref = "javascript:GF_hybrid.generateSelectedDiagram('thread')";
         let q = new URL(document.documentURI).search.slice(1)
             .replaceAll(/[^a-zA-Z0-9=,.&-]/g,'');
-        if (q === "" || !q.includes('shiftRows')) {
-            q = "patchWidth=7&patchHeight=7&footside=---x,---4,---x,---4&tile=5-,-5,5-,-5&headside=-,c,-,c,&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=2&shiftRowsSE=2&e1=lclc&l2=llctt&f2=rcrc&d2=rrctt&e3=rcrc&l4=llctt&f4=lclc&d4=rrctt&droste2=e12=clcrcl,e13=ct,f42=ctcl,e32=f22=ctcr,e33=f43=lct,e31=f21=lctc,e11=rclcrc,f23=rct,f41=rctc,e10=tc,f20=tcl,e30=f40=tcr"
-        }
         this.galleryPanels.createHTML(container);
         GF_panel.load({caption: "tweak selected stitch", id: "tweak", size:{width:'98%', height: 'auto'}, parent: container});
         container.insertAdjacentHTML('beforeend',`
@@ -713,40 +696,21 @@ const GF_hybrid = {
                 Assign tweaked stitch <button onclick="GF_hybrid.assignToAll()" >to all</button>
                 <button onclick="GF_hybrid.assignToIgnored()" id="ignored">to ignored</button>
                 or click a stich in the pair diagram.
-                ${this.patternInfo.getLinkHtmlString(q)}
+                ${this.patternLink.getLinkHtmlString()}
             </p>
             <p>
             ${this.steps.getHtmlString("droste")}
-            ${GF_hybrid.swatchSize.getHtmlString()}
+            ${GF_hybrid.swatchSize.getHtmlString(q)}
             </p>
             <div id="toast"></div>
         `);
         GF_panel.load({caption: this.steps.getHtmlString("pair"), id: "pair_panel", wandHref: pairWandHref, controls: ["resize"], parent: container});
         GF_panel.load({caption: this.steps.getHtmlString("thread"), id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"], parent: container});
         GF_panel.load({caption: 'stitch enumeration', id: "legend_panel", controls: ["resize"], parent: container});
-        GF_panel.load({caption: "specifications", id: "specs", controls: ["resize"], size:{width: '100%', height: '300px'}, parent: container});
         this.steps.setListeners();
         document.getElementById('tweak').insertAdjacentHTML('beforeend', GF_hybrid.tweak.getHtmlString());
         const params = new URLSearchParams(q);
         document.getElementById('tweak').parentNode.style = `width: calc(100% - 7px)`;
-        const specsPanelContent = document.getElementById('specs');
-        function drosteTextField(level) {
-            const paramValue = (params.get('droste'+(level+1)) || '').replaceAll(',','\n') + '\n' || '';
-            return `<textarea id="droste${level}" spellcheck="false" placeholder="droste step ${level}, default all: ctc">${paramValue}</textarea>`
-        }
-        specsPanelContent.innerHTML = `
-          <a href="javascript:['droste1','droste2','droste3'].forEach(GF_panel.cleanupStitches)" 
-             title="Reduce panel content"
-             ><img src="${this.content_home}/images/broom.png"></a>
-          Specs collected from URL and clicks:
-          ${this.patternInfo.getSpecsHtmlString(q)}
-          ${drosteTextField(1)}
-          ${drosteTextField(2)}
-          ${drosteTextField(3)}
-        `;
-        specsPanelContent.parentNode.style.display = "block";
-        specsPanelContent.style.width = "100%";
-        specsPanelContent.style.height = "0";
         for (let type of ["pair", "thread"]) {
             const panelEl = document.getElementById(type + '_panel');
             panelEl.innerHTML = "Click/tap the wand to (re)generate the diagram. Large diagrams may take several seconds.";
@@ -803,7 +767,7 @@ const GF_hybrid = {
         }
     },
     /**
-     * Wrapper for load. Initial step is 1 and specs panel is shown immediately
+     * Wrapper for load. Initial step is 1
      *
      * @param {!HTMLElement} container receives the generated components
      */
@@ -815,14 +779,14 @@ const GF_hybrid = {
         GF_hybrid.deferredLoading();
     },
     /**
-     * Wrapper for load. Initial step is 0 and specs panel is initially hidden, shown when step becomes larger.
+     * Wrapper for load. Initial step is 0
      *
      * @param {!HTMLElement} container receives the generated components
      * */
     loadStitches(container){
         this.load(container);
         GF_hybrid.galleryPanels.onlyStitches();
-        this.hideParents([GF_hybrid.tweak.drosteOnBasicStitch.id, 'specs']);
+        this.hideParents([GF_hybrid.tweak.drosteOnBasicStitch.id]);
         this.steps.init('stitches');
         GF_hybrid.deferredLoading();
     },
@@ -844,67 +808,47 @@ const GF_hybrid = {
         GF_hybrid.deferredLoading();
     },
     assignToIgnored() {
-        const stepValue = document.getElementById('pairStep').value * 1;
+        // limited to 100 columns, this avoids conflicts with other numbered params such as droste
         const stitchValue = document.getElementById(GF_hybrid.tweak.basicStitch.id).value;
-        let query = this.patternInfo.getValue();
-
-        // key=- where key is letters+digits (e.g. e1=-, f42=-)
-        // this also matches droste1=- but not expecting just a dash as content for the droste specs
-        const regexp = /(^|&)([a-z]+[0-9]+=)-(&|$)/gi
-
-        if (document.getElementById(GF_hybrid.tweak.drosteOnBasicStitch.id).value.trim() !== '') {
-            this.showToast("Assign to ignored is not implemented for droste applied to basic stitch")
-        } else if (stepValue !== 0 && stitchValue) {
-            this.showToast("Assign to ignored is only implemented for step 1")
-        } else if (!regexp.test(query)) {
+        const tags = new Set(
+            Array.from(new URLSearchParams(GF_hybrid.patternLink.getValue()))
+                .filter(([k, v]) => v === '-' && /^[a-z][a-z]?[0-9]+$/i.test(k))
+                .map(([k]) => k)
+        );
+        if (tags.length === 0) {
             this.showToast("No ignored stitches.")
         } else {
-            if (stitchValue) {
-                query = query.replace(regexp, `$1$2${stitchValue}$3`);
-            } else {
-                query = query.replace(regexp, (match, sep, keyEq, tail) => {
-                    const rnd = this.getRandomStitch();
-                    return `${sep}${keyEq}${rnd}${tail}`;
-                });
-            }
-            document.getElementById('pair_panel').style.backgroundColor = GF_hybrid.dirtyBackGround;
-            this.patternInfo.setValue(query);
+            this.assignToSelected(tags, stitchValue)
+        }
+    },
+    assignToSelected(tagSet, stitchValue) {
+        document.getElementById('pair_panel').style.backgroundColor = GF_hybrid.dirtyBackGround;
+        for (const key of tagSet) {
+            this.patternLink.setKeyValue(key, stitchValue ? stitchValue : this.getRandomStitch());
         }
     },
     assignToAll() {
         const stepValue = document.getElementById('pairStep').value * 1;
         const stitchValue = document.getElementById(GF_hybrid.tweak.basicStitch.id).value;
-        const stitchTitles = Array.from(document.getElementById('pair_panel')
-            .getElementsByTagName('title')
-        );
         if (document.getElementById(GF_hybrid.tweak.drosteOnBasicStitch.id).value.trim() !== '') {
             this.showToast("Assign to all is not implemented for droste applied to basic stitch")
         } else if (stepValue !== 0 && stitchValue) {
-            document.getElementById('droste' + stepValue).value =
-                stitchValue; // default for this droste level
-        } else if (!stitchTitles || stitchTitles.length === 0) {
-            this.showToast("No stitches found in the pair diagram.")
+            document.getElementById('droste' + stepValue)
+                .value = stitchValue; // set a new default for this droste level
         } else {
-            document.getElementById('pair_panel').style.backgroundColor = GF_hybrid.dirtyBackGround;
-            const params = new URLSearchParams(this.patternInfo.getValue());
-            const regex = /^[a-zA-Z]{1,2}\d+$/;
-            // remove predefined stitches
-            for (const key of Array.from(params.keys())) {
-                if (regex.test(key)) {
-                    params.delete(key);
-                }
+            const tags = new Set(
+                [...document.querySelectorAll('#pair_panel title')]
+                    .map(el => (el.textContent || '')
+                        .toLowerCase()
+                        .split(' - ')[1]?.trim() || ''
+                    )
+            );
+            tags.delete('');
+            if (tags.size === 0) {
+                this.showToast("No stitches found in the pair diagram.")
+            } else {
+                this.assignToSelected(tags, stitchValue)
             }
-            // add stitches with ID-s from diagram
-            stitchTitles.forEach(el => {
-                const [stitch,tag = ''] = el.textContent.toLowerCase().split(/ - /);
-                if (tag !== '') {
-                    const newValue = stitchValue
-                        ? stitchValue
-                        : this.getRandomStitch();
-                    params.set(tag, newValue);
-                }
-            });
-            this.patternInfo.setValue(Array.from(params).map(([k, v]) => `${k}=${v}`).join('&'));
         }
     }
 }
