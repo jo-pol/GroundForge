@@ -692,12 +692,16 @@ const GF_hybrid = {
         this.galleryPanels.createHTML(container);
         GF_panel.load({caption: "tweak selected stitch", id: "tweak", size:{width:'98%', height: 'auto'}, parent: container});
         container.insertAdjacentHTML('beforeend',`
-            <p><span class="noprint">
+            <p>
+                ${this.patternLink.getLinkHtmlString()}
+                <span class="noprint">
+                    <input type="button" onclick="window.print()" value="save diagrams">&nbsp;<a onclick="GF_hybrid.showToast('Print with PDF as destination')" style="cursor: pointer">(?)</a>
+                </span>
+            </p>
+            <p class="noprint">
                 Assign tweaked stitch <button onclick="GF_hybrid.assignToAll()" >to all</button>
                 <button onclick="GF_hybrid.assignToIgnored()" id="ignored">to ignored</button>
                 or click a stich in the pair diagram.
-                </span>
-                ${this.patternLink.getLinkHtmlString()}
             </p>
             <p class="noprint">
             ${this.steps.getHtmlString("droste")}
