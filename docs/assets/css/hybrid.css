@@ -25,7 +25,11 @@
 }
 
 @media print {
-    .gf_panel > a, .gf_panel > input[type="color"] { display: none }
+    .gf_panel > a,
+    .gf_panel > input[type="color"],
+    .gf_panel:has(> :is(#tweak, #stitches, #snow3, #snow4, #pattern)),
+    .noprint
+    { display: none !important}
     .gf_panel > div { overflow: hidden; }
     .gf_panel > figcaption { outline: 2px solid #ddd;}
     .gf_panel:not(.hidden):not([style*="display: none"]) {
