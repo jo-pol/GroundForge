@@ -711,7 +711,7 @@ const GF_hybrid = {
                 ${this.patternLink.getLinkHtmlString()}
                 <input value="save diagrams" type="button"
                  onclick="if (! ('ontouchstart' in window || 'ontouchmove' in window)) window.print()" class="noprint"
-                 onmouseenter="GF_hybrid.toast.set('Print with PDF as destination, prepare by adjusting panel sizes.')"
+                 onmouseenter="if(!('ontouchstart' in window||'ontouchmove' in window)) GF_hybrid.toast.set('Print with PDF as destination, prepare by adjusting panel sizes.')"
                  onmouseleave="GF_hybrid.toast.hide()"
                  ontouchstart="GF_hybrid.toast.set('iPhone: Share to (docs, ...), other smartphones: ...')"
                  ontouchend="GF_hybrid.toast.hide()"
