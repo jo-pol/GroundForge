@@ -155,11 +155,11 @@ const GF_hybrid = {
                     const pos2 = basicStitchEl.selectionEnd - 1;
                     basicStitchEl.setSelectionRange(pos1, pos2);
                     if (GF_hybrid.isVisible('drosteStep')) {
-                        GF_hybrid.showToast("Possible stitch characters: CTLR, or (at step level zero) a single '-' to ignore a stitch."  );
+                        GF_hybrid.toast.show("Possible stitch characters: CTLR, or (at step level zero) a single '-' to ignore a stitch."  );
                     } else if (!GF_hybrid.isVisible('pairStep')) {
-                        GF_hybrid.showToast("Possible stitch characters: CTLR, or a single '-' to ignore a stitch."  );
+                        GF_hybrid.toast.show("Possible stitch characters: CTLR, or a single '-' to ignore a stitch."  );
                     } else {
-                        GF_hybrid.showToast("Possible stitch characters: CTLR. At pair step level zero, a single '-' is possible to ignore a stitch. " +
+                        GF_hybrid.toast.show("Possible stitch characters: CTLR. At pair step level zero, a single '-' is possible to ignore a stitch. " +
                             "With content in 'droste on basic stitches', T is replaced with LR for proper flipping."
                         );
                     }
@@ -207,7 +207,7 @@ const GF_hybrid = {
                 }
                 const value = drosteOnBasicEl.value.trim().toUpperCase();
                 if (this.lastValid.trim() === '' && value !== '') {
-                    GF_hybrid.showToast("No droste applied to basic stitch for pair step 3." );
+                    GF_hybrid.toast.show("No droste applied to basic stitch for pair step 3." );
                     drosteOnBasicEl.value = this.lastValid;
                 } else if (isValid(value)) {
                     this.lastValid = value;
@@ -217,7 +217,7 @@ const GF_hybrid = {
                     const pos1 = drosteOnBasicEl.selectionStart - 1;
                     const pos2 = drosteOnBasicEl.selectionEnd - 1;
                     drosteOnBasicEl.setSelectionRange(pos1, pos2);
-                    GF_hybrid.showToast(this.msg);
+                    GF_hybrid.toast.show(this.msg);
                 }
             },
         },
@@ -363,7 +363,7 @@ const GF_hybrid = {
         }
     },
     swatchSize: {
-        getHtmlString(q) {
+        getHtmlString() {
             return `
             Swatch size:
             <span style="display: inline-block; vertical-align: top">
@@ -384,7 +384,7 @@ const GF_hybrid = {
             `;},
         valueChanged(changedEl) {
             if (changedEl.validity.badInput) {
-                GF_hybrid.showToast("Please enter positive numbers for the swatch size.");
+                GF_hybrid.toast.show("Please enter positive numbers for the swatch size.");
                 return;
             }
             if (changedEl.value === "")
@@ -395,17 +395,20 @@ const GF_hybrid = {
             const width = Number.parseInt(document.getElementById('patchWidth')?.value ?? '', 10) || 0;
             const height = Number.parseInt(document.getElementById('patchHeight')?.value ?? '', 10) || 0;
             if (config.centerMatrixRows * 1.5 > height || config.centerMatrixCols * 1.5 > width) {
-                GF_hybrid.showToast(
+                GF_hybrid.toast.show(
                     `Recommended swatch size: at least 1.5 tiles. Tile size is ${config.centerMatrixCols}x${config.centerMatrixRows}.`
                 );
             } else if( changedEl.rangeOverflow ){
-                GF_hybrid.showToast("Large dense swatches cause slow diagrams and may choke browsers.");
+                GF_hybrid.toast.show("Large dense swatches cause slow diagrams and may choke browsers.");
             }
             console.log('');
         }
     },
     patternLink: {
-        params: new URLSearchParams((window.location.search).includes('patchWidth')?window.location.search:"patchWidth=7&patchHeight=7&footside=---x,---4,---x,---4&tile=5-,-5,5-,-5&headside=-,c,-,c,&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=2&shiftRowsSE=2&e1=lclc&l2=llctt&f2=rcrc&d2=rrctt&e3=rcrc&l4=llctt&f4=lclc&d4=rrctt&droste2=e12=clcrcl,e13=ct,f42=ctcl,e32=f22=ctcr,e33=f43=lct,e31=f21=lctc,e11=rclcrc,f23=rct,f41=rctc,e10=tc,f20=tcl,e30=f40=tcr"),
+        params: new URLSearchParams((window.location.search).includes('patchWidth')
+            ? window.location.search.replaceAll(/[^a-zA-Z0-9=,.&-]/g,'')
+            : "patchWidth=7&patchHeight=7&footside=---x,---4,---x,---4&tile=5-,-5,5-,-5&headside=-,c,-,c,&shiftColsSW=0&shiftRowsSW=4&shiftColsSE=2&shiftRowsSE=2&e1=lclc&l2=llctt&f2=rcrc&d2=rrctt&e3=rcrc&l4=llctt&f4=lclc&d4=rrctt&droste2=e12=clcrcl,e13=ct,f42=ctcl,e32=f22=ctcr,e33=f43=lct,e31=f21=lctc,e11=rclcrc,f23=rct,f41=rctc,e10=tc,f20=tcl,e30=f40=tcr"
+        ),
         getLinkHtmlString() {return `<a id="selfRef" href="?${decodeURIComponent(this.params.toString())}">Pattern</a>`},
         setParams(newParams) {
             // for historical reasons: step-1 is URL argument &droste2
@@ -497,10 +500,10 @@ const GF_hybrid = {
                 const step = isNaN(val) ? 0 : Math.min(max, Math.max(0, val));
                 if (val !== step) {
                     if (GF_hybrid.isVisible('drosteStep')) {
-                        GF_hybrid.showToast("Steps: min=0, max=3.");
+                        GF_hybrid.toast.show("Steps: min=0, max=3.");
                     }
                     else {
-                        GF_hybrid.showToast("Steps: min=0, max=3, max for pairs is 2 when a snow gallery is visible.");
+                        GF_hybrid.toast.show("Steps: min=0, max=3, max for pairs is 2 when a snow gallery is visible.");
                     }
                 }
                 GF_hybrid.galleryPanels.toggleSnowOptions(step === 3);
@@ -662,21 +665,35 @@ const GF_hybrid = {
                 <br>`)
         });
     },
-    showToast(message) {
-        const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.style.display = 'block';
+    toast: {
+        /** id of the div (or whatever) to contain the message, styled more or less like the status bar of the browser */
+        id: "toast",
+        /** To be combined with set, typically at onmouseleave */
+        hide(){
+            document.getElementById(this.id).style.display = 'none';
+        },
+        /** Typically used at onmouseenter */
+        set(message){
+            const toast = document.getElementById(this.id);
+            toast.textContent = message;
+            toast.style.display = 'block';
+            return toast
+        },
+        /** Combines set and hide, typically for input errors, automatically cleared */
+        show(message){
+            const toast = set(message)
 
-        function hideToast() {
-            toast.style.display = 'none';
-            window.removeEventListener('mousedown', hideToast);
-            window.removeEventListener('keydown', hideToast);
-            window.removeEventListener('focus', hideToast, true);
+            function hideToast() {
+                toast.style.display = 'none';
+                window.removeEventListener('mousedown', hideToast);
+                window.removeEventListener('keydown', hideToast);
+                window.removeEventListener('focus', hideToast, true);
+            }
+
+            window.addEventListener('mousedown', hideToast);
+            window.addEventListener('keydown', hideToast);
+            window.addEventListener('focus', hideToast, true);
         }
-
-        window.addEventListener('mousedown', hideToast);
-        window.addEventListener('keydown', hideToast);
-        window.addEventListener('focus', hideToast, true);
     },
     /**
      * Loads all components required for the droste mixer.
@@ -687,25 +704,27 @@ const GF_hybrid = {
         console.log('================ Loading panels ================');
         const pairWandHref = "javascript:GF_hybrid.generateSelectedDiagram('pair');GF_hybrid.setStitchEvents();document.getElementById('thread_panel').style.backgroundColor = GF_hybrid.dirtyBackGround;void(0);";
         const threadWandHref = "javascript:GF_hybrid.generateSelectedDiagram('thread')";
-        let q = new URL(document.documentURI).search.slice(1)
-            .replaceAll(/[^a-zA-Z0-9=,.&-]/g,'');
         this.galleryPanels.createHTML(container);
-        GF_panel.load({caption: "tweak selected stitch", id: "tweak", size:{width:'98%', height: 'auto'}, parent: container});
+        GF_panel.load({caption: "tweak selected stitch", id: "tweak", size:{width:'100%', height: 'auto'}, parent: container});
         container.insertAdjacentHTML('beforeend',`
             <p>
                 ${this.patternLink.getLinkHtmlString()}
-                <span class="noprint">
-                    <input type="button" onclick="window.print()" value="save diagrams">&nbsp;<a onclick="GF_hybrid.showToast('Print with PDF as destination')" style="cursor: pointer">(?)</a>
-                </span>
+                <input value="save diagrams" type="button"
+                 onclick="if (! 'ontouchstart' in window) window.print()" class="noprint"
+                 onmouseenter="GF_hybrid.toast.set('Print with PDF as destination, prepare by adjusting panel sizes.')"
+                 onmouseleave="GF_hybrid.toast.hide()"
+                 ontouchstart="GF_hybrid.toast.set('iPhone: Share to (docs, ...), other smartphones: ...')"
+                 ontouchend="GF_hybrid.toast.hide()"
+                 >
             </p>
             <p class="noprint">
                 Assign tweaked stitch <button onclick="GF_hybrid.assignToAll()" >to all</button>
                 <button onclick="GF_hybrid.assignToIgnored()" id="ignored">to ignored</button>
-                or click a stich in the pair diagram.
+                or&nbsp;click a stitch in the pair diagram.
             </p>
             <p class="noprint">
             ${this.steps.getHtmlString("droste")}
-            ${GF_hybrid.swatchSize.getHtmlString(q)}
+            ${GF_hybrid.swatchSize.getHtmlString()}
             </p>
             <div id="toast"></div>
         `);
@@ -714,7 +733,6 @@ const GF_hybrid = {
         GF_panel.load({caption: 'stitch enumeration', id: "legend_panel", controls: ["resize"], parent: container});
         this.steps.setListeners();
         document.getElementById('tweak').insertAdjacentHTML('beforeend', GF_hybrid.tweak.getHtmlString());
-        const params = new URLSearchParams(q);
         document.getElementById('tweak').parentNode.style = `width: calc(100% - 7px)`;
         for (let type of ["pair", "thread"]) {
             const panelEl = document.getElementById(type + '_panel');
@@ -821,7 +839,7 @@ const GF_hybrid = {
                 .map(([k]) => k)
         );
         if (tags.length === 0) {
-            this.showToast("No ignored stitches.")
+            this.toast.show("No ignored stitches.")
         } else {
             this.assignToSelected(tags, stitchValue)
         }
@@ -836,7 +854,7 @@ const GF_hybrid = {
         const stepValue = document.getElementById('pairStep').value * 1;
         const stitchValue = document.getElementById(GF_hybrid.tweak.basicStitch.id).value;
         if (document.getElementById(GF_hybrid.tweak.drosteOnBasicStitch.id).value.trim() !== '') {
-            this.showToast("Assign to all is not implemented for droste applied to basic stitch")
+            this.toast.show("Assign to all is not implemented for droste applied to basic stitch")
         } else if (stepValue !== 0 && stitchValue) {
             document.getElementById('droste' + stepValue)
                 .value = stitchValue; // set a new default for this droste level
@@ -850,7 +868,7 @@ const GF_hybrid = {
             );
             tags.delete('');
             if (tags.size === 0) {
-                this.showToast("No stitches found in the pair diagram.")
+                this.toast.show("No stitches found in the pair diagram.")
             } else {
                 this.assignToSelected(tags, stitchValue)
             }
