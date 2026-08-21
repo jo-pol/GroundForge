@@ -709,11 +709,11 @@ const GF_hybrid = {
         container.insertAdjacentHTML('beforeend',`
             <p>
                 ${this.patternLink.getLinkHtmlString()}
-                <input value="save diagrams" type="button"
-                 onclick="if (! ('ontouchstart' in window || 'ontouchmove' in window)) window.print()" class="noprint"
-                 onmouseenter="if('ontouchstart' in window||'ontouchmove' in window)) GF_hybrid.toast.hide()"
+                <input value="save diagrams" type="button" class="noprint"
+                 onclick="if (! ('ontouchstart' in window || 'ontouchmove' in window)) window.print()"
+                 onmouseenter="GF_hybrid.toast.set('Print with PDF as destination, prepare by adjusting panel sizes.')"
                  onmouseleave="GF_hybrid.toast.hide()"
-                 ontouchstart="GF_hybrid.toast.set('iPhone: Share to (docs, ...), other smartphones: ...')"
+                 ontouchstart="GF_hybrid.toast.set('Firefox: print - share (to docs, ...), Chrome/Safari: share - print - print - to files; ')"
                  ontouchend="GF_hybrid.toast.hide()"
                  >
             </p>
