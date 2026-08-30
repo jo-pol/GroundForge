@@ -154,14 +154,10 @@ const GF_hybrid = {
                     const pos1 = basicStitchEl.selectionStart - 1;
                     const pos2 = basicStitchEl.selectionEnd - 1;
                     basicStitchEl.setSelectionRange(pos1, pos2);
-                    if (GF_hybrid.isVisible('drosteStep')) {
-                        GF_hybrid.toast.show("Possible stitch characters: CTLR, or (at step level zero) a single '-' to ignore a stitch."  );
-                    } else if (!GF_hybrid.isVisible('pairStep')) {
-                        GF_hybrid.toast.show("Possible stitch characters: CTLR, or a single '-' to ignore a stitch."  );
+                    if (document.getElementById('pairStep').value === '0') {
+                        GF_hybrid.toast.show("Possible stitch characters: CTLR, or just '-' to ignore a stitch.");
                     } else {
-                        GF_hybrid.toast.show("Possible stitch characters: CTLR. At pair step level zero, a single '-' is possible to ignore a stitch. " +
-                            "With content in 'droste on basic stitches', T is replaced with LR for proper flipping."
-                        );
+                        GF_hybrid.toast.show("Possible stitch characters: CTLR");
                     }
                     return;
                 }
@@ -189,9 +185,9 @@ const GF_hybrid = {
             msg: `
                 "Droste applied to basic stitch" needs either numbered stitches,
                  or as many stitches as characters in "Basic stitch".
-                 Allowed separators between stitches: ";.," 
-                 Example of a numbered stitch: "X12=CTCT".
-                 Default for not specified stitches is "CTC".
+                 Separators: ";.," 
+                 Numbered stitch: "X12=CTCT".
+                 Default stitch: "CTC".
             `,
             fixInput(basicStitchEl, drosteOnBasicEl) {
                 function isValid(str) {
@@ -206,10 +202,7 @@ const GF_hybrid = {
                     return stitches.every(g => groupRegex.test(g));
                 }
                 const value = drosteOnBasicEl.value.trim().toUpperCase();
-                if (this.lastValid.trim() === '' && value !== '') {
-                    GF_hybrid.toast.show("No droste applied to basic stitch for pair step 3." );
-                    drosteOnBasicEl.value = this.lastValid;
-                } else if (isValid(value)) {
+                if (isValid(value)) {
                     this.lastValid = value;
                     drosteOnBasicEl.value = value;
                 } else {
@@ -681,7 +674,7 @@ const GF_hybrid = {
         },
         /** Combines set and hide, typically for input errors, automatically cleared */
         show(message){
-            const toast = set(message)
+            const toast = this.set(message)
 
             function hideToast() {
                 toast.style.display = 'none';
