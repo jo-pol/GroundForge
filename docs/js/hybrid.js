@@ -686,6 +686,19 @@ const GF_hybrid = {
             window.addEventListener('mousedown', hideToast);
             window.addEventListener('keydown', hideToast);
             window.addEventListener('focus', hideToast, true);
+        },
+        showSaveHint(evt){
+            const hasPointerType = evt && typeof evt.pointerType === 'string';
+            const touchCapable = navigator.maxTouchPoints > 0 || ('ontouchstart' in window);
+            if (!hasPointerType && touchCapable) {
+                return;
+            }
+            const isTouch = hasPointerType && (evt.pointerType === 'touch' || evt.pointerType === 'pen');
+            if (isTouch) {
+                this.show('Firefox: print - share (to docs, ...), Chrome/Safari: share - print - print - to files; ');
+            } else {
+                this.set('Print with PDF as destination, prepare by adjusting panel sizes.');
+            }
         }
     },
     /**
@@ -702,12 +715,8 @@ const GF_hybrid = {
         container.insertAdjacentHTML('beforeend',`
             <p>
                 ${this.patternLink.getLinkHtmlString()}
-                <input value="save diagrams" type="button" class="noprint"
+                <input id="saveDiagramsBtn" value="save/share diagrams" type="button" class="noprint"
                  onclick="if (! ('ontouchstart' in window || 'ontouchmove' in window)) window.print()"
-                 onmouseenter="GF_hybrid.toast.set('Print with PDF as destination, prepare by adjusting panel sizes.')"
-                 onmouseleave="GF_hybrid.toast.hide()"
-                 ontouchstart="GF_hybrid.toast.set('Firefox: print - share (to docs, ...), Chrome/Safari: share - print - print - to files; ')"
-                 ontouchend="GF_hybrid.toast.hide()"
                  >
             </p>
             <p class="noprint">
@@ -721,6 +730,16 @@ const GF_hybrid = {
             </p>
             <div id="toast"></div>
         `);
+        const saveBtn = document.getElementById('saveDiagramsBtn');
+        if (saveBtn) {
+            saveBtn.addEventListener('pointerenter', e => this.toast.showSaveHint(e));
+            saveBtn.addEventListener('pointerdown', e => this.toast.showSaveHint(e));
+            saveBtn.addEventListener('mouseenter', e => this.toast.showSaveHint(e));
+            saveBtn.addEventListener('touchstart', e => this.toast.showSaveHint(e));
+            saveBtn.addEventListener('pointerleave', () => this.toast.hide());
+            saveBtn.addEventListener('pointercancel', () => this.toast.hide());
+            saveBtn.addEventListener('mouseleave', () => this.toast.hide());
+        }
         GF_panel.load({caption: this.steps.getHtmlString("pair"), id: "pair_panel", wandHref: pairWandHref, controls: ["resize"], parent: container});
         GF_panel.load({caption: this.steps.getHtmlString("thread"), id: "thread_panel", wandHref: threadWandHref, controls: ["resize", "color"], parent: container});
         GF_panel.load({caption: 'stitch enumeration', id: "legend_panel", controls: ["resize"], parent: container});
