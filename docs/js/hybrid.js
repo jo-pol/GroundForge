@@ -79,7 +79,7 @@ const GF_hybrid = {
                             <button type="button"
                                     class="recipe-btn">
                               <img src="${GF_hybrid.content_home}/${imgPath}/${img}"
-                                   onclick="GF_hybrid.tweak.setRecipe('${basicStitch}','${droste1}','${droste2 ?? ''}')"
+                                   onclick="GF_hybrid.tweak.setRecipe('${basicStitch}','${droste1}','${droste2 ? droste2 : ''}')"
                                    alt="${basicStitch} ; ${droste1}${droste2 ? ' ; ' + droste2 : ''}">
                             </button>
                         `);
@@ -131,7 +131,7 @@ const GF_hybrid = {
                 <span id="colorCode"></span>
                 <input type="text" id="${this.id}"
                         value="${GF_hybrid.tweak.basicStitch.lastValid}" placeholder="empty=random; type ? for more info"
-                        oninput="GF_hybrid.tweak.basicStitch.fixInput(this,${other}))"
+                        oninput="GF_hybrid.tweak.basicStitch.fixInput(this, document.getElementById('${GF_hybrid.tweak.drosteOnBasicStitch.id}'))"
                 />
              </label>`;
             },
@@ -145,9 +145,9 @@ const GF_hybrid = {
                       </g>
                     </svg>`
             },
-            fixInput(basicStitchEl, drostOnBasicEl) {
+            fixInput(basicStitchEl, drosteOnBasicEl) {
                 let value = basicStitchEl.value.toLowerCase().trim();
-                const hasDroste = drostOnBasicEl && drostOnBasicEl.value.trim() !== '';
+                const hasDroste = drosteOnBasicEl && drosteOnBasicEl.value.trim() !== '';
                 const regexp = hasDroste ? /^[tclr]*$/ : /^(-|([tclr])*)$/;
                 if (!regexp.test(value)) {
                     basicStitchEl.value = this.lastValid;
@@ -155,9 +155,9 @@ const GF_hybrid = {
                     const pos2 = Math.max(0, drosteOnBasicEl.selectionEnd - 1);
                     basicStitchEl.setSelectionRange(pos1, pos2);
                     if (document.getElementById('pairStep').value === '0') {
-                        GF_hybrid.toast.show("Possible stitch characters: CTLR, or just '-' to ignore a stitch.");
+                        GF_hybrid.toast.show("Characters for Basic stitch: CTLR, or just '-' to ignore a stitch.");
                     } else {
-                        GF_hybrid.toast.show("Possible stitch characters: CTLR");
+                        GF_hybrid.toast.show("Characters for Basic stitch: CTLR");
                     }
                     return;
                 }
@@ -173,12 +173,11 @@ const GF_hybrid = {
             id: 'drosteStitches',
             lastValid: '',  // TODO make it a data attribute
             getHtmlString() {
-                const other = `document.getElementById('${GF_hybrid.tweak.basicStitch.id}'`;
                 return `
             <label>Droste applied to basic stitch:
                 <input type="text" id="${this.id}"
                         value="${this.lastValid}" placeholder="Type ? for info"
-                        oninput="GF_hybrid.tweak.drosteOnBasicStitch.fixInput(${other}, this)"
+                        oninput="GF_hybrid.tweak.drosteOnBasicStitch.fixInput(document.getElementById('${GF_hybrid.tweak.basicStitch.id}'), this)"
                 />
             </label>`
             },
@@ -226,10 +225,9 @@ const GF_hybrid = {
             apply(direction) {
                 function flip2(value) {
                     switch (direction) {
-                        case 'b2d': return value
+                        case 'b2d': return value.toLowerCase()
                             .replace(/l/g, "R")
-                            .replace(/r/g, "L")
-                            .toLowerCase();
+                            .replace(/r/g, "L");
                         case 'b2p': return value
                             .split("").reverse().join("");
                     }
