@@ -17,12 +17,12 @@ title: API
     * [thread.html](#threadhtml)
   * [Download SVG](#download-svg)
 
-GroundForge is a library to generate tread diagrams from pair diagrams for bobbin lace.
+GroundForge is a library to generate thread diagrams from pair diagrams for bobbin lace.
 
 Current User Interfaces
 =======================
 
-* The former editor (aka the page _tiles_) is split into
+* The initial editor (aka the page _tiles_) is split into
   * [pattern editor](/GroundForge/pattern)
   * [stitches](/GroundForge/stitches)
   * [droste](/GroundForge/droste)
@@ -39,14 +39,14 @@ too much copy-pasting between the current user interfaces.
 Some new scripts are started to share code between the user interfaces.
 
 * [Stitch gallery](stitch-gallery) shares code between _nets_, _stitches_ and _droste_.
-* [Panels](panels) is started to be resued on several existing pages before developing new pages.
+* [Panels](panels) is started to be reused on several existing pages before developing new pages.
   The stitches gallery is not yet flexible enough to be used along with the panels.
 * [Hybrid](../drosteMixer.md) was started to test the _panel.js_ code.
   It is evolving into a page that combines functionality of
   the pages _stitches_, _droste_ and a variant of the _snow mixer_.
-  This variant wass inspired when writing 
+  This variant was inspired when writing 
   [snow with two droste steps](/GroundForge-help/snow-mix/droste),
-  it connects the 3/6 pair snowflakes in an [asymmetric](//GroundForge-help/snow-mix/droste/#spiderysnowyasym-connections/) way.
+  it connects the 3/6 pair snowflakes in an [asymmetric](/GroundForge-help/snow-mix/droste/#spiderysnowyasym-connections/) way.
   By hiding or not generating certain components, the script could be used
   to replace the three pages.
 * A [tiling gallery](/GroundForge/tileGallery) 

@@ -34,7 +34,7 @@ The generated stitch can have 0 twists between two crosses, e.g. "cc".
 <input type="number" name="maxTwistsBetweenStitches" id="maxTwistsBetweenStitches" min="1" max="5" value="2" onchange="genVal(this)" >&nbsp;
 **The maximal number of twists between two stitches**  
 Minimal 1, maximal 5.  
-The generated stitch can have 0 twists at the front and at the back, e.g. "ctc".</td>
+The generated stitch can have 0 twists at the front and at the back, e.g. "ctc".
 
 **Position of twists between stitches:**  
 <span id="between">

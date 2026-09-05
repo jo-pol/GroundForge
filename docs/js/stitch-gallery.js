@@ -43,9 +43,9 @@ const GF_stitches = {
     },
 
 
-    loadStitchExamples(gallryID = "#gallery") {
+    loadStitchExamples(galleryID = "#gallery") {
         for (let stitch of GF_stitches.stitches) {
-            document.querySelector(gallryID).innerHTML += `
+            document.querySelector(galleryID).innerHTML += `
             <figure>
                 <svg width="20" height="54">
                   <g transform="scale(2,2)">

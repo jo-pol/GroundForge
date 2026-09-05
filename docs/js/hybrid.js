@@ -125,15 +125,15 @@ const GF_hybrid = {
             id: 'basicStitchInput',
             lastValid: '', // TODO make it a data attribute
             getHtmlString() {
-                const other = `document.getElementById('${GF_hybrid.tweak.drosteOnBasicStitch.id}`;
+                const other = `document.getElementById('${GF_hybrid.tweak.drosteOnBasicStitch.id}')`;
                 return `
             <label>Basic stitch:
                 <span id="colorCode"></span>
                 <input type="text" id="${this.id}"
                         value="${GF_hybrid.tweak.basicStitch.lastValid}" placeholder="empty=random; type ? for more info"
-                        oninput="GF_hybrid.tweak.basicStitch.fixInput(this,${other}'))"
+                        oninput="GF_hybrid.tweak.basicStitch.fixInput(this,${other}))"
                 />
-             </label>`
+             </label>`;
             },
             setColorCode() {
                 document.querySelector('#colorCode').innerHTML = `
@@ -151,8 +151,8 @@ const GF_hybrid = {
                 const regexp = hasDroste ? /^[tclr]*$/ : /^(-|([tclr])*)$/;
                 if (!regexp.test(value)) {
                     basicStitchEl.value = this.lastValid;
-                    const pos1 = basicStitchEl.selectionStart - 1;
-                    const pos2 = basicStitchEl.selectionEnd - 1;
+                    const pos1 = Math.max(0, drosteOnBasicEl.selectionStart - 1);
+                    const pos2 = Math.max(0, drosteOnBasicEl.selectionEnd - 1);
                     basicStitchEl.setSelectionRange(pos1, pos2);
                     if (document.getElementById('pairStep').value === '0') {
                         GF_hybrid.toast.show("Possible stitch characters: CTLR, or just '-' to ignore a stitch.");
@@ -173,12 +173,12 @@ const GF_hybrid = {
             id: 'drosteStitches',
             lastValid: '',  // TODO make it a data attribute
             getHtmlString() {
-                const other = `document.getElementById('${GF_hybrid.tweak.basicStitch.id}`;
+                const other = `document.getElementById('${GF_hybrid.tweak.basicStitch.id}'`;
                 return `
             <label>Droste applied to basic stitch:
                 <input type="text" id="${this.id}"
                         value="${this.lastValid}" placeholder="Type ? for info"
-                        oninput="GF_hybrid.tweak.drosteOnBasicStitch.fixInput(${other}'), this)"
+                        oninput="GF_hybrid.tweak.drosteOnBasicStitch.fixInput(${other}, this)"
                 />
             </label>`
             },
@@ -207,8 +207,8 @@ const GF_hybrid = {
                     drosteOnBasicEl.value = value;
                 } else {
                     drosteOnBasicEl.value = this.lastValid;
-                    const pos1 = drosteOnBasicEl.selectionStart - 1;
-                    const pos2 = drosteOnBasicEl.selectionEnd - 1;
+                    const pos1 = Math.max(0, drosteOnBasicEl.selectionStart - 1);
+                    const pos2 = Math.max(0, drosteOnBasicEl.selectionEnd - 1);
                     drosteOnBasicEl.setSelectionRange(pos1, pos2);
                     GF_hybrid.toast.show(this.msg);
                 }
@@ -219,7 +219,7 @@ const GF_hybrid = {
                 <p>Flip:
                 <button onclick="GF_hybrid.tweak.flip.apply('b2d')">&harr;</button>
                 <button onclick="GF_hybrid.tweak.flip.apply('b2p')">&varr;</button>
-                <button onclick="GF_hybrid.tweak.flip.apply('b2d');GF_hybrid.recipes.flip.apply('b2p')">both</button>
+                <button onclick="GF_hybrid.tweak.flip.apply('b2d');GF_hybrid.tweak.flip.apply('b2p')">both</button>
                 </p>
                 `;
             },
@@ -376,12 +376,10 @@ const GF_hybrid = {
             </span>
             `;},
         valueChanged(changedEl) {
-            if (changedEl.validity.badInput) {
+            if (Number.isNaN(changedEl.valueAsNumber) || changedEl.valueAsNumber < 1 ) {
                 GF_hybrid.toast.show("Please enter positive numbers for the swatch size.");
                 return;
             }
-            if (changedEl.value === "")
-                return; // allow empty field
             GF_hybrid.patternLink.setKeyValue(changedEl.name, changedEl.value);
 
             const config = TilesConfig(GF_hybrid.patternLink.getValue());
@@ -391,8 +389,8 @@ const GF_hybrid = {
                 GF_hybrid.toast.show(
                     `Recommended swatch size: at least 1.5 tiles. Tile size is ${config.centerMatrixCols}x${config.centerMatrixRows}.`
                 );
-            } else if( changedEl.rangeOverflow ){
-                GF_hybrid.toast.show("Large dense swatches cause slow diagrams and may choke browsers.");
+            } else if( changedEl.validity.rangeOverflow ){
+                GF_hybrid.toast.show("Large, dense swatches may slow down diagram rendering and overload browsers.");
             }
             console.log('');
         }
@@ -490,7 +488,7 @@ const GF_hybrid = {
                 const val = parseInt(e.target.value, 10);
                 const snowVisible = GF_hybrid.galleryPanels.isSnowVisible() || document.getElementById("drosteStitches").value.trim() !== '';
                 const max = snowVisible && e.target.id === 'pairStep' ? 2 : 3;
-                const step = isNaN(val) ? 0 : Math.min(max, Math.max(0, val));
+                const step = Number.isNaN(val) ? 0 : Math.min(max, Math.max(0, val));
                 if (val !== step) {
                     if (GF_hybrid.isVisible('drosteStep')) {
                         GF_hybrid.toast.show("Steps: min=0, max=3.");
@@ -850,7 +848,7 @@ const GF_hybrid = {
                 .filter(([k, v]) => v === '-' && /^[a-z][a-z]?[0-9]+$/i.test(k))
                 .map(([k]) => k)
         );
-        if (tags.length === 0) {
+        if (tags.size === 0) {
             this.toast.show("No ignored stitches.")
         } else {
             this.assignToSelected(tags, stitchValue)
